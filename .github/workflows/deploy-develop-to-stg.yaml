@@ -1,0 +1,29 @@
+name: Deploy Develop to STG
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Deploy to SFTP
+      env:
+        SFTP_HOST: ${{ secrets.SFTP_HOST }}
+        SFTP_PORT: ${{ secrets.SFTP_PORT }}
+        SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
+        SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+      run: |
+        sudo apt-get install lftp
+
+        git clone https://github.com/jmalbarra/heo-website-bootstrap.git .
+        cd .
+        
+        /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
+        cd htdocs/staging
+        mirror -R . .
+        bye
+        EOF
