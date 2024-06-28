@@ -19,5 +19,5 @@ jobs:
       run: |
         echo 'hello'
         sudo apt-get install sshpass
-        sshpass -P $SFTP_PORT -p "$SFTP_PASSWORD" scp -r "./" "$SFTP_USERNAME@$SFTP_HOST:/"
+        sshpass -p "$SFTP_PASSWORD" scp -P 21 -r "./" "$SFTP_USERNAME@$SFTP_HOST:/"
 
