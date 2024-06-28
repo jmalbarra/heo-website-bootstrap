@@ -1,4 +1,4 @@
-name: Deploy HTML to SFTP
+name: Deploy Main to PROD
 
 on:
   push:
