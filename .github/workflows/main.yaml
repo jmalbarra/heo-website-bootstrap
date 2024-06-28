@@ -20,7 +20,7 @@ jobs:
         echo 'hello'
         sudo apt-get install lftp
 
-        git clone https://github.com/tu_usuario/mi-repo.git .
+        git clone https://github.com/jmalbarra/heo-website-bootstrap.git .
         cd .
 
         echo 'hola'
