@@ -19,9 +19,13 @@ jobs:
       run: |
         echo 'hello'
         sudo apt-get install lftp
+
+        git clone https://github.com/tu_usuario/mi-repo.git .
+        cd .
+
         echo 'hola'
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
         cd htdocs
-        mirror -R .
+        mirror -R . .
         bye
         EOF
