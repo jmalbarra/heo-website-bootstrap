@@ -18,7 +18,9 @@ jobs:
         SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
       run: |
         echo 'hello'
-        lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
+        sudo apt-get install lftp
+        echo 'hola'
+        /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
         cd htdocs
         put ./
         bye
