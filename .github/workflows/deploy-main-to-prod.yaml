@@ -25,5 +25,9 @@ jobs:
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
         cd htdocs
         mirror -R . .
+
+        cd htdocs/staging
+        mirror -R . .
+
         bye
         EOF
