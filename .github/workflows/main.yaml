@@ -20,6 +20,7 @@ jobs:
         echo 'hello'
         sudo apt-get install lftp
         echo 'hola'
+        ls ./
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
         cd htdocs
         put ./
