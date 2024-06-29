@@ -26,6 +26,5 @@ jobs:
         mkdir -p htdocs/staging
         cd htdocs/staging
         mirror -R . .
-
         bye
         EOF
