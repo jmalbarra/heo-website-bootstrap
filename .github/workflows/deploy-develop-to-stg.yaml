@@ -19,7 +19,7 @@ jobs:
       run: |
         sudo apt-get install lftp
 
-        git clone https://github.com/jmalbarra/heo-website-bootstrap.git .
+        git clone -b develop https://github.com/jmalbarra/heo-website-bootstrap.git .
         cd .
         
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
