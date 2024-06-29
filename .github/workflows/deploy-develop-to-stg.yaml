@@ -23,7 +23,6 @@ jobs:
         cd .
         
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
-        mkdir -p htdocs/staging
         cd htdocs/staging
         mirror -R . .
         bye
