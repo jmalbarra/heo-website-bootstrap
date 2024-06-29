@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Deploy to SFTP
+    - name: Deploy to STG SFTP
       env:
         SFTP_HOST: ${{ secrets.SFTP_HOST }}
         SFTP_PORT: ${{ secrets.SFTP_PORT }}
@@ -19,11 +19,13 @@ jobs:
       run: |
         sudo apt-get install lftp
 
-        git clone https://github.com/jmalbarra/heo-website-bootstrap.git .
+        git clone -b develop https://github.com/jmalbarra/heo-website-bootstrap.git .
         cd .
         
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
+        mkdir -p htdocs/staging
         cd htdocs/staging
         mirror -R . .
+
         bye
         EOF
