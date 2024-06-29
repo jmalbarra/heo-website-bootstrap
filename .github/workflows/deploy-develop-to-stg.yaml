@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Deploy to SFTP
+    - name: Deploy to STG SFTP
       env:
         SFTP_HOST: ${{ secrets.SFTP_HOST }}
         SFTP_PORT: ${{ secrets.SFTP_PORT }}
@@ -24,7 +24,7 @@ jobs:
         
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
         cd htdocs/staging
-        mdelete *
         mirror -R . .
+        
         bye
         EOF

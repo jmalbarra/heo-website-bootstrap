@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Deploy to SFTP
+    - name: Deploy to STG and PROD SFTP
       env:
         SFTP_HOST: ${{ secrets.SFTP_HOST }}
         SFTP_PORT: ${{ secrets.SFTP_PORT }}
