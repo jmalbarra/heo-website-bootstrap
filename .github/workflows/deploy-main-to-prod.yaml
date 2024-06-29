@@ -26,7 +26,6 @@ jobs:
         cd htdocs
         mirror -R . .
 
-        mkdir -p htdocs/staging
         cd htdocs/staging
         mirror -R . .
 
