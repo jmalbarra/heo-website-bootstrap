@@ -5,14 +5,26 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
-	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 	<style>
+		:root {
+			--accent: #00ff41;
+			--accent-dim: rgba(0, 255, 65, 0.5);
+			--accent-glow: rgba(0, 255, 65, 0.4);
+			--accent-bg: rgba(0, 255, 65, 0.12);
+			--surface: rgba(12, 12, 14, 0.9);
+			--surface-border: rgba(0, 255, 65, 0.2);
+			--text: #e8e8e8;
+			--text-muted: rgba(255,255,255,0.4);
+			--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+			--radius: 6px;
+		}
 		* { margin: 0; padding: 0; box-sizing: border-box; }
 		body {
-			background: #000;
+			background: #050507;
 			min-height: 100vh;
 			overflow: hidden;
-			font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', monospace;
+			font-family: 'Geist Mono', 'JetBrains Mono', monospace;
 		}
 		#matrix-container {
 			position: fixed;
@@ -22,42 +34,59 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			transition: opacity 0.8s ease;
+			transition: opacity 0.6s var(--ease-out);
 		}
 		#matrix-container.fade-out { opacity: 0; pointer-events: none; }
+		#matrix-container.login-mode #matrix-logo,
+		#matrix-container.login-mode #enter-btn { opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.3s; }
+		#matrix-container.login-mode #matrix-overlay { opacity: 0.2; }
 		#matrix-canvas {
 			position: absolute;
 			inset: 0;
 			width: 100%;
 			height: 100%;
+			opacity: 0.7;
 		}
 		#matrix-overlay {
 			position: absolute;
 			inset: 0;
-			background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.9) 100%);
+			background: radial-gradient(ellipse 80% 50% at 50% 100%, transparent 0%, rgba(5,5,7,0.4) 40%, rgba(5,5,7,0.95) 100%);
 			pointer-events: none;
 		}
 		#enter-btn {
 			position: relative;
 			z-index: 10;
 			padding: 18px 48px;
-			font-size: 1.1rem;
+			font-size: 0.9rem;
 			font-family: inherit;
 			font-weight: 500;
-			letter-spacing: 0.2em;
+			letter-spacing: 0.24em;
 			text-transform: uppercase;
-			color: #00ff41;
-			background: transparent;
-			border: 2px solid #00ff41;
+			color: var(--accent);
+			background: var(--accent-bg);
+			border: 1px solid var(--surface-border);
+			border-radius: var(--radius);
 			cursor: pointer;
-			transition: all 0.3s ease;
-			text-shadow: 0 0 10px #00ff41;
+			transition: all 0.4s var(--ease-out);
+			box-shadow: 0 0 0 0 var(--accent-glow);
 		}
 		#enter-btn:hover {
-			background: rgba(0, 255, 65, 0.15);
-			box-shadow: 0 0 25px rgba(0, 255, 65, 0.5);
+			background: rgba(0, 255, 136, 0.2);
+			box-shadow: 0 0 32px var(--accent-glow), inset 0 0 20px rgba(0,255,136,0.05);
+			border-color: var(--accent);
+			transform: translateY(-1px);
 		}
-		/* Login screen */
+		#matrix-logo {
+			position: relative;
+			z-index: 10;
+			width: 160px;
+			height: auto;
+			margin-bottom: 40px;
+			opacity: 0.8;
+			filter: drop-shadow(0 0 24px var(--accent-glow)) drop-shadow(0 0 60px rgba(0,255,136,0.15));
+			transition: filter 0.4s var(--ease-out);
+		}
+		/* Login screen - glass panel */
 		#login-container {
 			position: fixed;
 			inset: 0;
@@ -66,168 +95,301 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			background: #000;
+			background: transparent;
 			opacity: 0;
-			transition: opacity 0.8s ease;
+			transition: opacity 0.5s var(--ease-out);
 		}
-		#login-container.visible {
-			display: flex;
-			opacity: 1;
-		}
+		#login-container.visible { display: flex; opacity: 1; }
 		#login-container.fade-out { opacity: 0; pointer-events: none; }
 		#login-box {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			gap: 20px;
+			gap: 24px;
+			padding: 48px 40px;
+			background: var(--surface);
+			backdrop-filter: blur(24px);
+			-webkit-backdrop-filter: blur(24px);
+			border: 1px solid var(--surface-border);
+			border-radius: 12px;
+			box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.04);
 		}
-		#login-box label {
-			color: #00ff41;
-			font-family: inherit;
-			font-size: 1rem;
-		}
-		#login-name {
-			padding: 12px 20px;
-			font-size: 1rem;
-			font-family: inherit;
-			background: transparent;
-			border: 2px solid #00ff41;
-			color: #00ff41;
-			outline: none;
-			width: 280px;
-		}
-		#login-name::placeholder { color: rgba(0, 255, 65, 0.5); }
-		#login-btn {
-			padding: 12px 32px;
+		#login-name, #login-email {
+			padding: 14px 20px;
 			font-size: 0.95rem;
 			font-family: inherit;
-			letter-spacing: 0.1em;
-			color: #00ff41;
-			background: transparent;
-			border: 2px solid #00ff41;
+			background: rgba(0,0,0,0.3);
+			border: 1px solid var(--surface-border);
+			border-radius: var(--radius);
+			color: var(--accent);
+			outline: none;
+			width: 280px;
+			transition: all 0.3s var(--ease-out);
+		}
+		#login-name:focus, #login-email:focus {
+			border-color: var(--accent);
+			box-shadow: 0 0 0 3px var(--accent-bg);
+		}
+		#login-name::placeholder, #login-email::placeholder { color: var(--accent-dim); }
+		#login-terms {
+			display: flex;
+			align-items: flex-start;
+			gap: 10px;
+			max-width: 320px;
 			cursor: pointer;
-			transition: all 0.3s ease;
+			margin-top: -4px;
+		}
+		#login-terms input { margin-top: 4px; accent-color: var(--accent); cursor: pointer; }
+		#login-terms span { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; cursor: pointer; }
+		#login-terms a { color: var(--accent-dim); text-decoration: none; transition: color 0.2s; }
+		#login-terms a:hover { color: var(--accent); }
+		#login-btn {
+			padding: 18px 48px;
+			font-size: 0.9rem;
+			font-family: inherit;
+			letter-spacing: 0.12em;
+			color: #050507;
+			background: linear-gradient(135deg, var(--accent) 0%, #00cc55 100%);
+			border: none;
+			border-radius: var(--radius);
+			cursor: pointer;
+			transition: all 0.4s var(--ease-out);
+			box-shadow: 0 4px 16px rgba(0, 255, 65, 0.35);
+			font-weight: 500;
 		}
 		#login-btn:hover {
-			background: rgba(0, 255, 65, 0.15);
-			box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+			transform: translateY(-2px);
+			box-shadow: 0 8px 28px rgba(0, 255, 65, 0.45), 0 0 0 1px rgba(0,255,65,0.2);
 		}
-		/* Terminal iTerm-style (Dracula/OH-MY-ZSH look) */
+		/* Terminal - estilo moderno tipo IDE */
 		#terminal-container {
 			position: fixed;
 			inset: 0;
 			z-index: 3;
 			display: none;
 			flex-direction: column;
-			background: #000000;
+			background: #08080a;
 			opacity: 0;
-			transition: opacity 0.8s ease;
+			transition: opacity 0.5s var(--ease-out);
 		}
 		#terminal-container.visible {
 			display: flex;
 			opacity: 1;
 		}
-		#terminal-header {
-			display: flex;
-			align-items: center;
-			padding: 10px 16px;
-			background: #0a0a0a;
-			border-bottom: 1px solid #1a1a1a;
-		}
-		.terminal-dot {
-			width: 12px; height: 12px; border-radius: 50%;
-			margin-right: 8px;
-		}
-		.terminal-dot.red { background: #ff5f56; }
-		.terminal-dot.yellow { background: #ffbd2e; }
-		.terminal-dot.green { background: #27ca40; }
-		#terminal-title {
-			margin-left: 12px;
-			color: #6272a4;
-			font-size: 0.85rem;
-		}
 		#terminal-body {
 			flex: 1;
-			padding: 20px 24px;
+			padding: 40px 48px 48px 56px;
 			overflow-y: auto;
-			color: #ffffff;
+			position: relative;
+			background: 
+				linear-gradient(90deg, rgba(0,255,65,0.02) 0%, transparent 1px),
+				radial-gradient(ellipse 120% 50% at 50% 0%, rgba(0,255,65,0.06) 0%, transparent 50%),
+				#08080a;
+			color: var(--text);
 			font-size: 0.95rem;
-			line-height: 1.6;
+			line-height: 1.8;
 			white-space: pre-wrap;
 			word-wrap: break-word;
-			font-family: 'Menlo', 'Monaco', 'Meslo LG L', 'JetBrains Mono', monospace;
+			font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+			max-width: 820px;
+			margin: 0 auto;
+			width: 100%;
+			letter-spacing: 0.01em;
 		}
 		#terminal-output {
-			min-height: 100px;
+			min-height: 120px;
 		}
-		/* Prompt segments - iTerm/Dracula palette */
-		.prompt-user { color: #50fa7b; }  /* green: user@host */
-		.prompt-path { color: #8be9fd; } /* blue: ~ */
-		.prompt-env { color: #f1fa8c; }  /* yellow: (env) */
-		.prompt-arrow { color: #ffffff; }
+		/* Prompt estilo zsh moderno */
+		.prompt-lead { color: #7dd3fc; font-weight: 500; }
+		.prompt-user { color: #4ade80; font-weight: 500; }
+		.prompt-path { color: #7dd3fc; }
+		.prompt-env { color: #fde047; }
+		.prompt-arrow { color: rgba(255,255,255,0.9); }
 		.terminal-input-line {
 			display: flex;
 			align-items: center;
-			margin-top: 8px;
-			flex-wrap: wrap;
+			margin-top: 16px;
+			padding: 12px 16px;
+			background: rgba(0,0,0,0.35);
+			border: 1px solid rgba(0,255,65,0.15);
+			border-radius: var(--radius);
+			flex-wrap: nowrap;
+			white-space: nowrap;
+			transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
 		}
+		.terminal-input-line:focus-within {
+			border-color: var(--accent);
+			box-shadow: 0 0 0 3px var(--accent-bg);
+		}
+		.prompt-inline { white-space: nowrap; flex-shrink: 0; }
+		.terminal-line {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: baseline;
+			gap: 0 4px;
+		}
+		.terminal-exchange { margin-bottom: 20px; }
+		.terminal-exchange .nomios-response { margin-top: 8px; padding-left: 0; white-space: pre-wrap; line-height: 1.7; }
 		#terminal-input {
 			flex: 1;
-			min-width: 200px;
+			min-width: 120px;
 			background: transparent;
 			border: none;
-			color: #ffffff;
+			color: var(--text);
 			font: inherit;
 			font-size: 0.95rem;
 			outline: none;
-			caret-color: #e0e0e0;
-			caret-shape: block;
+			caret-color: var(--accent);
 		}
-		#terminal-input::placeholder { color: #6272a4; }
+		#terminal-input::placeholder { color: rgba(255,255,255,0.25); }
 		.block-cursor {
 			display: inline-block;
-			width: 0.6em;
-			height: 1.2em;
-			background: #e0e0e0;
+			width: 0.55em;
+			height: 1.1em;
+			background: var(--accent);
 			animation: blink 1s step-end infinite;
 			vertical-align: text-bottom;
 			margin-left: 2px;
+			border-radius: 1px;
 		}
 		@keyframes blink {
-			50% { opacity: 0; }
+			50% { opacity: 0.4; }
 		}
-		.nomios-response { color: #50fa7b; margin: 8px 0; }
-		.error-msg { color: #ff5555; }
-		.loading { color: #6272a4; font-style: italic; }
+		.nomios-response { color: #4ade80; margin: 8px 0; white-space: pre-wrap; line-height: 1.7; }
+		.msg-text { color: var(--text); }
+		.system-msg { color: #4ade80; }
+		.error-msg { color: #f87171; }
+		.loading { color: #4ade80; font-style: italic; opacity: 0.9; }
+		#terminal-logo {
+			position: absolute;
+			top: 24px;
+			right: 40px;
+			width: 40px;
+			opacity: 0.2;
+			pointer-events: none;
+			filter: drop-shadow(0 0 12px rgba(0,255,65,0.2));
+		}
+		/* Mobile */
+		@media (max-width: 480px) {
+			#login-name, #login-email { width: min(280px, calc(100vw - 48px)); }
+			#login-box { gap: 16px; padding: 0 16px; }
+			#login-terms { max-width: min(320px, calc(100vw - 48px)); }
+			#enter-btn { padding: 16px 36px; font-size: 1rem; min-height: 44px; }
+			#login-btn { min-height: 44px; }
+			#matrix-logo { width: 140px; }
+			#terminal-body { padding: 16px; }
+			#terminal-output, .terminal-line, .nomios-response { font-size: 0.85rem; }
+			.terminal-input-line { flex-wrap: wrap; }
+			.prompt-inline { flex-shrink: 0; }
+			#terms-modal { padding: 16px; display: flex; }
+			#terms-modal > div { max-width: calc(100vw - 32px); padding: 20px; }
+		}
+		@media (max-width: 360px) {
+			#matrix-logo { width: 120px; }
+		}
+		/* Modales modernos con glass */
+		.modal-overlay {
+			display: none;
+			position: fixed;
+			inset: 0;
+			z-index: 100;
+			background: rgba(5,5,7,0.85);
+			backdrop-filter: blur(12px);
+			-webkit-backdrop-filter: blur(12px);
+			align-items: center;
+			justify-content: center;
+			padding: 24px;
+			transition: opacity 0.3s var(--ease-out);
+		}
+		.modal-panel {
+			background: var(--surface);
+			backdrop-filter: blur(24px);
+			-webkit-backdrop-filter: blur(24px);
+			border: 1px solid var(--surface-border);
+			border-radius: 12px;
+			max-width: 500px;
+			max-height: 80vh;
+			overflow-y: auto;
+			padding: 28px;
+			color: var(--accent);
+			font-family: inherit;
+			box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
+		}
+		.modal-panel h3 { margin-bottom: 16px; font-size: 1.1rem; font-weight: 500; }
+		.modal-panel p, .modal-panel li { font-size: 0.9rem; line-height: 1.6; margin-bottom: 12px; }
+		.modal-panel ul { margin: 0 0 16px 20px; }
+		.modal-btn {
+			margin-top: 20px;
+			padding: 12px 28px;
+			background: var(--accent-bg);
+			border: 1px solid var(--surface-border);
+			border-radius: var(--radius);
+			color: var(--accent);
+			cursor: pointer;
+			font-family: inherit;
+			font-size: 0.9rem;
+			transition: all 0.3s var(--ease-out);
+		}
+		.modal-btn:hover {
+			background: rgba(0, 255, 65, 0.2);
+			border-color: var(--accent);
+			box-shadow: 0 0 20px var(--accent-glow);
+		}
+		.modal-panel--error { border-color: rgba(255,85,85,0.4); color: #ff6b6b; }
+		.modal-panel--error .modal-btn { border-color: rgba(255,85,85,0.4); color: #ff6b6b; background: rgba(255,85,85,0.1); }
+		.modal-panel--error .modal-btn:hover { background: rgba(255,85,85,0.2); border-color: #ff6b6b; box-shadow: 0 0 20px rgba(255,85,85,0.3); }
 	</style>
 </head>
 <body>
 	<div id="matrix-container">
 		<canvas id="matrix-canvas"></canvas>
 		<div id="matrix-overlay"></div>
+		<img src="../images/ojo-goth-blanco.png" alt="Hacia el Ocaso" id="matrix-logo">
 		<button id="enter-btn">Conectar</button>
 	</div>
 	<div id="login-container">
 		<div id="login-box">
-			<label for="login-name">Ingresá tu nombre para iniciar sesión</label>
-			<input type="text" id="login-name" placeholder="Tu nombre" autocomplete="off" maxlength="32">
-			<button id="login-btn">Iniciar sesión</button>
+			<input type="text" id="login-name" placeholder="Nombre de usuario" autocomplete="username" maxlength="32" aria-label="Nombre de usuario">
+			<input type="email" id="login-email" placeholder="tu@email.com" autocomplete="email" maxlength="128" aria-label="Email">
+			<label id="login-terms">
+				<input type="checkbox" id="login-terms-check" required checked>
+				<span>Acepto los <a href="#" id="terms-link">t&eacute;rminos y condiciones</a>.</span>
+			</label>
+			<button id="login-btn">Entrar al sistema</button>
+		</div>
+	</div>
+	<div id="terms-modal" class="modal-overlay">
+		<div class="modal-panel">
+			<h3>Términos y Condiciones - n0m10s</h3>
+			<p>Al registrar tu nombre y correo electrónico, autorizás expresamente a Hacia el Ocaso a utilizar dichos datos de contacto para:</p>
+			<ul>
+				<li>Enviar newsletters, novedades y comunicaciones sobre la banda.</li>
+				<li>Informar sobre lanzamientos, shows y contenidos exclusivos.</li>
+				<li>Gestionar la relación con nuestra comunidad.</li>
+			</ul>
+			<p>Los datos serán tratados conforme a la normativa vigente. Podés solicitar la baja en cualquier momento.</p>
+			<button id="terms-close" class="modal-btn">Cerrar</button>
+		</div>
+	</div>
+	<div id="error-modal" class="modal-overlay">
+		<div class="modal-panel modal-panel--error">
+			<h3>Error de acceso</h3>
+			<p id="error-message">Los datos ingresados no son válidos.</p>
+			<button id="error-close" class="modal-btn">Cerrar</button>
 		</div>
 	</div>
 	<div id="terminal-container">
-		<div id="terminal-header">
-			<span class="terminal-dot red"></span>
-			<span class="terminal-dot yellow"></span>
-			<span class="terminal-dot green"></span>
-			<span id="terminal-title">guest@OcasoCore ~</span>
-		</div>
 		<div id="terminal-body">
+			<img src="../images/ojo-goth-blanco.png" alt="Hacia el Ocaso" id="terminal-logo">
 			<div id="terminal-output"></div>
 			<div class="terminal-input-line">
-				<span class="prompt-user" id="prompt-user-host">guest@OcasoCore</span>
-				<span class="prompt-path"> ~ </span>
-				<span class="prompt-env">(nomios)</span>
-				<span class="prompt-arrow"> » </span>
+				<span class="prompt-inline">
+					<span class="prompt-lead">› </span>
+					<span class="prompt-user" id="prompt-user-host">guest@OcasoCore</span>
+					<span class="prompt-path"> ~ </span>
+					<span class="prompt-env">(Nomios)</span>
+					<span class="prompt-arrow"> » </span>
+				</span>
 				<input type="text" id="terminal-input" placeholder="" autocomplete="off" autofocus>
 			</div>
 		</div>
@@ -255,10 +417,10 @@
 				ctx.fillStyle = `rgba(0, 255, 65, ${0.3 + Math.random() * 0.7})`;
 				ctx.fillText(char, x, y);
 				if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
-				drops[i]++;
+				drops[i] += 3;
 			}
 		}
-		let matrixInterval = setInterval(drawMatrix, 50);
+		let matrixInterval = setInterval(drawMatrix, 22);
 		window.addEventListener('resize', () => {
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
@@ -269,32 +431,78 @@
 		const enterBtn = document.getElementById('enter-btn');
 		const loginContainer = document.getElementById('login-container');
 		const loginNameEl = document.getElementById('login-name');
+		const loginEmailEl = document.getElementById('login-email');
+		const loginTermsCheck = document.getElementById('login-terms-check');
 		const loginBtn = document.getElementById('login-btn');
+		const termsModal = document.getElementById('terms-modal');
 		let currentUserName = 'guest';
+		let currentUserEmail = '';
+		// Guardar en servidor (subscribe.php). Ruta relativa: mismo directorio que index.html.
+		const SUBSCRIBE_URL = 'subscribe.php';
 		enterBtn.addEventListener('click', () => {
-			matrixContainer.classList.add('fade-out');
-			setTimeout(() => {
-				clearInterval(matrixInterval);
-				loginContainer.classList.add('visible');
-				loginNameEl.focus();
-			}, 900);
+			matrixContainer.classList.add('login-mode'); // oculta logo y botón, Matrix sigue visible
+			loginContainer.classList.add('visible');
+			loginNameEl.focus();
 		});
+		document.getElementById('terms-link').addEventListener('click', (e) => {
+			e.preventDefault();
+			termsModal.style.display = 'flex';
+		});
+		document.getElementById('terms-close').addEventListener('click', () => { termsModal.style.display = 'none'; });
+		const errorModal = document.getElementById('error-modal');
+		const errorMessage = document.getElementById('error-message');
+		document.getElementById('error-close').addEventListener('click', () => { errorModal.style.display = 'none'; });
+		function showLoginError(msg) {
+			errorMessage.textContent = msg;
+			errorModal.style.display = 'flex';
+		}
 		function doLogin() {
 			const name = loginNameEl.value.trim();
-			if (!name) return;
+			const email = loginEmailEl.value.trim().toLowerCase();
+			const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!name) { showLoginError('Ingresá tu nombre de usuario.'); return; }
+			if (!email || !validEmail.test(email)) { showLoginError('El correo electrónico no es válido.'); return; }
+			if (!loginTermsCheck.checked) { showLoginError('Debés aceptar los términos y condiciones.'); return; }
 			currentUserName = name;
+			currentUserEmail = email;
+			// Guardar contacto (localStorage + endpoint si está configurado)
+			try {
+				const contact = { name, email, ts: Date.now() };
+				const stored = JSON.parse(localStorage.getItem('n0m10s_contacts') || '[]');
+				stored.push(contact);
+				localStorage.setItem('n0m10s_contacts', JSON.stringify(stored));
+				if (SUBSCRIBE_URL) {
+					fetch(SUBSCRIBE_URL, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ name, email, _subject: 'n0m10s inscripción' }),
+					}).catch(() => {});
+				}
+			} catch (_) {}
 			loginContainer.classList.add('fade-out');
 			setTimeout(() => {
+				clearInterval(matrixInterval);
+				matrixContainer.classList.add('fade-out');
 				loginContainer.classList.remove('visible');
 				terminalContainer.classList.add('visible');
 				document.getElementById('prompt-user-host').textContent = currentUserName + '@OcasoCore';
-				document.getElementById('terminal-title').textContent = currentUserName + '@OcasoCore ~';
 				document.getElementById('terminal-input').focus();
-				appendOutput('Bienvenido al sistema n0m10s.\nEscribe tu mensaje y presiona Enter para hablar con Nomios.\n');
+				appendOutput('> Sistema n0m10s conectado. Escribe y Enter para hablar con Nomios.', 'normal');
+				// Fullscreen para ocultar barra del navegador (botones Mac, etc)
+				document.documentElement.requestFullscreen?.().catch(() => {});
+				// Arrancar chequeo de foco (fallback: en fullscreen los clics suelen quitar el foco)
+				clearInterval(window._terminalFocusCheck);
+				const inp = document.getElementById('terminal-input');
+				window._terminalFocusCheck = setInterval(() => {
+					if (terminalContainer.classList.contains('visible') && document.activeElement !== inp) {
+						inp.focus();
+					}
+				}, 200);
 			}, 600);
 		}
 		loginBtn.addEventListener('click', doLogin);
 		loginNameEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
+		loginEmailEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
 		// --- Terminal & Nomios API ---
 		const NOMIOS_CHAT = 'https://nomios.duckdns.org/chat';
 		const output = document.getElementById('terminal-output');
@@ -303,8 +511,9 @@
 		function appendOutput(text, type = 'normal', isHtml = false) {
 			const div = document.createElement('div');
 			if (type === 'prompt') {
-				div.innerHTML = `<span class="prompt-user">${currentUserName}@OcasoCore</span><span class="prompt-path"> ~ </span><span class="prompt-env">(nomios)</span><span class="prompt-arrow"> » </span>${isHtml ? text : document.createTextNode(text).textContent}`;
+				div.innerHTML = `<span class="prompt-lead">› </span><span class="prompt-user">${currentUserName}@OcasoCore</span><span class="prompt-path"> ~ </span><span class="prompt-env">(Nomios)</span><span class="prompt-arrow"> » </span>${isHtml ? text : document.createTextNode(text).textContent}`;
 			} else if (type === 'nomios') div.className = 'nomios-response';
+			else if (type === 'normal') div.className = 'system-msg';
 			else if (type === 'error') div.className = 'error-msg';
 			else if (type === 'loading') div.className = 'loading';
 			if (!isHtml && type !== 'prompt') div.textContent = text;
@@ -316,7 +525,8 @@
 		function appendUserMessage(msg) {
 			const escaped = String(msg).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 			const div = document.createElement('div');
-			div.innerHTML = `<span class="prompt-user">${currentUserName}@OcasoCore</span><span class="prompt-path"> ~ </span><span class="prompt-env">(nomios)</span><span class="prompt-arrow"> » </span><span class="input-text">${escaped}</span>`;
+			div.className = 'terminal-line';
+			div.innerHTML = `<span class="prompt-inline"><span class="prompt-lead">› </span><span class="prompt-user">${currentUserName}@OcasoCore</span><span class="prompt-path"> ~ </span><span class="prompt-env">(Nomios)</span><span class="prompt-arrow"> » </span></span><span class="msg-text"> ${escaped}</span>`;
 			output.appendChild(div);
 			output.scrollTop = output.scrollHeight;
 		}
@@ -324,7 +534,7 @@
 			if (!text.trim()) return;
 			const msg = text.trim();
 			appendUserMessage(msg);
-			appendOutput('nomios: ', 'loading');
+			appendOutput('… ', 'loading');
 			const loadingEl = output.lastChild;
 			try {
 				const ctrl = new AbortController();
@@ -344,14 +554,31 @@
 				loadingEl.remove();
 				if (data.status === 'ok' && data.reply) {
 					conversationHistory.push({ user: msg, assistant: data.reply });
-					appendOutput(data.reply, 'nomios');
+					const exch = document.createElement('div');
+					exch.className = 'terminal-exchange';
+					const nomDiv = document.createElement('div');
+					nomDiv.className = 'nomios-response';
+					exch.appendChild(nomDiv);
+					output.appendChild(exch);
+					const replyText = data.reply;
+					let i = 0;
+					const typeInterval = 48; // ms por carácter
+					function typeNext() {
+						if (i < replyText.length) {
+							nomDiv.textContent += replyText[i];
+							i++;
+							output.scrollTop = output.scrollHeight;
+							setTimeout(typeNext, typeInterval);
+						}
+					}
+					typeNext();
 				} else {
 					appendOutput(data.message || 'Error desconocido', 'error');
 				}
 			} catch (err) {
 				loadingEl.remove();
-				const msg = err.name === 'AbortError' ? 'Timeout: la IA tardó demasiado' : `Error: ${err.message}. ¿Desplegaste nomios-ai con CORS (allow_origins=["*"])?`;
-				appendOutput(msg, 'error');
+				const errMsg = err.name === 'AbortError' ? 'Timeout: la IA tardó demasiado' : `Error: ${err.message}`;
+				appendOutput(errMsg, 'error');
 			}
 		}
 		inputEl.addEventListener('keydown', (e) => {
@@ -361,6 +588,41 @@
 				if (val) sendToNomios(val);
 			}
 		});
+		// Cuando el input pierde el foco (click en fullscreen, etc), recuperarlo
+		// Usamos delay 50ms porque en fullscreen el navegador suele robar el foco después
+		inputEl.addEventListener('blur', () => {
+			if (terminalContainer.classList.contains('visible')) setTimeout(() => inputEl.focus(), 150);
+		});
+		// Recuperar foco en el input al hacer click/touch (en fullscreen el navegador suele quitarlo)
+		function refocusInput(e) {
+			if (!terminalContainer.classList.contains('visible')) return;
+			if (e.target === inputEl || inputEl.contains(e.target)) return;
+			setTimeout(() => inputEl.focus(), 0); // siguiente tick: después del foco por defecto del navegador
+		}
+		terminalContainer.addEventListener('mousedown', refocusInput);
+		terminalContainer.addEventListener('click', refocusInput);
+		// Listener a nivel documento (capture) para fullscreen: clics pueden no llegar al contenedor
+		document.addEventListener('mousedown', refocusInput, true);
+		document.addEventListener('click', refocusInput, true);
+		document.addEventListener('touchstart', refocusInput, true);
+		document.addEventListener('fullscreenchange', () => {
+			if (document.fullscreenElement && terminalContainer.classList.contains('visible')) {
+				setTimeout(() => inputEl.focus(), 100);
+			}
+		});
+		// Fallback: en fullscreen el foco se pierde con clics; cada 400ms lo recuperamos si hace falta
+		let focusCheckInterval;
+		document.addEventListener('fullscreenchange', () => {
+			clearInterval(focusCheckInterval);
+			if (document.fullscreenElement && terminalContainer.classList.contains('visible')) {
+				focusCheckInterval = setInterval(() => {
+					if (document.activeElement !== inputEl) inputEl.focus();
+				}, 150);
+			}
+		});
+		if (document.fullscreenElement) {
+			document.dispatchEvent(new Event('fullscreenchange'));
+		}
 	</script>
 </body>
 </html>
