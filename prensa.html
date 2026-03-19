@@ -32,6 +32,84 @@
 	</script>
 	<!-- End MailerLite Universal -->
 
+	<!-- Carousel Style-->
+	<style>
+
+        .carousel-container {
+            width: 80%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: auto;
+        }
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            margin: 0 1rem;
+        }
+
+        .carousel-button:focus {
+            outline: none;
+        }
+    </style>
+	<!-- Carousel Style -->
+	<!-- Carousel Script -->
+	<script>
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            const carousel = document.getElementById('carousel');
+            const totalItems = carousel.children.length;
+            if (index >= totalItems) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = totalItems - 1;
+            } else {
+                currentIndex = index;
+            }
+            const offset = -currentIndex * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+
+        // Auto-slide every 3 seconds
+        setInterval(nextSlide, 3000);
+    </script>
+	<!-- End Carousel Script -->
 </head>
 <body>
 
@@ -50,8 +128,8 @@
 					<li><a href="shows.html">Próximos Shows</a></li>
 					<li><a href="videos.html">Videos</a></li>
 					<li><a href="fotos.html">Fotos</a></li>
-					<li class="colorlib-active"><a href="musica.html">Música</a></li>
-					<li><a href="prensa.html">Prensa</a></li>
+					<li><a href="musica.html">Música</a></li>
+					<li class="colorlib-active"><a href="prensa.html">Prensa</a></li>
 					<li><a href="nosotros.html">Nosotros</a></li>
 				</ul>
 			</nav>
@@ -75,26 +153,29 @@
 				<section class="ftco-section ftco-no-pt ftco-no-pb">
 					<div class="container px-md-0">
 						<div class="row d-flex no-gutters">
-							<div class="col-md-4 portfolio-wrap-2">
-								<div class="row no-gutters align-items-center">
-									<div href="#" class="img w-100 js-fullheight d-flex align-items-center">
-										<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6So94YyGUL4HI45JjLzbAp?utm_source=generator" width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>									</div>
-								</div>
-							</div>
-							<div class="col-md-4 portfolio-wrap-2">
-								<div class="row no-gutters align-items-center">
-									<div href="#" class="img w-100 js-fullheight d-flex align-items-center">
-										<iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/3JY6VlXseXt9KfxXYojHXW?utm_source=generator" width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+							
+							<!-- FOTO PORTADA -->
+							<div class="col-md-12 img portfolio-wrap js-fullheight align-items-center justify-content-center" style="background-image: url(images/work-1.jpg);">
+								<div style="height: 100%; display: flex; flex-direction: column;">
+									<div style="flex: 0 0 85%; background-color: lightblue;">
+										<div class="carousel-container" style="width: 500px; height: 300px;">
+											<div class="carousel" id="carousel">
+												<div class="carousel-item"><img src="images/musica.jpg" alt="Image 1"></div>
+												<div class="carousel-item"><img src="images/fotos.jpg" alt="Image 2"></div>
+												<div class="carousel-item"><img src="images/merch.jpg" alt="Image 3"></div>
+											</div>
+											<div class="carousel-buttons">
+												<button class="carousel-button" onclick="prevSlide()">‹</button>
+												<button class="carousel-button" onclick="nextSlide()">›</button>
+											</div>
+										</div>
+									</div>
+									<div style="flex: 0 0 15%; background-color: lightcoral;">
+										Content for 15% height div
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4 portfolio-wrap-2">
-								<div class="row no-gutters align-items-center">
-									<div href="#" class="img w-100 js-fullheight d-flex align-items-center">
-										<iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/1wbRI0DA5Bmfn3LaHNG7xO?utm_source=generator" width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-									</div>
-								</div>
-							</div>
+
 						</div>
 					</div>
 				</section>
