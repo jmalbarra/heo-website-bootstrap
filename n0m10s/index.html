@@ -213,15 +213,14 @@
 			background: rgba(0,0,0,0.35);
 			border: 1px solid rgba(0,255,65,0.15);
 			border-radius: var(--radius);
-			flex-wrap: nowrap;
-			white-space: nowrap;
+			flex-wrap: wrap;
 			transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
 		}
 		.terminal-input-line:focus-within {
 			border-color: var(--accent);
 			box-shadow: 0 0 0 3px var(--accent-bg);
 		}
-		.prompt-inline { white-space: nowrap; flex-shrink: 0; }
+		.prompt-inline { flex-shrink: 0; min-width: 0; overflow-wrap: break-word; word-break: break-word; }
 		.terminal-line {
 			display: flex;
 			flex-wrap: wrap;
@@ -277,10 +276,27 @@
 			#enter-btn { padding: 16px 36px; font-size: 1rem; min-height: 44px; }
 			#login-btn { min-height: 44px; }
 			#matrix-logo { width: 140px; }
-			#terminal-body { padding: 16px; }
+			#terminal-body { padding: 16px; overflow-x: hidden; }
+			.terminal-input-line { width: 100%; box-sizing: border-box; }
 			#terminal-output, .terminal-line, .nomios-response { font-size: 0.85rem; }
-			.terminal-input-line { flex-wrap: wrap; }
-			.prompt-inline { flex-shrink: 0; }
+			.terminal-input-line {
+				flex-wrap: wrap;
+				min-width: 0;
+				overflow-wrap: break-word;
+			}
+			.prompt-inline {
+				flex-shrink: 1;
+				min-width: 0;
+				max-width: 100%;
+				white-space: normal;
+				word-break: break-all;
+				overflow-wrap: anywhere;
+			}
+			.terminal-line .prompt-inline {
+				word-break: break-all;
+				overflow-wrap: anywhere;
+			}
+			#terminal-input { min-width: 0; }
 			#terms-modal { padding: 16px; display: flex; }
 			#terms-modal > div { max-width: calc(100vw - 32px); padding: 20px; }
 		}
