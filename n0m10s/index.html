@@ -136,13 +136,28 @@
 			align-items: flex-start;
 			gap: 10px;
 			max-width: 320px;
-			cursor: pointer;
+			cursor: default;
 			margin-top: -4px;
 		}
 		#login-terms input { margin-top: 4px; accent-color: var(--accent); cursor: pointer; }
-		#login-terms span { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; cursor: pointer; }
-		#login-terms a { color: var(--accent-dim); text-decoration: none; transition: color 0.2s; }
-		#login-terms a:hover { color: var(--accent); }
+		#login-terms label { cursor: pointer; padding-right: 8px; flex-shrink: 0; }
+		#login-terms span { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
+		#login-terms a,
+		#terms-link {
+			background: none;
+			border: none;
+			font: inherit;
+			padding: 0;
+			color: var(--accent-dim);
+			text-decoration: none;
+			transition: color 0.2s;
+			touch-action: manipulation;
+			cursor: pointer;
+			-webkit-tap-highlight-color: transparent;
+			margin-left: 0.5em;
+		}
+		#login-terms a:hover,
+		#terms-link:hover { color: var(--accent); }
 		#login-btn {
 			padding: 18px 48px;
 			font-size: 0.9rem;
@@ -367,10 +382,11 @@
 		<div id="login-box">
 			<input type="text" id="login-name" placeholder="Nombre de usuario" autocomplete="nickname" maxlength="32" aria-label="Nombre de usuario" data-form-type="other" data-lpignore="true">
 			<input type="email" id="login-email" placeholder="tu@email.com" autocomplete="off" maxlength="128" aria-label="Email" data-form-type="other" data-lpignore="true">
-			<label id="login-terms">
+			<div id="login-terms">
 				<input type="checkbox" id="login-terms-check" required checked>
-				<span>Acepto los <a href="#" id="terms-link">t&eacute;rminos y condiciones</a>.</span>
-			</label>
+				<label for="login-terms-check">Acepto los </label>
+				<button type="button" id="terms-link" class="link-like">t&eacute;rminos y condiciones</button>.
+			</div>
 			<button id="login-btn">Entrar al sistema</button>
 		</div>
 	</div>
@@ -460,10 +476,34 @@
 			loginContainer.classList.add('visible');
 			loginNameEl.focus();
 		});
-		document.getElementById('terms-link').addEventListener('click', (e) => {
-			e.preventDefault();
-			termsModal.style.display = 'flex';
-		});
+		// Términos: solo abrir en click intencional (evita apertura accidental al toque en móvil)
+		(function() {
+			const termsLink = document.getElementById('terms-link');
+			let touchStart = null;
+			termsLink.addEventListener('pointerdown', (e) => {
+				if (e.pointerType === 'touch') {
+					touchStart = { x: e.clientX, y: e.clientY };
+				}
+			}, { passive: true });
+			termsLink.addEventListener('click', (e) => {
+				e.preventDefault();
+				if (!e.isTrusted) return;
+				// Mouse: abrir directo
+				if (e.pointerType === 'mouse') {
+					termsModal.style.display = 'flex';
+					return;
+				}
+				// Touch: solo si el dedo no se movió (evita scroll accidental)
+				if (e.pointerType === 'touch' && touchStart) {
+					const dx = Math.abs((e.clientX || touchStart.x) - touchStart.x);
+					const dy = Math.abs((e.clientY || touchStart.y) - touchStart.y);
+					if (dx < 12 && dy < 12) {
+						termsModal.style.display = 'flex';
+					}
+					touchStart = null;
+				}
+			});
+		})();
 		document.getElementById('terms-close').addEventListener('click', () => { termsModal.style.display = 'none'; });
 		const errorModal = document.getElementById('error-modal');
 		const errorMessage = document.getElementById('error-message');
