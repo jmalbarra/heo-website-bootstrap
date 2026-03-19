@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>n0m10s - Hacia el Ocaso</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+	<style>
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body {
+			background: #000;
+			min-height: 100vh;
+			overflow: hidden;
+			font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', monospace;
+		}
+		#matrix-container {
+			position: fixed;
+			inset: 0;
+			z-index: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			transition: opacity 0.8s ease;
+		}
+		#matrix-container.fade-out { opacity: 0; pointer-events: none; }
+		#matrix-canvas {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+		}
+		#matrix-overlay {
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.9) 100%);
+			pointer-events: none;
+		}
+		#enter-btn {
+			position: relative;
+			z-index: 10;
+			padding: 18px 48px;
+			font-size: 1.1rem;
+			font-family: inherit;
+			font-weight: 500;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: #00ff41;
+			background: transparent;
+			border: 2px solid #00ff41;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			text-shadow: 0 0 10px #00ff41;
+		}
+		#enter-btn:hover {
+			background: rgba(0, 255, 65, 0.15);
+			box-shadow: 0 0 25px rgba(0, 255, 65, 0.5);
+		}
+		/* Login screen */
+		#login-container {
+			position: fixed;
+			inset: 0;
+			z-index: 2;
+			display: none;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			background: #000;
+			opacity: 0;
+			transition: opacity 0.8s ease;
+		}
+		#login-container.visible {
+			display: flex;
+			opacity: 1;
+		}
+		#login-container.fade-out { opacity: 0; pointer-events: none; }
+		#login-box {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 20px;
+		}
+		#login-box label {
+			color: #00ff41;
+			font-family: inherit;
+			font-size: 1rem;
+		}
+		#login-name {
+			padding: 12px 20px;
+			font-size: 1rem;
+			font-family: inherit;
+			background: transparent;
+			border: 2px solid #00ff41;
+			color: #00ff41;
+			outline: none;
+			width: 280px;
+		}
+		#login-name::placeholder { color: rgba(0, 255, 65, 0.5); }
+		#login-btn {
+			padding: 12px 32px;
+			font-size: 0.95rem;
+			font-family: inherit;
+			letter-spacing: 0.1em;
+			color: #00ff41;
+			background: transparent;
+			border: 2px solid #00ff41;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+		#login-btn:hover {
+			background: rgba(0, 255, 65, 0.15);
+			box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+		}
+		/* Terminal iTerm-style (Dracula/OH-MY-ZSH look) */
+		#terminal-container {
+			position: fixed;
+			inset: 0;
+			z-index: 3;
+			display: none;
+			flex-direction: column;
+			background: #000000;
+			opacity: 0;
+			transition: opacity 0.8s ease;
+		}
+		#terminal-container.visible {
+			display: flex;
+			opacity: 1;
+		}
+		#terminal-header {
+			display: flex;
+			align-items: center;
+			padding: 10px 16px;
+			background: #0a0a0a;
+			border-bottom: 1px solid #1a1a1a;
+		}
+		.terminal-dot {
+			width: 12px; height: 12px; border-radius: 50%;
+			margin-right: 8px;
+		}
+		.terminal-dot.red { background: #ff5f56; }
+		.terminal-dot.yellow { background: #ffbd2e; }
+		.terminal-dot.green { background: #27ca40; }
+		#terminal-title {
+			margin-left: 12px;
+			color: #6272a4;
+			font-size: 0.85rem;
+		}
+		#terminal-body {
+			flex: 1;
+			padding: 20px 24px;
+			overflow-y: auto;
+			color: #ffffff;
+			font-size: 0.95rem;
+			line-height: 1.6;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+			font-family: 'Menlo', 'Monaco', 'Meslo LG L', 'JetBrains Mono', monospace;
+		}
+		#terminal-output {
+			min-height: 100px;
+		}
+		/* Prompt segments - iTerm/Dracula palette */
+		.prompt-user { color: #50fa7b; }  /* green: user@host */
+		.prompt-path { color: #8be9fd; } /* blue: ~ */
+		.prompt-env { color: #f1fa8c; }  /* yellow: (env) */
+		.prompt-arrow { color: #ffffff; }
+		.terminal-input-line {
+			display: flex;
+			align-items: center;
+			margin-top: 8px;
+			flex-wrap: wrap;
+		}
+		#terminal-input {
+			flex: 1;
+			min-width: 200px;
+			background: transparent;
+			border: none;
+			color: #ffffff;
+			font: inherit;
+			font-size: 0.95rem;
+			outline: none;
+			caret-color: #e0e0e0;
+			caret-shape: block;
+		}
+		#terminal-input::placeholder { color: #6272a4; }
+		.block-cursor {
+			display: inline-block;
+			width: 0.6em;
+			height: 1.2em;
+			background: #e0e0e0;
+			animation: blink 1s step-end infinite;
+			vertical-align: text-bottom;
+			margin-left: 2px;
+		}
+		@keyframes blink {
+			50% { opacity: 0; }
+		}
+		.nomios-response { color: #50fa7b; margin: 8px 0; }
+		.error-msg { color: #ff5555; }
+		.loading { color: #6272a4; font-style: italic; }
+	</style>
+</head>
+<body>
+	<div id="matrix-container">
+		<canvas id="matrix-canvas"></canvas>
+		<div id="matrix-overlay"></div>
+		<button id="enter-btn">Conectar</button>
+	</div>
+	<div id="login-container">
+		<div id="login-box">
+			<label for="login-name">Ingresá tu nombre para iniciar sesión</label>
+			<input type="text" id="login-name" placeholder="Tu nombre" autocomplete="off" maxlength="32">
+			<button id="login-btn">Iniciar sesión</button>
+		</div>
+	</div>
+	<div id="terminal-container">
+		<div id="terminal-header">
+			<span class="terminal-dot red"></span>
+			<span class="terminal-dot yellow"></span>
+			<span class="terminal-dot green"></span>
+			<span id="terminal-title">guest@OcasoCore ~</span>
+		</div>
+		<div id="terminal-body">
+			<div id="terminal-output"></div>
+			<div class="terminal-input-line">
+				<span class="prompt-user" id="prompt-user-host">guest@OcasoCore</span>
+				<span class="prompt-path"> ~ </span>
+				<span class="prompt-env">(nomios)</span>
+				<span class="prompt-arrow"> » </span>
+				<input type="text" id="terminal-input" placeholder="" autocomplete="off" autofocus>
+			</div>
+		</div>
+	</div>
+	<script>
+		// --- Matrix Rain Effect ---
+		const canvas = document.getElementById('matrix-canvas');
+		const ctx = canvas.getContext('2d');
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+		const charArray = chars.split('');
+		const fontSize = 14;
+		const columns = Math.floor(canvas.width / fontSize);
+		const drops = Array(columns).fill(1);
+		function drawMatrix() {
+			ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = '#00ff41';
+			ctx.font = `${fontSize}px JetBrains Mono, monospace`;
+			for (let i = 0; i < drops.length; i++) {
+				const char = charArray[Math.floor(Math.random() * charArray.length)];
+				const x = i * fontSize;
+				const y = drops[i] * fontSize;
+				ctx.fillStyle = `rgba(0, 255, 65, ${0.3 + Math.random() * 0.7})`;
+				ctx.fillText(char, x, y);
+				if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+				drops[i]++;
+			}
+		}
+		let matrixInterval = setInterval(drawMatrix, 50);
+		window.addEventListener('resize', () => {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		});
+		// --- Transition to Terminal ---
+		const matrixContainer = document.getElementById('matrix-container');
+		const terminalContainer = document.getElementById('terminal-container');
+		const enterBtn = document.getElementById('enter-btn');
+		const loginContainer = document.getElementById('login-container');
+		const loginNameEl = document.getElementById('login-name');
+		const loginBtn = document.getElementById('login-btn');
+		let currentUserName = 'guest';
+		enterBtn.addEventListener('click', () => {
+			matrixContainer.classList.add('fade-out');
+			setTimeout(() => {
+				clearInterval(matrixInterval);
+				loginContainer.classList.add('visible');
+				loginNameEl.focus();
+			}, 900);
+		});
+		function doLogin() {
+			const name = loginNameEl.value.trim();
+			if (!name) return;
+			currentUserName = name;
+			loginContainer.classList.add('fade-out');
+			setTimeout(() => {
+				loginContainer.classList.remove('visible');
+				terminalContainer.classList.add('visible');
+				document.getElementById('prompt-user-host').textContent = currentUserName + '@OcasoCore';
+				document.getElementById('terminal-title').textContent = currentUserName + '@OcasoCore ~';
+				document.getElementById('terminal-input').focus();
+				appendOutput('Bienvenido al sistema n0m10s.\nEscribe tu mensaje y presiona Enter para hablar con Nomios.\n');
+			}, 600);
+		}
+		loginBtn.addEventListener('click', doLogin);
+		loginNameEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
+		// --- Terminal & Nomios API ---
+		const NOMIOS_CHAT = 'https://nomios.duckdns.org/chat';
+		const output = document.getElementById('terminal-output');
+		const inputEl = document.getElementById('terminal-input');
+		let conversationHistory = [];
+		function appendOutput(text, type = 'normal', isHtml = false) {
+			const div = document.createElement('div');
+			if (type === 'prompt') {
+				div.innerHTML = `<span class="prompt-user">${currentUserName}@OcasoCore</span><span class="prompt-path"> ~ </span><span class="prompt-env">(nomios)</span><span class="prompt-arrow"> » </span>${isHtml ? text : document.createTextNode(text).textContent}`;
+			} else if (type === 'nomios') div.className = 'nomios-response';
+			else if (type === 'error') div.className = 'error-msg';
+			else if (type === 'loading') div.className = 'loading';
+			if (!isHtml && type !== 'prompt') div.textContent = text;
+			else if (type === 'prompt') { /* ya seteado con innerHTML */ }
+			else div.textContent = text;
+			output.appendChild(div);
+			output.scrollTop = output.scrollHeight;
+		}
+		function appendUserMessage(msg) {
+			const escaped = String(msg).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+			const div = document.createElement('div');
+			div.innerHTML = `<span class="prompt-user">${currentUserName}@OcasoCore</span><span class="prompt-path"> ~ </span><span class="prompt-env">(nomios)</span><span class="prompt-arrow"> » </span><span class="input-text">${escaped}</span>`;
+			output.appendChild(div);
+			output.scrollTop = output.scrollHeight;
+		}
+		async function sendToNomios(text) {
+			if (!text.trim()) return;
+			const msg = text.trim();
+			appendUserMessage(msg);
+			appendOutput('nomios: ', 'loading');
+			const loadingEl = output.lastChild;
+			try {
+				const ctrl = new AbortController();
+				const timeout = setTimeout(() => ctrl.abort(), 120000); // 120s - la API puede tardar
+				const res = await fetch(NOMIOS_CHAT, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						text: msg,
+						username: currentUserName !== 'guest' ? currentUserName : null,
+						history: conversationHistory,
+					}),
+					signal: ctrl.signal,
+				});
+				clearTimeout(timeout);
+				const data = await res.json();
+				loadingEl.remove();
+				if (data.status === 'ok' && data.reply) {
+					conversationHistory.push({ user: msg, assistant: data.reply });
+					appendOutput(data.reply, 'nomios');
+				} else {
+					appendOutput(data.message || 'Error desconocido', 'error');
+				}
+			} catch (err) {
+				loadingEl.remove();
+				const msg = err.name === 'AbortError' ? 'Timeout: la IA tardó demasiado' : `Error: ${err.message}. ¿Desplegaste nomios-ai con CORS (allow_origins=["*"])?`;
+				appendOutput(msg, 'error');
+			}
+		}
+		inputEl.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter') {
+				const val = inputEl.value.trim();
+				inputEl.value = '';
+				if (val) sendToNomios(val);
+			}
+		});
+	</script>
+</body>
+</html>
