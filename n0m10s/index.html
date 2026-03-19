@@ -406,7 +406,7 @@
 					<span class="prompt-env">(Nomios)</span>
 					<span class="prompt-arrow"> » </span>
 				</span>
-				<input type="text" id="terminal-input" placeholder="" autocomplete="off" autofocus>
+				<input type="text" id="terminal-input" placeholder="" autocomplete="nope" autocorrect="off" autocapitalize="off" inputmode="text" autofocus data-form-type="other" data-lpignore="true">
 			</div>
 		</div>
 	</div>
@@ -523,6 +523,17 @@
 		const NOMIOS_CHAT = 'https://nomios.duckdns.org/chat';
 		const output = document.getElementById('terminal-output');
 		const inputEl = document.getElementById('terminal-input');
+		// Android: scroll input arriba del teclado cuando se abre
+		inputEl.addEventListener('focus', () => {
+			setTimeout(() => inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 400);
+		});
+		if (window.visualViewport) {
+			window.visualViewport.addEventListener('resize', () => {
+				if (document.activeElement === inputEl) {
+					inputEl.scrollIntoView({ block: 'center' });
+				}
+			});
+		}
 		let conversationHistory = [];
 		function appendOutput(text, type = 'normal', isHtml = false) {
 			const div = document.createElement('div');
