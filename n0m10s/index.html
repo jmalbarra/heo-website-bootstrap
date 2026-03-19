@@ -213,15 +213,14 @@
 			background: rgba(0,0,0,0.35);
 			border: 1px solid rgba(0,255,65,0.15);
 			border-radius: var(--radius);
-			flex-wrap: nowrap;
-			white-space: nowrap;
+			flex-wrap: wrap;
 			transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
 		}
 		.terminal-input-line:focus-within {
 			border-color: var(--accent);
 			box-shadow: 0 0 0 3px var(--accent-bg);
 		}
-		.prompt-inline { white-space: nowrap; flex-shrink: 0; }
+		.prompt-inline { flex-shrink: 0; min-width: 0; overflow-wrap: break-word; word-break: break-word; }
 		.terminal-line {
 			display: flex;
 			flex-wrap: wrap;
@@ -277,10 +276,27 @@
 			#enter-btn { padding: 16px 36px; font-size: 1rem; min-height: 44px; }
 			#login-btn { min-height: 44px; }
 			#matrix-logo { width: 140px; }
-			#terminal-body { padding: 16px; }
+			#terminal-body { padding: 16px; overflow-x: hidden; }
+			.terminal-input-line { width: 100%; box-sizing: border-box; }
 			#terminal-output, .terminal-line, .nomios-response { font-size: 0.85rem; }
-			.terminal-input-line { flex-wrap: wrap; }
-			.prompt-inline { flex-shrink: 0; }
+			.terminal-input-line {
+				flex-wrap: wrap;
+				min-width: 0;
+				overflow-wrap: break-word;
+			}
+			.prompt-inline {
+				flex-shrink: 1;
+				min-width: 0;
+				max-width: 100%;
+				white-space: normal;
+				word-break: break-all;
+				overflow-wrap: anywhere;
+			}
+			.terminal-line .prompt-inline {
+				word-break: break-all;
+				overflow-wrap: anywhere;
+			}
+			#terminal-input { min-width: 0; }
 			#terms-modal { padding: 16px; display: flex; }
 			#terms-modal > div { max-width: calc(100vw - 32px); padding: 20px; }
 		}
@@ -349,8 +365,8 @@
 	</div>
 	<div id="login-container">
 		<div id="login-box">
-			<input type="text" id="login-name" placeholder="Nombre de usuario" autocomplete="username" maxlength="32" aria-label="Nombre de usuario">
-			<input type="email" id="login-email" placeholder="tu@email.com" autocomplete="email" maxlength="128" aria-label="Email">
+			<input type="text" id="login-name" placeholder="Nombre de usuario" autocomplete="nickname" maxlength="32" aria-label="Nombre de usuario" data-form-type="other" data-lpignore="true">
+			<input type="email" id="login-email" placeholder="tu@email.com" autocomplete="off" maxlength="128" aria-label="Email" data-form-type="other" data-lpignore="true">
 			<label id="login-terms">
 				<input type="checkbox" id="login-terms-check" required checked>
 				<span>Acepto los <a href="#" id="terms-link">t&eacute;rminos y condiciones</a>.</span>
@@ -390,7 +406,7 @@
 					<span class="prompt-env">(Nomios)</span>
 					<span class="prompt-arrow"> » </span>
 				</span>
-				<input type="text" id="terminal-input" placeholder="" autocomplete="off" autofocus>
+				<input type="text" id="terminal-input" placeholder="" autocomplete="nope" autocorrect="off" autocapitalize="off" inputmode="text" autofocus data-form-type="other" data-lpignore="true">
 			</div>
 		</div>
 	</div>
@@ -507,6 +523,17 @@
 		const NOMIOS_CHAT = 'https://nomios.duckdns.org/chat';
 		const output = document.getElementById('terminal-output');
 		const inputEl = document.getElementById('terminal-input');
+		// Android: scroll input arriba del teclado cuando se abre
+		inputEl.addEventListener('focus', () => {
+			setTimeout(() => inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 400);
+		});
+		if (window.visualViewport) {
+			window.visualViewport.addEventListener('resize', () => {
+				if (document.activeElement === inputEl) {
+					inputEl.scrollIntoView({ block: 'center' });
+				}
+			});
+		}
 		let conversationHistory = [];
 		function appendOutput(text, type = 'normal', isHtml = false) {
 			const div = document.createElement('div');
