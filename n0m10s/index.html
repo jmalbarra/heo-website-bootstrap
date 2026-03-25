@@ -8,12 +8,12 @@
 	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 	<style>
 		:root {
-			--accent: #00ff41;
-			--accent-dim: rgba(0, 255, 65, 0.5);
-			--accent-glow: rgba(0, 255, 65, 0.4);
-			--accent-bg: rgba(0, 255, 65, 0.12);
+			--accent: #22eec9;
+			--accent-dim: rgba(34, 238, 201, 0.5);
+			--accent-glow: rgba(34, 238, 201, 0.4);
+			--accent-bg: rgba(34, 238, 201, 0.12);
 			--surface: rgba(12, 12, 14, 0.9);
-			--surface-border: rgba(0, 255, 65, 0.2);
+			--surface-border: rgba(34, 238, 201, 0.2);
 			--text: #e8e8e8;
 			--text-muted: rgba(255,255,255,0.4);
 			--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -71,8 +71,8 @@
 			box-shadow: 0 0 0 0 var(--accent-glow);
 		}
 		#enter-btn:hover {
-			background: rgba(0, 255, 136, 0.2);
-			box-shadow: 0 0 32px var(--accent-glow), inset 0 0 20px rgba(0,255,136,0.05);
+			background: rgba(34, 238, 201, 0.18);
+			box-shadow: 0 0 32px var(--accent-glow), inset 0 0 20px rgba(34,238,201,0.08);
 			border-color: var(--accent);
 			transform: translateY(-1px);
 		}
@@ -83,7 +83,7 @@
 			height: auto;
 			margin-bottom: 40px;
 			opacity: 0.8;
-			filter: drop-shadow(0 0 24px var(--accent-glow)) drop-shadow(0 0 60px rgba(0,255,136,0.15));
+			filter: drop-shadow(0 0 24px var(--accent-glow)) drop-shadow(0 0 60px rgba(34,238,201,0.15));
 			transition: filter 0.4s var(--ease-out);
 		}
 		/* Login screen - glass panel */
@@ -136,11 +136,22 @@
 			align-items: flex-start;
 			gap: 10px;
 			max-width: 320px;
+			width: 100%;
 			cursor: default;
 			margin-top: -4px;
+			justify-content: flex-start;
+			text-align: left;
 		}
-		#login-terms input { margin-top: 4px; accent-color: var(--accent); cursor: pointer; }
-		#login-terms label { cursor: pointer; padding-right: 8px; flex-shrink: 0; }
+		#login-terms input { margin-top: 4px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+		#login-terms .terms-text-wrap {
+			font-size: 0.75rem;
+			color: var(--text-muted);
+			line-height: 1.5;
+			flex: 1 1 auto;
+			min-width: 0;
+			text-align: left;
+		}
+		#login-terms label { cursor: pointer; }
 		#login-terms span { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
 		#login-terms a,
 		#terms-link {
@@ -154,7 +165,12 @@
 			touch-action: manipulation;
 			cursor: pointer;
 			-webkit-tap-highlight-color: transparent;
-			margin-left: 0.5em;
+			margin: 0;
+			display: inline-block;
+			vertical-align: baseline;
+			width: auto;
+			max-width: 100%;
+			text-align: left;
 		}
 		#login-terms a:hover,
 		#terms-link:hover { color: var(--accent); }
@@ -164,17 +180,17 @@
 			font-family: inherit;
 			letter-spacing: 0.12em;
 			color: #050507;
-			background: linear-gradient(135deg, var(--accent) 0%, #00cc55 100%);
+			background: linear-gradient(135deg, var(--accent) 0%, #0d9f82 100%);
 			border: none;
 			border-radius: var(--radius);
 			cursor: pointer;
 			transition: all 0.4s var(--ease-out);
-			box-shadow: 0 4px 16px rgba(0, 255, 65, 0.35);
+			box-shadow: 0 4px 16px rgba(34, 238, 201, 0.35);
 			font-weight: 500;
 		}
 		#login-btn:hover {
 			transform: translateY(-2px);
-			box-shadow: 0 8px 28px rgba(0, 255, 65, 0.45), 0 0 0 1px rgba(0,255,65,0.2);
+			box-shadow: 0 8px 28px rgba(34, 238, 201, 0.45), 0 0 0 1px rgba(34,238,201,0.2);
 		}
 		/* Terminal - estilo moderno tipo IDE */
 		#terminal-container {
@@ -183,7 +199,11 @@
 			z-index: 3;
 			display: none;
 			flex-direction: column;
-			background: #08080a;
+			/* Fondo a todo el viewport: si va en #terminal-body + max-width se cortaba el resplandor */
+			background:
+				linear-gradient(90deg, rgba(34,238,201,0.02) 0%, transparent 1px),
+				radial-gradient(ellipse 140% 55% at 50% 0%, rgba(34,238,201,0.07) 0%, transparent 52%),
+				#08080a;
 			opacity: 0;
 			transition: opacity 0.5s var(--ease-out);
 		}
@@ -193,60 +213,84 @@
 		}
 		#terminal-body {
 			flex: 1;
-			padding: 40px 48px 48px 56px;
+			padding: 40px 32px 48px 32px;
 			overflow-y: auto;
 			position: relative;
-			background: 
-				linear-gradient(90deg, rgba(0,255,65,0.02) 0%, transparent 1px),
-				radial-gradient(ellipse 120% 50% at 50% 0%, rgba(0,255,65,0.06) 0%, transparent 50%),
-				#08080a;
+			background: transparent;
 			color: var(--text);
 			font-size: 0.95rem;
 			line-height: 1.8;
-			white-space: pre-wrap;
+			/* pre-wrap solo en salida: en el input heredaba y los \\n del HTML entre <span> partían el prompt */
+			white-space: normal;
 			word-wrap: break-word;
 			font-family: 'Geist Mono', 'JetBrains Mono', monospace;
 			max-width: 820px;
 			margin: 0 auto;
 			width: 100%;
 			letter-spacing: 0.01em;
+			text-align: left;
 		}
 		#terminal-output {
 			min-height: 120px;
+			text-align: left;
+			white-space: pre-wrap;
 		}
 		/* Prompt estilo zsh moderno */
-		.prompt-lead { color: #7dd3fc; font-weight: 500; }
-		.prompt-user { color: #4ade80; font-weight: 500; }
-		.prompt-path { color: #7dd3fc; }
+		.prompt-lead { color: #6ef5dc; font-weight: 500; }
+		.prompt-user { color: #22eec9; font-weight: 500; }
+		.prompt-path { color: #6ef5dc; }
 		.prompt-env { color: #fde047; }
 		.prompt-arrow { color: rgba(255,255,255,0.9); }
+		/* Grid: alineación estable a la izquierda (flex+wrap+center podía centrar el bloque del prompt) */
 		.terminal-input-line {
-			display: flex;
-			align-items: center;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr);
+			gap: 10px;
+			justify-items: stretch;
+			align-content: start;
 			margin-top: 16px;
 			padding: 12px 16px;
 			background: rgba(0,0,0,0.35);
-			border: 1px solid rgba(0,255,65,0.15);
+			border: 1px solid rgba(34,238,201,0.15);
 			border-radius: var(--radius);
-			flex-wrap: wrap;
+			text-align: left;
+			white-space: normal;
+			direction: ltr;
+			width: 100%;
+			box-sizing: border-box;
 			transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
 		}
 		.terminal-input-line:focus-within {
 			border-color: var(--accent);
 			box-shadow: 0 0 0 3px var(--accent-bg);
 		}
-		.prompt-inline { flex-shrink: 0; min-width: 0; overflow-wrap: break-word; word-break: break-word; }
+		.prompt-inline {
+			flex-shrink: 0;
+			min-width: 0;
+			overflow-wrap: break-word;
+			word-break: break-word;
+			text-align: left;
+		}
+		.terminal-input-line .prompt-inline {
+			width: 100%;
+			min-width: 0;
+			justify-self: stretch;
+			white-space: normal;
+		}
 		.terminal-line {
 			display: flex;
 			flex-wrap: wrap;
-			align-items: baseline;
+			align-items: flex-start;
+			justify-content: flex-start;
 			gap: 0 4px;
+			text-align: left;
 		}
 		.terminal-exchange { margin-bottom: 20px; }
 		.terminal-exchange .nomios-response { margin-top: 8px; padding-left: 0; white-space: pre-wrap; line-height: 1.7; }
 		#terminal-input {
-			flex: 1;
-			min-width: 120px;
+			display: block;
+			width: 100%;
+			min-width: 0;
 			background: transparent;
 			border: none;
 			color: var(--text);
@@ -254,8 +298,26 @@
 			font-size: 0.95rem;
 			outline: none;
 			caret-color: var(--accent);
+			text-align: left;
 		}
 		#terminal-input::placeholder { color: rgba(255,255,255,0.25); }
+		@media (min-width: 720px) {
+			.terminal-input-line {
+				grid-template-columns: minmax(0, auto) minmax(120px, 1fr);
+				gap: 0 10px;
+				align-items: center;
+			}
+			.terminal-input-line .prompt-inline {
+				width: auto;
+				max-width: 100%;
+				justify-self: start;
+			}
+			#terminal-input {
+				width: 100%;
+				min-width: 120px;
+				justify-self: stretch;
+			}
+		}
 		.block-cursor {
 			display: inline-block;
 			width: 0.55em;
@@ -269,11 +331,11 @@
 		@keyframes blink {
 			50% { opacity: 0.4; }
 		}
-		.nomios-response { color: #4ade80; margin: 8px 0; white-space: pre-wrap; line-height: 1.7; }
+		.nomios-response { color: #5edcc4; margin: 8px 0; white-space: pre-wrap; line-height: 1.7; text-align: left; }
 		.msg-text { color: var(--text); }
-		.system-msg { color: #4ade80; }
+		.system-msg { color: #22eec9; text-align: left; }
 		.error-msg { color: #f87171; }
-		.loading { color: #4ade80; font-style: italic; opacity: 0.9; }
+		.loading { color: #6ef5dc; font-style: italic; opacity: 0.9; text-align: left; }
 		#terminal-logo {
 			position: absolute;
 			top: 24px;
@@ -281,7 +343,7 @@
 			width: 40px;
 			opacity: 0.2;
 			pointer-events: none;
-			filter: drop-shadow(0 0 12px rgba(0,255,65,0.2));
+			filter: drop-shadow(0 0 12px rgba(34,238,201,0.2));
 		}
 		/* Mobile */
 		@media (max-width: 480px) {
@@ -294,18 +356,12 @@
 			#terminal-body { padding: 16px; overflow-x: hidden; }
 			.terminal-input-line { width: 100%; box-sizing: border-box; }
 			#terminal-output, .terminal-line, .nomios-response { font-size: 0.85rem; }
-			.terminal-input-line {
-				flex-wrap: wrap;
-				min-width: 0;
-				overflow-wrap: break-word;
-			}
+			.terminal-input-line { min-width: 0; }
 			.prompt-inline {
-				flex-shrink: 1;
-				min-width: 0;
-				max-width: 100%;
 				white-space: normal;
-				word-break: break-all;
+				word-break: break-word;
 				overflow-wrap: anywhere;
+				text-align: left;
 			}
 			.terminal-line .prompt-inline {
 				word-break: break-all;
@@ -362,7 +418,7 @@
 			transition: all 0.3s var(--ease-out);
 		}
 		.modal-btn:hover {
-			background: rgba(0, 255, 65, 0.2);
+			background: rgba(34, 238, 201, 0.2);
 			border-color: var(--accent);
 			box-shadow: 0 0 20px var(--accent-glow);
 		}
@@ -384,8 +440,9 @@
 			<input type="email" id="login-email" placeholder="tu@email.com" autocomplete="off" maxlength="128" aria-label="Email" data-form-type="other" data-lpignore="true">
 			<div id="login-terms">
 				<input type="checkbox" id="login-terms-check" required checked>
-				<label for="login-terms-check">Acepto los </label>
-				<button type="button" id="terms-link" class="link-like">t&eacute;rminos y condiciones</button>.
+				<span class="terms-text-wrap">
+					<label for="login-terms-check">Acepto los </label><button type="button" id="terms-link" class="link-like">t&eacute;rminos y condiciones</button>.
+				</span>
 			</div>
 			<button id="login-btn">Entrar al sistema</button>
 		</div>
@@ -440,13 +497,13 @@
 		function drawMatrix() {
 			ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
-			ctx.fillStyle = '#00ff41';
+			ctx.fillStyle = '#22eec9';
 			ctx.font = `${fontSize}px JetBrains Mono, monospace`;
 			for (let i = 0; i < drops.length; i++) {
 				const char = charArray[Math.floor(Math.random() * charArray.length)];
 				const x = i * fontSize;
 				const y = drops[i] * fontSize;
-				ctx.fillStyle = `rgba(0, 255, 65, ${0.3 + Math.random() * 0.7})`;
+				ctx.fillStyle = `rgba(34, 238, 201, ${0.3 + Math.random() * 0.7})`;
 				ctx.fillText(char, x, y);
 				if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
 				drops[i] += 3;
