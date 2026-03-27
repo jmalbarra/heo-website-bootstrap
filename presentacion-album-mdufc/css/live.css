@@ -385,6 +385,18 @@ code {
 	line-height: 1.65;
 }
 
+.share-cta {
+	font-size: 0.75rem;
+	text-align: center;
+	margin-top: 18px;
+	padding-top: 14px;
+	border-top: 1px solid rgba(34, 238, 201, 0.1);
+}
+
+.share-cta a {
+	letter-spacing: 0.08em;
+}
+
 .status-bar {
 	font-size: 0.72rem;
 	color: var(--text-muted);
