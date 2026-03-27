@@ -1,0 +1,52 @@
+diff --git a/.github/workflows/deploy-develop-to-stg.yaml b/.github/workflows/deploy-develop-to-stg.yaml
+index 885e002..af24e45 100644
+--- a/.github/workflows/deploy-develop-to-stg.yaml
++++ b/.github/workflows/deploy-develop-to-stg.yaml
+@@ -17,11 +17,19 @@ jobs:
+         SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
+         SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+       run: |
+-        sudo apt-get install lftp
++        sudo apt-get update -qq && sudo apt-get install -y lftp php-cli
+ 
+         git clone -b develop https://github.com/jmalbarra/heo-website-bootstrap.git .
+         cd .
+-        
++
++        # presentacion-album-mdufc: config.php desde secreto (no commiteado)
++        export OPERATOR_SECRET="${{ secrets.PRESENTACION_MDUFC_OPERATOR_SECRET }}"
++        if [ -n "$OPERATOR_SECRET" ]; then
++          php -r '$s=getenv("OPERATOR_SECRET"); $c="<?php\n"."define(\"OPERATOR_SECRET\", ".var_export($s,true).");\n"; file_put_contents("presentacion-album-mdufc/includes/config.php", $c);'
++        else
++          echo "::warning::PRESENTACION_MDUFC_OPERATOR_SECRET no definido; subí includes/config.php a mano o configurá el secreto en el repo."
++        fi
++
+         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
+         cd htdocs/staging
+         mirror -R . .
+diff --git a/.github/workflows/deploy-main-to-prod.yaml b/.github/workflows/deploy-main-to-prod.yaml
+index 8b254d9..cd1bc83 100644
+--- a/.github/workflows/deploy-main-to-prod.yaml
++++ b/.github/workflows/deploy-main-to-prod.yaml
+@@ -17,11 +17,19 @@ jobs:
+         SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
+         SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+       run: |
+-        sudo apt-get install lftp
++        sudo apt-get update -qq && sudo apt-get install -y lftp php-cli
+ 
+         git clone https://github.com/jmalbarra/heo-website-bootstrap.git .
+         cd .
+-        
++
++        # presentacion-album-mdufc: config.php desde secreto (no commiteado)
++        export OPERATOR_SECRET="${{ secrets.PRESENTACION_MDUFC_OPERATOR_SECRET }}"
++        if [ -n "$OPERATOR_SECRET" ]; then
++          php -r '$s=getenv("OPERATOR_SECRET"); $c="<?php\n"."define(\"OPERATOR_SECRET\", ".var_export($s,true).");\n"; file_put_contents("presentacion-album-mdufc/includes/config.php", $c);'
++        else
++          echo "::warning::PRESENTACION_MDUFC_OPERATOR_SECRET no definido; subí includes/config.php a mano o configurá el secreto en el repo."
++        fi
++
+         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
+         cd htdocs
+         mirror -R . .
