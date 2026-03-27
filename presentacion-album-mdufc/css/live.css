@@ -296,17 +296,16 @@ code {
 	border-style: dashed;
 }
 
-/* Futuro: solo cifrado animado (sin título real ni segunda línea) */
-.track-item--locked .track-title--cipher {
+/* Temas futuros: sin nombre real; mensaje de Nomios */
+.track-item--locked .track-title--pending {
 	color: var(--text-muted);
 	filter: none;
 	font-weight: 400;
-	font-size: 0.82rem;
-	letter-spacing: 0.18em;
-	font-variant-numeric: tabular-nums;
+	font-size: 0.8rem;
+	font-style: italic;
+	letter-spacing: 0.04em;
+	line-height: 1.4;
 	user-select: none;
-	line-height: 1.45;
-	word-break: break-all;
 }
 
 .track-item--interlude {
