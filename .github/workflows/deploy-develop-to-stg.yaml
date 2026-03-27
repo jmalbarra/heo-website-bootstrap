@@ -8,8 +8,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        ref: develop
+        fetch-depth: 1
+
     - name: Deploy to STG SFTP
       env:
         SFTP_HOST: ${{ secrets.SFTP_HOST }}
@@ -19,9 +25,6 @@ jobs:
       run: |
         sudo apt-get update -qq && sudo apt-get install -y lftp php-cli
 
-        git clone -b develop https://github.com/jmalbarra/heo-website-bootstrap.git .
-        cd .
-
         # presentacion-album-mdufc: config.php desde secreto (no commiteado)
         export OPERATOR_SECRET="${{ secrets.PRESENTACION_MDUFC_OPERATOR_SECRET }}"
         if [ -n "$OPERATOR_SECRET" ]; then
@@ -30,8 +33,12 @@ jobs:
           echo "::warning::PRESENTACION_MDUFC_OPERATOR_SECRET no definido; subí includes/config.php a mano o configurá el secreto en el repo."
         fi
 
+        # mirror: --ignore-time evita resubir todo tras un checkout (mtime nuevo en CI).
+        # Se re-sube si cambia el tamaño; -x excluye .git/.github (antes se subía ~toda la carpeta .git).
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
+        set net:max-retries 3
+        set net:reconnect-interval-base 5
         cd htdocs/staging
-        mirror -R . .
+        mirror -R --ignore-time --parallel=10 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -X '.DS_Store' . .
         bye
         EOF
