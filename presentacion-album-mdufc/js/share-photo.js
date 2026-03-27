@@ -38,6 +38,19 @@
 		};
 	}
 
+	/** Dibuja la imagen dentro del rectángulo sin deformar (como object-fit: contain). */
+	function drawImageContain(img, boxX, boxY, boxW, boxH) {
+		var iw = img.naturalWidth;
+		var ih = img.naturalHeight;
+		if (iw <= 0 || ih <= 0) return;
+		var scale = Math.min(boxW / iw, boxH / ih);
+		var dw = iw * scale;
+		var dh = ih * scale;
+		var ox = boxX + (boxW - dw) / 2;
+		var oy = boxY + (boxH - dh) / 2;
+		ctx.drawImage(img, 0, 0, iw, ih, ox, oy, dw, dh);
+	}
+
 	function drawCoverImage(img, w, h) {
 		var ir = img.naturalWidth / img.naturalHeight;
 		var vr = w / h;
@@ -160,6 +173,7 @@
 		ctx.save();
 		ctx.translate(cx, cy);
 		ctx.rotate(angle);
+		/* Escala uniforme para no aplastar las formas */
 		ctx.scale(scale, scale);
 		ctx.globalAlpha = alpha;
 		var blue = "rgba(72, 148, 255, 0.72)";
@@ -189,7 +203,8 @@
 
 		ctx.fillStyle = "rgba(180, 210, 255, 0.35)";
 		ctx.beginPath();
-		ctx.ellipse(0, 0, 3, 14, 0, 0, Math.PI * 2);
+		/* Cuerpo más redondo: con 3×14 y rotación fuerte parecía una raya aplastada */
+		ctx.ellipse(0, 0, 5, 11, 0, 0, Math.PI * 2);
 		ctx.fill();
 
 		ctx.restore();
@@ -211,7 +226,7 @@
 			px = positions[k][0] * OUT_W + (rand() - 0.5) * 40;
 			py = positions[k][1] * OUT_H + (rand() - 0.5) * 40;
 			sc = positions[k][2] * (0.9 + rand() * 0.35);
-			ang = (rand() - 0.5) * 1.2;
+			ang = (rand() - 0.5) * 0.85;
 			drawButterfly(px, py, sc, ang, 0.75 + rand() * 0.2);
 		}
 	}
@@ -224,7 +239,7 @@
 			ctx.globalAlpha = 0.92;
 			ctx.shadowColor = "rgba(34, 238, 201, 0.5)";
 			ctx.shadowBlur = 24;
-			ctx.drawImage(logoImg, OUT_W - logoSize - pad, pad, logoSize, logoSize);
+			drawImageContain(logoImg, OUT_W - logoSize - pad, pad, logoSize, logoSize);
 			ctx.restore();
 		}
 

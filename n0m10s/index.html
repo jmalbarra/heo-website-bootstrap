@@ -240,14 +240,16 @@
 		}
 		#terminal-body {
 			flex: 1;
-			padding: 40px 32px 48px 32px;
-			overflow-y: auto;
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
+			padding: max(40px, env(safe-area-inset-top, 0px)) max(32px, env(safe-area-inset-right, 0px)) max(48px, env(safe-area-inset-bottom, 0px)) max(32px, env(safe-area-inset-left, 0px));
+			overflow: hidden;
 			position: relative;
 			background: transparent;
 			color: var(--text);
 			font-size: 0.95rem;
 			line-height: 1.8;
-			/* pre-wrap solo en salida: en el input heredaba y los \\n del HTML entre <span> partían el prompt */
 			white-space: normal;
 			word-wrap: break-word;
 			font-family: 'Geist Mono', 'JetBrains Mono', monospace;
@@ -258,7 +260,10 @@
 			text-align: left;
 		}
 		#terminal-output {
-			min-height: 120px;
+			flex: 1 1 auto;
+			min-height: 80px;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
 			text-align: left;
 			white-space: pre-wrap;
 		}
@@ -270,6 +275,7 @@
 		.prompt-arrow { color: rgba(255,255,255,0.9); }
 		/* Grid: alineación estable a la izquierda (flex+wrap+center podía centrar el bloque del prompt) */
 		.terminal-input-line {
+			flex-shrink: 0;
 			display: grid;
 			grid-template-columns: minmax(0, 1fr);
 			gap: 10px;
@@ -360,17 +366,17 @@
 		}
 		.nomios-response { color: #5edcc4; margin: 8px 0; white-space: pre-wrap; line-height: 1.7; text-align: left; }
 		.msg-text { color: var(--text); }
-		.system-msg { color: #22eec9; text-align: left; }
+		.system-msg { color: #22eec9; text-align: left; white-space: pre-line; line-height: 1.65; }
 		.error-msg { color: #f87171; }
 		.loading { color: #6ef5dc; font-style: italic; opacity: 0.9; text-align: left; }
 		#terminal-logo {
 			position: absolute;
-			top: 24px;
-			right: 40px;
+			top: max(16px, env(safe-area-inset-top, 0px));
+			right: max(24px, env(safe-area-inset-right, 0px));
 			width: 40px;
-			opacity: 0.2;
+			opacity: 0.32;
 			pointer-events: none;
-			filter: drop-shadow(0 0 12px rgba(34,238,201,0.2));
+			filter: drop-shadow(0 0 12px rgba(34,238,201,0.25));
 		}
 		/* Mobile */
 		@media (max-width: 480px) {
@@ -381,8 +387,18 @@
 			#login-btn { min-height: 44px; }
 			.matrix-logo-wrap { padding: 28px 32px 20px; margin: -16px 0 8px; }
 			#matrix-logo { width: 140px; }
-			#terminal-body { padding: 16px; overflow-x: hidden; }
-			.terminal-input-line { width: 100%; box-sizing: border-box; }
+			#terminal-body {
+				padding: max(14px, env(safe-area-inset-top, 0px)) 14px max(20px, env(safe-area-inset-bottom, 0px)) 14px;
+				overflow-x: hidden;
+			}
+			#terminal-output { min-height: min(36vh, 220px); }
+			.terminal-input-line { width: 100%; box-sizing: border-box; margin-top: 12px; }
+			#terminal-logo {
+				width: 44px;
+				opacity: 0.42;
+				top: max(10px, env(safe-area-inset-top, 0px));
+				right: max(12px, env(safe-area-inset-right, 0px));
+			}
 			#terminal-output, .terminal-line, .nomios-response { font-size: 0.85rem; }
 			.terminal-input-line { min-width: 0; }
 			.prompt-inline {
@@ -680,7 +696,7 @@
 				terminalContainer.classList.add('visible');
 				document.getElementById('prompt-user-host').textContent = currentUserName + '@OcasoCore';
 				const inp = document.getElementById('terminal-input');
-				appendOutput('> Sistema n0m10s conectado. Escribe y Enter para hablar con Nomios.', 'normal');
+				appendOutput('> Sistema n0m10s conectado.\n> Escribe y pulsa Enter para hablar con Nomios.', 'normal');
 				setTimeout(() => {
 					try { inp.focus({ preventScroll: true }); } catch (_) { inp.focus(); }
 				}, 100);

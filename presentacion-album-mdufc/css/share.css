@@ -102,6 +102,8 @@
 	display: block;
 	width: 100%;
 	height: auto;
+	/* Misma relación que 1080×1350: evita que en móvil se estire solo en un eje */
+	aspect-ratio: 1080 / 1350;
 	vertical-align: middle;
 }
 
