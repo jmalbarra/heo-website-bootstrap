@@ -3,12 +3,14 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
 	<title>Tu foto — Mitos de un futuro cercano · Hacia el Ocaso</title>
 	<meta name="description" content="Creá una imagen con glitch, colores del disco y marcas para compartir en redes.">
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/live.css?v=3">
-	<link rel="stylesheet" href="css/share.css?v=3">
+	<link rel="stylesheet" href="css/live.css?v=5">
+	<link rel="stylesheet" href="css/share.css?v=5">
 </head>
 <body class="share-page">
 	<div id="matrix-bg" aria-hidden="true">
@@ -46,7 +48,21 @@
 		</div>
 		<a class="share-back" href="index.html">← Volver al show</a>
 	</div>
-	<script src="js/matrix-bg.js?v=3"></script>
-	<script src="js/share-photo.js?v=3"></script>
+	<script>
+	(function () {
+		var bust = "_=" + Date.now();
+		function loadScript(src, onload) {
+			var s = document.createElement("script");
+			s.src = src + (src.indexOf("?") >= 0 ? "&" : "?") + bust;
+			s.async = false;
+			if (onload) s.onload = onload;
+			s.onerror = onload || function () {};
+			document.body.appendChild(s);
+		}
+		loadScript("js/matrix-bg.js", function () {
+			loadScript("js/share-photo.js");
+		});
+	})();
+	</script>
 </body>
 </html>
