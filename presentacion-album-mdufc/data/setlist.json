@@ -7,7 +7,7 @@
   "songs": [
     {
       "id": "intro-nomios-v2",
-      "title": "Intro — Nomios v2",
+      "title": "Mensaje de Nomios",
       "about": "Luces: blackout → prendidas lentas. Color: verde azulado / teal holográfico (~2:00).\n\nEscenario vacío; track con texturas frías y digitales. Nomios “despierta”: diagnósticos, mide energía del público, pide participación para “abrir el canal”. Mezcla guía espiritual y asistente tecnológico.\n\nIdeas: voz con modulación tipo AI + delay corto; barra de energía cuando gritan; destellos verdes tipo glitch orgánico.",
       "lyrics": "(Track + voz Nomios — no letra fija.)",
       "kind": "song",
@@ -30,13 +30,6 @@
       "duration": "2:40"
     },
     {
-      "id": "pausa-1",
-      "title": "Pausa 1 — luces en la banda",
-      "about": "Luces en toda la banda. Juanma agradece y pregunta si están listos. Colchón de sintes hacia Metamorfosis.",
-      "lyrics": "Momento hablado + puente musical.",
-      "kind": "pausa"
-    },
-    {
       "id": "metamorfosis",
       "title": "Metamorfosis",
       "about": "Color verde esperanza. Intro reconocible; pedir brazos izquierda/derecha para “activar el cambio”. Ritual de transformación colectiva (~3:54).\n\nIdeas: crisálidas / glitch orgánico; corte con “Respiren… transformemos”.",
@@ -51,13 +44,6 @@
       "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
       "kind": "song",
       "duration": "4:24"
-    },
-    {
-      "id": "pausa-2",
-      "title": "Pausa 2 — La conexión",
-      "about": "Luz en el ocaso. Momento íntimo: Juanma habla de conexión, amor y comunidad; dedicación a parejas, amigos, otras bandas y público.",
-      "lyrics": "Momento hablado.",
-      "kind": "pausa"
     },
     {
       "id": "la-conexion",
@@ -92,13 +78,6 @@
       "duration": "3:40"
     },
     {
-      "id": "pausa-3",
-      "title": "Pausa 3 — Nomios (sombras)",
-      "about": "Todo a oscuras. Nomios: tono bíblico / apocalíptico / político-espiritual — humanidad, egoísmo, planeta enojado.",
-      "lyrics": "Nomios hablado.",
-      "kind": "pausa"
-    },
-    {
       "id": "gaia",
       "title": "Gaia",
       "about": "Rojo/blanco. Subterráneo; siluetas inquietantes (~2:24).\n\nIdeas: destellos blancos como truenos; grietas, raíces, magma.",
@@ -123,13 +102,6 @@
       "duration": "2:45"
     },
     {
-      "id": "pausa-4",
-      "title": "Pausa 4 — Nomios (energía)",
-      "about": "Oscuridad. Nomios baja la energía a propósito, provoca respuesta; juego derecha/izquierda. Puente tipo Aletheia o similar.",
-      "lyrics": "Nomios + interacción.",
-      "kind": "pausa"
-    },
-    {
       "id": "parias",
       "title": "Parias",
       "about": "Verde planta oscuro. Silencio y arranque directo; funde con riff pre-Parias (~2:54).\n\nIdeas: ciudades abandonadas / concreto fisurado; golpes verdes en breakdowns.",
@@ -144,13 +116,6 @@
       "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
       "kind": "song",
       "duration": "3:30"
-    },
-    {
-      "id": "pausa-5",
-      "title": "Pausa 5 — antes de Erial",
-      "about": "Oscuridad. Nomios: “después de la tormenta sale el sol”; realidad maleable, intuición, esperanza. Intro Rami + luces hacia Erial.",
-      "lyrics": "Nomios + transición.",
-      "kind": "pausa"
     },
     {
       "id": "erial",

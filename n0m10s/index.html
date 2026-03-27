@@ -3,7 +3,7 @@
 <head>
 	<title>n0m10s - Hacia el Ocaso</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 	<style>
@@ -23,12 +23,17 @@
 		body {
 			background: #050507;
 			min-height: 100vh;
+			min-height: 100dvh;
+			min-height: -webkit-fill-available;
 			overflow: hidden;
 			font-family: 'Geist Mono', 'JetBrains Mono', monospace;
 		}
 		#matrix-container {
 			position: fixed;
 			inset: 0;
+			min-height: 100vh;
+			min-height: 100dvh;
+			min-height: -webkit-fill-available;
 			z-index: 1;
 			display: flex;
 			flex-direction: column;
@@ -200,6 +205,8 @@
 			background: linear-gradient(135deg, var(--accent) 0%, #0d9f82 100%);
 			border: none;
 			border-radius: var(--radius);
+			touch-action: manipulation;
+			-webkit-tap-highlight-color: transparent;
 			cursor: pointer;
 			transition: all 0.4s var(--ease-out);
 			box-shadow: 0 4px 16px rgba(34, 238, 201, 0.35);
@@ -213,6 +220,9 @@
 		#terminal-container {
 			position: fixed;
 			inset: 0;
+			min-height: 100vh;
+			min-height: 100dvh;
+			min-height: -webkit-fill-available;
 			z-index: 3;
 			display: none;
 			flex-direction: column;
@@ -466,7 +476,7 @@
 					<label for="login-terms-check">Acepto los </label><button type="button" id="terms-link" class="link-like">t&eacute;rminos y condiciones</button>.
 				</span>
 			</div>
-			<button id="login-btn">Entrar al sistema</button>
+			<button type="button" id="login-btn">Entrar al sistema</button>
 		</div>
 	</div>
 	<div id="terms-modal" class="modal-overlay">
@@ -506,54 +516,65 @@
 		</div>
 	</div>
 	<script>
-		// --- Matrix Rain Effect ---
-		const canvas = document.getElementById('matrix-canvas');
-		const ctx = canvas.getContext('2d', { alpha: true });
-		const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-		const charArray = chars.split('');
-		const fontSize = 14;
-		let drops = [];
-		function matrixViewportSize() {
-			const vv = window.visualViewport;
-			let w = window.innerWidth || document.documentElement.clientWidth || 320;
-			let h = window.innerHeight || document.documentElement.clientHeight || 480;
-			if (vv) {
-				w = Math.max(vv.width, w);
-				h = Math.max(vv.height, h);
-			}
-			return { w: Math.max(1, Math.round(w)), h: Math.max(1, Math.round(h)) };
-		}
-		function resizeMatrixCanvas() {
-			const { w, h } = matrixViewportSize();
-			canvas.width = w;
-			canvas.height = h;
-			const columns = Math.max(1, Math.floor(canvas.width / fontSize));
-			drops = Array(columns).fill(1);
-		}
-		function drawMatrix() {
-			if (!canvas.width || !canvas.height || !drops.length) return;
-			ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
-			ctx.font = `${fontSize}px JetBrains Mono, monospace`;
-			for (let i = 0; i < drops.length; i++) {
-				const char = charArray[Math.floor(Math.random() * charArray.length)];
-				const x = i * fontSize;
-				const y = drops[i] * fontSize;
-				ctx.fillStyle = `rgba(34, 238, 201, ${0.3 + Math.random() * 0.7})`;
-				ctx.fillText(char, x, y);
-				if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
-				drops[i] += 3;
-			}
-		}
-		resizeMatrixCanvas();
-		let matrixInterval = setInterval(drawMatrix, 22);
-		window.addEventListener('resize', resizeMatrixCanvas);
-		if (window.visualViewport) {
-			window.visualViewport.addEventListener('resize', resizeMatrixCanvas);
-		}
-		window.addEventListener('orientationchange', () => {
-			setTimeout(resizeMatrixCanvas, 150);
-		});
+		const isCoarsePointer = typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches;
+		const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+		// --- Matrix Rain Effect (si falla el canvas, el resto de la página sigue funcionando) ---
+		let matrixInterval = null;
+		(function initMatrix() {
+			try {
+				const canvas = document.getElementById('matrix-canvas');
+				if (!canvas) return;
+				const ctx = canvas.getContext('2d', { alpha: true });
+				if (!ctx) return;
+				const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				const charArray = chars.split('');
+				const fontSize = 14;
+				let drops = [];
+				function matrixViewportSize() {
+					const vv = window.visualViewport;
+					let w = window.innerWidth || document.documentElement.clientWidth || 320;
+					let h = window.innerHeight || document.documentElement.clientHeight || 480;
+					if (vv) {
+						w = Math.max(vv.width, w);
+						h = Math.max(vv.height, h);
+					}
+					return { w: Math.max(1, Math.round(w)), h: Math.max(1, Math.round(h)) };
+				}
+				function resizeMatrixCanvas() {
+					const { w, h } = matrixViewportSize();
+					canvas.width = w;
+					canvas.height = h;
+					const columns = Math.max(1, Math.floor(canvas.width / fontSize));
+					drops = Array(columns).fill(1);
+				}
+				function drawMatrix() {
+					if (!canvas.width || !canvas.height || !drops.length) return;
+					ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+					ctx.fillRect(0, 0, canvas.width, canvas.height);
+					ctx.font = `${fontSize}px JetBrains Mono, monospace`;
+					for (let i = 0; i < drops.length; i++) {
+						const char = charArray[Math.floor(Math.random() * charArray.length)];
+						const x = i * fontSize;
+						const y = drops[i] * fontSize;
+						ctx.fillStyle = `rgba(34, 238, 201, ${0.3 + Math.random() * 0.7})`;
+						ctx.fillText(char, x, y);
+						if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+						drops[i] += 3;
+					}
+				}
+				resizeMatrixCanvas();
+				requestAnimationFrame(resizeMatrixCanvas);
+				matrixInterval = setInterval(drawMatrix, 22);
+				window.addEventListener('resize', resizeMatrixCanvas);
+				if (window.visualViewport) {
+					window.visualViewport.addEventListener('resize', resizeMatrixCanvas);
+				}
+				window.addEventListener('orientationchange', () => {
+					setTimeout(resizeMatrixCanvas, 200);
+				});
+			} catch (_) {}
+		})();
 		// --- Transition to Terminal ---
 		const matrixContainer = document.getElementById('matrix-container');
 		const terminalContainer = document.getElementById('terminal-container');
@@ -578,10 +599,16 @@
 				});
 			});
 		}
-		enterBtn.addEventListener('click', (e) => {
-			e.preventDefault();
-			openLoginScreen();
-		});
+		function bindEnterButton() {
+			const go = (e) => {
+				e.preventDefault();
+				openLoginScreen();
+			};
+			enterBtn.addEventListener('click', go);
+			// iOS Chrome/Safari: el click sintético a veces no llega; touchend + preventDefault evita el doble disparo
+			enterBtn.addEventListener('touchend', go, { passive: false });
+		}
+		bindEnterButton();
 		// Términos: solo abrir en click intencional (evita apertura accidental al toque en móvil)
 		(function() {
 			const termsLink = document.getElementById('terms-link');
@@ -618,13 +645,16 @@
 			errorMessage.textContent = msg;
 			errorModal.style.display = 'flex';
 		}
+		let doLoginLocked = false;
 		function doLogin() {
+			if (doLoginLocked) return;
 			const name = loginNameEl.value.trim();
 			const email = loginEmailEl.value.trim().toLowerCase();
 			const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 			if (!name) { showLoginError('Ingresá tu nombre de usuario.'); return; }
 			if (!email || !validEmail.test(email)) { showLoginError('El correo electrónico no es válido.'); return; }
 			if (!loginTermsCheck.checked) { showLoginError('Debés aceptar los términos y condiciones.'); return; }
+			doLoginLocked = true;
 			currentUserName = name;
 			currentUserEmail = email;
 			// Guardar contacto (localStorage + endpoint si está configurado)
@@ -643,26 +673,34 @@
 			} catch (_) {}
 			loginContainer.classList.add('fade-out');
 			setTimeout(() => {
-				clearInterval(matrixInterval);
+				if (matrixInterval) clearInterval(matrixInterval);
+				matrixInterval = null;
 				matrixContainer.classList.add('fade-out');
 				loginContainer.classList.remove('visible');
 				terminalContainer.classList.add('visible');
 				document.getElementById('prompt-user-host').textContent = currentUserName + '@OcasoCore';
-				document.getElementById('terminal-input').focus();
-				appendOutput('> Sistema n0m10s conectado. Escribe y Enter para hablar con Nomios.', 'normal');
-				// Fullscreen para ocultar barra del navegador (botones Mac, etc)
-				document.documentElement.requestFullscreen?.().catch(() => {});
-				// Arrancar chequeo de foco (fallback: en fullscreen los clics suelen quitar el foco)
-				clearInterval(window._terminalFocusCheck);
 				const inp = document.getElementById('terminal-input');
-				window._terminalFocusCheck = setInterval(() => {
-					if (terminalContainer.classList.contains('visible') && document.activeElement !== inp) {
-						inp.focus();
-					}
-				}, 200);
+				appendOutput('> Sistema n0m10s conectado. Escribe y Enter para hablar con Nomios.', 'normal');
+				setTimeout(() => {
+					try { inp.focus({ preventScroll: true }); } catch (_) { inp.focus(); }
+				}, 100);
+				// Fullscreen: en iOS no está soportado y puede interferir con el teclado
+				if (!isIOS) {
+					document.documentElement.requestFullscreen?.().catch(() => {});
+				}
+				clearInterval(window._terminalFocusCheck);
+				// En táctil, reenfocar cada 200ms rompe scroll y teclado
+				if (!isCoarsePointer) {
+					window._terminalFocusCheck = setInterval(() => {
+						if (terminalContainer.classList.contains('visible') && document.activeElement !== inp) {
+							inp.focus();
+						}
+					}, 200);
+				}
 			}, 600);
 		}
-		loginBtn.addEventListener('click', doLogin);
+		loginBtn.addEventListener('click', (e) => { e.preventDefault(); doLogin(); });
+		loginBtn.addEventListener('touchend', (e) => { e.preventDefault(); doLogin(); }, { passive: false });
 		loginNameEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
 		loginEmailEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
 		// --- Terminal & Nomios API ---
@@ -764,13 +802,16 @@
 		// Cuando el input pierde el foco (click en fullscreen, etc), recuperarlo
 		// Usamos delay 50ms porque en fullscreen el navegador suele robar el foco después
 		inputEl.addEventListener('blur', () => {
-			if (terminalContainer.classList.contains('visible')) setTimeout(() => inputEl.focus(), 150);
+			if (!terminalContainer.classList.contains('visible')) return;
+			if (isCoarsePointer) return;
+			setTimeout(() => inputEl.focus(), 150);
 		});
 		// Recuperar foco en el input al hacer click/touch (en fullscreen el navegador suele quitarlo)
 		function refocusInput(e) {
+			if (isCoarsePointer) return;
 			if (!terminalContainer.classList.contains('visible')) return;
 			if (e.target === inputEl || inputEl.contains(e.target)) return;
-			setTimeout(() => inputEl.focus(), 0); // siguiente tick: después del foco por defecto del navegador
+			setTimeout(() => inputEl.focus(), 0);
 		}
 		terminalContainer.addEventListener('mousedown', refocusInput);
 		terminalContainer.addEventListener('click', refocusInput);
@@ -779,6 +820,7 @@
 		document.addEventListener('click', refocusInput, true);
 		document.addEventListener('touchstart', refocusInput, true);
 		document.addEventListener('fullscreenchange', () => {
+			if (isCoarsePointer) return;
 			if (document.fullscreenElement && terminalContainer.classList.contains('visible')) {
 				setTimeout(() => inputEl.focus(), 100);
 			}
@@ -787,6 +829,7 @@
 		let focusCheckInterval;
 		document.addEventListener('fullscreenchange', () => {
 			clearInterval(focusCheckInterval);
+			if (isCoarsePointer) return;
 			if (document.fullscreenElement && terminalContainer.classList.contains('visible')) {
 				focusCheckInterval = setInterval(() => {
 					if (document.activeElement !== inputEl) inputEl.focus();
