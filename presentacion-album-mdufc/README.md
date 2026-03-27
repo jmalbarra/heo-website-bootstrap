@@ -1,6 +1,8 @@
-# Presentación MDUFC (en vivo)
+# Presentación en vivo — Mitos de un futuro cercano
 
 Mini sitio para el público: **listado de temas** con desbloqueo según el avance del show, **letra** y **de qué habla** cada canción. Vista **operador** para avanzar o retroceder el índice en el servidor.
+
+*(La carpeta del repo sigue llamándose `presentacion-album-mdufc` por compatibilidad; el nombre para la gente es el del disco.)*
 
 Estética alineada con [`n0m10s/`](../n0m10s/).
 
@@ -22,7 +24,7 @@ El estado en vivo es solo el entero **`currentIndex`** (0 = primer tema). Se gua
 ### Opción recomendada: secreto de GitHub
 
 1. En el repo: **Settings → Secrets and variables → Actions → New repository secret**.
-2. Nombre: **`PRESENTACION_MDUFC_OPERATOR_SECRET`** · Valor: una cadena larga y aleatoria (la usás también al operar desde `operator.html`).
+2. Nombre del secreto en GitHub: **`PRESENTACION_MDUFC_OPERATOR_SECRET`** (nombre técnico; no hace falta cambiarlo) · Valor: una cadena larga y aleatoria (la usás también al operar desde `operator.html`).
 3. En cada deploy, [`.github/workflows/deploy-develop-to-stg.yaml`](../.github/workflows/deploy-develop-to-stg.yaml) y [`.github/workflows/deploy-main-to-prod.yaml`](../.github/workflows/deploy-main-to-prod.yaml) generan **`includes/config.php`** en el runner antes del mirror SFTP.
 
 Así no hace falta crear `config.php` a mano en el servidor ni volver a subirlo tras cada deploy.
