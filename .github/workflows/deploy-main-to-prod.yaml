@@ -8,8 +8,13 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
     - name: Deploy to STG and PROD SFTP
       env:
         SFTP_HOST: ${{ secrets.SFTP_HOST }}
@@ -17,17 +22,25 @@ jobs:
         SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
         SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
       run: |
-        sudo apt-get install lftp
+        sudo apt-get update -qq && sudo apt-get install -y lftp php-cli
 
-        git clone https://github.com/jmalbarra/heo-website-bootstrap.git .
-        cd .
-        
+        # presentacion-album-mdufc: config.php desde secreto (no commiteado)
+        export OPERATOR_SECRET="${{ secrets.PRESENTACION_MDUFC_OPERATOR_SECRET }}"
+        if [ -n "$OPERATOR_SECRET" ]; then
+          php -r '$s=getenv("OPERATOR_SECRET"); $c="<?php\n"."define(\"OPERATOR_SECRET\", ".var_export($s,true).");\n"; file_put_contents("presentacion-album-mdufc/includes/config.php", $c);'
+        else
+          echo "::warning::PRESENTACION_MDUFC_OPERATOR_SECRET no definido; subí includes/config.php a mano o configurá el secreto en el repo."
+        fi
+
+        # mirror: --ignore-time + exclusiones (ver deploy-develop-to-stg.yaml)
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
+        set net:max-retries 3
+        set net:reconnect-interval-base 5
         cd htdocs
-        mirror -R . .
+        mirror -R --ignore-time --parallel=10 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -X '.DS_Store' . .
 
         cd htdocs/staging
-        mirror -R . .
+        mirror -R --ignore-time --parallel=10 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -X '.DS_Store' . .
 
         bye
         EOF

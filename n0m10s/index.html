@@ -37,26 +37,43 @@
 			transition: opacity 0.6s var(--ease-out);
 		}
 		#matrix-container.fade-out { opacity: 0; pointer-events: none; }
-		#matrix-container.login-mode #matrix-logo,
+		#matrix-container.login-mode .matrix-logo-wrap,
 		#matrix-container.login-mode #enter-btn { opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.3s; }
 		#matrix-container.login-mode #matrix-overlay { opacity: 0.2; }
 		#matrix-canvas {
 			position: absolute;
 			inset: 0;
+			z-index: 0;
 			width: 100%;
 			height: 100%;
 			opacity: 0.7;
+			/* No interceptar toques: el lienzo va debajo del logo/botón */
+			pointer-events: none;
 		}
 		#matrix-overlay {
 			position: absolute;
 			inset: 0;
+			z-index: 1;
 			background: radial-gradient(ellipse 80% 50% at 50% 100%, transparent 0%, rgba(5,5,7,0.4) 40%, rgba(5,5,7,0.95) 100%);
 			pointer-events: none;
+		}
+		/* Evita que Safari recorte el resplandor del filtro (caja rectangular) */
+		.matrix-logo-wrap {
+			position: relative;
+			z-index: 10;
+			padding: 36px 48px 28px;
+			margin: -24px 0 12px;
+			overflow: visible;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 		#enter-btn {
 			position: relative;
 			z-index: 10;
 			padding: 18px 48px;
+			touch-action: manipulation;
+			-webkit-tap-highlight-color: transparent;
 			font-size: 0.9rem;
 			font-family: inherit;
 			font-weight: 500;
@@ -78,11 +95,11 @@
 		}
 		#matrix-logo {
 			position: relative;
-			z-index: 10;
 			width: 160px;
 			height: auto;
-			margin-bottom: 40px;
+			margin: 0;
 			opacity: 0.8;
+			display: block;
 			filter: drop-shadow(0 0 24px var(--accent-glow)) drop-shadow(0 0 60px rgba(34,238,201,0.15));
 			transition: filter 0.4s var(--ease-out);
 		}
@@ -352,6 +369,7 @@
 			#login-terms { max-width: min(320px, calc(100vw - 48px)); }
 			#enter-btn { padding: 16px 36px; font-size: 1rem; min-height: 44px; }
 			#login-btn { min-height: 44px; }
+			.matrix-logo-wrap { padding: 28px 32px 20px; margin: -16px 0 8px; }
 			#matrix-logo { width: 140px; }
 			#terminal-body { padding: 16px; overflow-x: hidden; }
 			.terminal-input-line { width: 100%; box-sizing: border-box; }
@@ -373,6 +391,7 @@
 			#terms-modal > div { max-width: calc(100vw - 32px); padding: 20px; }
 		}
 		@media (max-width: 360px) {
+			.matrix-logo-wrap { padding: 24px 28px 16px; }
 			#matrix-logo { width: 120px; }
 		}
 		/* Modales modernos con glass */
@@ -432,8 +451,10 @@
 	<div id="matrix-container">
 		<canvas id="matrix-canvas"></canvas>
 		<div id="matrix-overlay"></div>
-		<img src="../images/ojo-goth-blanco.png" alt="Hacia el Ocaso" id="matrix-logo">
-		<button id="enter-btn">Conectar</button>
+		<div class="matrix-logo-wrap">
+			<img src="../images/ojo-goth-blanco.png" alt="Hacia el Ocaso" id="matrix-logo">
+		</div>
+		<button type="button" id="enter-btn">Conectar</button>
 	</div>
 	<div id="login-container">
 		<div id="login-box">
@@ -487,18 +508,32 @@
 	<script>
 		// --- Matrix Rain Effect ---
 		const canvas = document.getElementById('matrix-canvas');
-		const ctx = canvas.getContext('2d');
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
+		const ctx = canvas.getContext('2d', { alpha: true });
 		const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 		const charArray = chars.split('');
 		const fontSize = 14;
-		const columns = Math.floor(canvas.width / fontSize);
-		const drops = Array(columns).fill(1);
+		let drops = [];
+		function matrixViewportSize() {
+			const vv = window.visualViewport;
+			let w = window.innerWidth || document.documentElement.clientWidth || 320;
+			let h = window.innerHeight || document.documentElement.clientHeight || 480;
+			if (vv) {
+				w = Math.max(vv.width, w);
+				h = Math.max(vv.height, h);
+			}
+			return { w: Math.max(1, Math.round(w)), h: Math.max(1, Math.round(h)) };
+		}
+		function resizeMatrixCanvas() {
+			const { w, h } = matrixViewportSize();
+			canvas.width = w;
+			canvas.height = h;
+			const columns = Math.max(1, Math.floor(canvas.width / fontSize));
+			drops = Array(columns).fill(1);
+		}
 		function drawMatrix() {
+			if (!canvas.width || !canvas.height || !drops.length) return;
 			ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
-			ctx.fillStyle = '#22eec9';
 			ctx.font = `${fontSize}px JetBrains Mono, monospace`;
 			for (let i = 0; i < drops.length; i++) {
 				const char = charArray[Math.floor(Math.random() * charArray.length)];
@@ -510,10 +545,14 @@
 				drops[i] += 3;
 			}
 		}
+		resizeMatrixCanvas();
 		let matrixInterval = setInterval(drawMatrix, 22);
-		window.addEventListener('resize', () => {
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;
+		window.addEventListener('resize', resizeMatrixCanvas);
+		if (window.visualViewport) {
+			window.visualViewport.addEventListener('resize', resizeMatrixCanvas);
+		}
+		window.addEventListener('orientationchange', () => {
+			setTimeout(resizeMatrixCanvas, 150);
 		});
 		// --- Transition to Terminal ---
 		const matrixContainer = document.getElementById('matrix-container');
@@ -529,10 +568,19 @@
 		let currentUserEmail = '';
 		// Guardar en servidor (subscribe.php). Ruta relativa: mismo directorio que index.html.
 		const SUBSCRIBE_URL = 'subscribe.php';
-		enterBtn.addEventListener('click', () => {
+		function openLoginScreen() {
 			matrixContainer.classList.add('login-mode'); // oculta logo y botón, Matrix sigue visible
 			loginContainer.classList.add('visible');
-			loginNameEl.focus();
+			// iOS: el foco al input falla si el panel aún no pintó con display:flex
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					try { loginNameEl.focus({ preventScroll: true }); } catch (_) { loginNameEl.focus(); }
+				});
+			});
+		}
+		enterBtn.addEventListener('click', (e) => {
+			e.preventDefault();
+			openLoginScreen();
 		});
 		// Términos: solo abrir en click intencional (evita apertura accidental al toque en móvil)
 		(function() {

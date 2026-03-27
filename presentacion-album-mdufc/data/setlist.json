@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "title": "Mitos de un futuro cercano",
+    "subtitle": "Hacia el Ocaso",
+    "eventLine": "Presentación del disco · show en vivo"
+  },
+  "songs": [
+    {
+      "id": "intro-nomios-v2",
+      "title": "Intro — Nomios v2",
+      "about": "Luces: blackout → prendidas lentas. Color: verde azulado / teal holográfico (~2:00).\n\nEscenario vacío; track con texturas frías y digitales. Nomios “despierta”: diagnósticos, mide energía del público, pide participación para “abrir el canal”. Mezcla guía espiritual y asistente tecnológico.\n\nIdeas: voz con modulación tipo AI + delay corto; barra de energía cuando gritan; destellos verdes tipo glitch orgánico.",
+      "lyrics": "(Track + voz Nomios — no letra fija.)",
+      "kind": "song",
+      "duration": "2:00"
+    },
+    {
+      "id": "cae-el-velo",
+      "title": "Cae el Velo",
+      "about": "Luces: cian vibrante. Intro movida; entran Damu, Demi, Nelo y Poli uno por uno saludando y agitando. Al entrar Juanma la canción explota — primer contacto fuerte con la banda (~3:37).\n\nIdeas: humo bajo “portal”; golpe de luz por entrada; transición directa al cierre.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "3:37"
+    },
+    {
+      "id": "espejos",
+      "title": "Espejos",
+      "about": "Color rosa/fucsia. Arranca pegado al cierre anterior, sin respiro. Tema de reflejos, loops y espejismo emocional (~2:40).\n\nIdeas: visuales duplicados / espejo; strobe suave en pre-coro como espejos rotos.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "2:40"
+    },
+    {
+      "id": "pausa-1",
+      "title": "Pausa 1 — luces en la banda",
+      "about": "Luces en toda la banda. Juanma agradece y pregunta si están listos. Colchón de sintes hacia Metamorfosis.",
+      "lyrics": "Momento hablado + puente musical.",
+      "kind": "pausa"
+    },
+    {
+      "id": "metamorfosis",
+      "title": "Metamorfosis",
+      "about": "Color verde esperanza. Intro reconocible; pedir brazos izquierda/derecha para “activar el cambio”. Ritual de transformación colectiva (~3:54).\n\nIdeas: crisálidas / glitch orgánico; corte con “Respiren… transformemos”.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "3:54"
+    },
+    {
+      "id": "mitos-futuro-cercano",
+      "title": "Mitos de un futuro cercano",
+      "about": "Blackout + FX de tormenta. Blanco / azul tormenta. Ambiente de tormenta: gotas, truenos digitales, tensión — primer quiebre fuerte (~4:24).\n\nIdeas: lluvia proyectada; viento panorámico.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "4:24"
+    },
+    {
+      "id": "pausa-2",
+      "title": "Pausa 2 — La conexión",
+      "about": "Luz en el ocaso. Momento íntimo: Juanma habla de conexión, amor y comunidad; dedicación a parejas, amigos, otras bandas y público.",
+      "lyrics": "Momento hablado.",
+      "kind": "pausa"
+    },
+    {
+      "id": "la-conexion",
+      "title": "La Conexión",
+      "about": "Rosa/rojo. Medio rave, íntimo, denso (~3:15).\n\nIdeas: láseres bajos; visuales tipo corazón digital; semioscuridad.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "3:15"
+    },
+    {
+      "id": "lo-que-siento",
+      "title": "Lo que siento",
+      "about": "Rosa/violeta. Pegado a La Conexión; explosivo, “maricoteca”. Saltar al máximo en estribos; en el puente: agacharse y el “uoooooh” (~3:09).\n\nIdeas: confeti o polvo lumínico al final; mantra corto.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "3:09"
+    },
+    {
+      "id": "trascender",
+      "title": "Trascender",
+      "about": "Blackout íntimo. Violeta/blanco. Speech breve: no bajar los brazos, comunidad, resistir juntos (~2:44).\n\nIdeas: estrellas lentas; halo blanco en Juanma en el speech.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "2:44"
+    },
+    {
+      "id": "en-las-sombras",
+      "title": "En las sombras",
+      "about": "Azul en versos; blanco+violeta en estribos. Vuelve la vibra “cumpleañito”, movido (~3:40).\n\nIdeas: humo fino; sombras moviéndose atrás.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "3:40"
+    },
+    {
+      "id": "pausa-3",
+      "title": "Pausa 3 — Nomios (sombras)",
+      "about": "Todo a oscuras. Nomios: tono bíblico / apocalíptico / político-espiritual — humanidad, egoísmo, planeta enojado.",
+      "lyrics": "Nomios hablado.",
+      "kind": "pausa"
+    },
+    {
+      "id": "gaia",
+      "title": "Gaia",
+      "about": "Rojo/blanco. Subterráneo; siluetas inquietantes (~2:24).\n\nIdeas: destellos blancos como truenos; grietas, raíces, magma.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "2:24"
+    },
+    {
+      "id": "cifra",
+      "title": "Cifra",
+      "about": "Rojo/naranja. Continúa el mood de siluetas (~3:05).\n\nIdeas: números cayendo como código roto; pulsos naranjas al kick.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "3:05"
+    },
+    {
+      "id": "sicofante",
+      "title": "Sicofante",
+      "about": "Blackout mutante. Rojo/azul. Intro psycho EDM + flashes; Juanma explica el tema (detractores, comunidad, resistencia) → pausa → tema (~2:45).\n\nIdeas: láser azul “corta” el escenario; whispers distorsionados.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "2:45"
+    },
+    {
+      "id": "pausa-4",
+      "title": "Pausa 4 — Nomios (energía)",
+      "about": "Oscuridad. Nomios baja la energía a propósito, provoca respuesta; juego derecha/izquierda. Puente tipo Aletheia o similar.",
+      "lyrics": "Nomios + interacción.",
+      "kind": "pausa"
+    },
+    {
+      "id": "parias",
+      "title": "Parias",
+      "about": "Verde planta oscuro. Silencio y arranque directo; funde con riff pre-Parias (~2:54).\n\nIdeas: ciudades abandonadas / concreto fisurado; golpes verdes en breakdowns.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "2:54"
+    },
+    {
+      "id": "lagrimas",
+      "title": "Lágrimas (largo)",
+      "about": "Rojo/blanco. Caos y catarsis (~3:30).\n\nIdeas: strobes controlados; agua + fracturas lumínicas.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "3:30"
+    },
+    {
+      "id": "pausa-5",
+      "title": "Pausa 5 — antes de Erial",
+      "about": "Oscuridad. Nomios: “después de la tormenta sale el sol”; realidad maleable, intuición, esperanza. Intro Rami + luces hacia Erial.",
+      "lyrics": "Nomios + transición.",
+      "kind": "pausa"
+    },
+    {
+      "id": "erial",
+      "title": "Erial",
+      "about": "Verde/amarillo. Repite ritual de intro; agradecimientos finales — “este disco es de ustedes” (~3:44).\n\nIdeas: sol naciente glitch; luz amarilla suave en siluetas.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "3:44"
+    },
+    {
+      "id": "madmo",
+      "title": "MADMO",
+      "about": "Blanco/azul. Cierre energético; corte mágico habitual (~4:00).\n\nIdeas: flash blanco absoluto → blackout; pantalla “Gracias por abrir el portal”.",
+      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
+      "kind": "song",
+      "duration": "4:00"
+    }
+  ]
+}
