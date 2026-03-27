@@ -59,7 +59,11 @@
 	}
 
 	function isPausa(song) {
-		return song && song.kind === "pausa";
+		if (!song) return false;
+		if (song.kind === "pausa") return true;
+		// JSON viejo o sin kind: no listar bloques que sigan el patrón "Pausa …"
+		var t = (song.title || "").trim();
+		return /^Pausa\s/i.test(t);
 	}
 
 	/** Último ítem que no es pausa, en o antes del cursor del operador (para “Ahora” / pasado). */
@@ -251,7 +255,7 @@
 	function init() {
 		state.devMode = isDevMode();
 
-		fetch("data/setlist.json", { cache: "no-store" })
+		fetch("data/setlist.json?_=" + Date.now(), { cache: "no-store" })
 			.then(function (r) {
 				if (!r.ok) throw new Error("setlist");
 				return r.json();

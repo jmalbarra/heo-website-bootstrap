@@ -24,7 +24,7 @@
 	};
 
 	function loadSetlist() {
-		return fetch("data/setlist.json", { cache: "no-store" }).then(function (r) {
+		return fetch("data/setlist.json?_=" + Date.now(), { cache: "no-store" }).then(function (r) {
 			if (!r.ok) throw new Error("setlist");
 			return r.json();
 		});
