@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Tu foto — Mitos de un futuro cercano · Hacia el Ocaso</title>
+	<meta name="description" content="Creá una imagen con glitch, colores del disco y marcas para compartir en redes.">
+	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/live.css">
+	<link rel="stylesheet" href="css/share.css">
+</head>
+<body class="share-page">
+	<div id="matrix-bg" aria-hidden="true">
+		<canvas id="matrix-canvas"></canvas>
+		<div id="matrix-overlay"></div>
+	</div>
+	<div class="app-wrap">
+		<div class="brand-mark">
+			<img src="../images/ojo-goth-blanco.png" alt="" class="brand-mark__img" width="72" height="72" decoding="async" role="presentation">
+		</div>
+		<header class="share-intro">
+			<p class="kicker">Compartí</p>
+			<h1>Tu foto con el vibe del disco</h1>
+			<p class="sub">Subí una imagen: le sumamos glitch, colores tipo tapa, mariposas y listo para publicar.</p>
+		</header>
+		<div class="panel share-panel">
+			<label class="share-dropzone">
+				<span class="share-dropzone__label">Elegir foto</span>
+				<span class="share-dropzone__hint">JPG o PNG · se procesa en tu celular o PC, no la subimos a ningún servidor</span>
+				<input type="file" id="share-file" accept="image/*">
+			</label>
+			<div id="share-preview-wrap" class="share-preview-wrap hidden">
+				<div class="share-canvas-frame">
+					<canvas id="share-canvas" width="1080" height="1350" aria-label="Vista previa de tu imagen"></canvas>
+				</div>
+				<div class="share-actions">
+					<button type="button" class="btn" id="btn-shuffle">Otro glitch</button>
+					<button type="button" class="btn btn-primary-solid" id="btn-download">Descargar PNG</button>
+				</div>
+				<p class="share-footer-note">
+					Instagram:
+					<a id="share-ig-link" href="https://www.instagram.com/heo.oficial/" target="_blank" rel="noopener noreferrer">@heo.oficial</a>
+				</p>
+			</div>
+		</div>
+		<a class="share-back" href="index.html">← Volver al show</a>
+	</div>
+	<script src="js/matrix-bg.js"></script>
+	<script src="js/share-photo.js"></script>
+</body>
+</html>

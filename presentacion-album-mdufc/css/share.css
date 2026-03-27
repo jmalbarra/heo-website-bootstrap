@@ -1,0 +1,140 @@
+/* Comparte tu foto — misma línea visual que live.css */
+.share-page .app-wrap {
+	max-width: 480px;
+}
+
+.share-intro {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.share-intro .kicker {
+	font-size: 0.7rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	color: var(--accent-dim);
+	margin-bottom: 8px;
+}
+
+.share-intro h1 {
+	font-family: "Space Grotesk", sans-serif;
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: var(--text);
+	line-height: 1.3;
+	margin-bottom: 8px;
+}
+
+.share-intro .sub {
+	font-size: 0.82rem;
+	color: var(--text-muted);
+	line-height: 1.55;
+}
+
+.share-panel {
+	padding: 22px 20px;
+}
+
+.share-dropzone {
+	display: block;
+	width: 100%;
+	padding: 28px 16px;
+	text-align: center;
+	border: 1px dashed var(--surface-border);
+	border-radius: 12px;
+	background: rgba(0, 0, 0, 0.22);
+	cursor: pointer;
+	transition: border-color 0.3s var(--ease-out), background 0.3s;
+}
+
+.share-dropzone:hover,
+.share-dropzone:focus-within {
+	border-color: var(--accent-dim);
+	background: rgba(34, 238, 201, 0.05);
+}
+
+.share-dropzone input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+	overflow: hidden;
+}
+
+.share-dropzone__label {
+	font-size: 0.78rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.share-dropzone__hint {
+	display: block;
+	margin-top: 8px;
+	font-size: 0.72rem;
+	color: var(--text-muted);
+	letter-spacing: 0.06em;
+}
+
+.share-preview-wrap {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.share-preview-wrap.hidden {
+	display: none;
+}
+
+.share-canvas-frame {
+	display: inline-block;
+	max-width: 100%;
+	border-radius: 10px;
+	overflow: hidden;
+	border: 1px solid var(--surface-border);
+	box-shadow:
+		0 20px 40px rgba(0, 0, 0, 0.45),
+		0 0 0 1px rgba(255, 255, 255, 0.03);
+	line-height: 0;
+	background: #0a0a0c;
+}
+
+.share-canvas-frame canvas {
+	display: block;
+	width: 100%;
+	height: auto;
+	vertical-align: middle;
+}
+
+.share-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 18px;
+	justify-content: center;
+}
+
+.share-actions .btn {
+	flex: 1 1 auto;
+	min-width: 140px;
+}
+
+.share-footer-note {
+	margin-top: 18px;
+	font-size: 0.72rem;
+	color: var(--text-muted);
+	text-align: center;
+	line-height: 1.5;
+}
+
+.share-footer-note a {
+	color: var(--accent-dim);
+}
+
+.share-back {
+	display: block;
+	text-align: center;
+	margin-top: 24px;
+	font-size: 0.75rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
