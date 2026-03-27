@@ -285,13 +285,21 @@ code {
 
 .track-item--locked {
 	cursor: default;
-	opacity: 0.55;
+	opacity: 0.78;
 	border-style: dashed;
 }
 
-.track-item--locked .track-title {
+/* Futuro: solo cifrado animado (sin título real ni segunda línea) */
+.track-item--locked .track-title--cipher {
 	color: var(--text-muted);
-	filter: blur(0.35px);
+	filter: none;
+	font-weight: 400;
+	font-size: 0.82rem;
+	letter-spacing: 0.18em;
+	font-variant-numeric: tabular-nums;
+	user-select: none;
+	line-height: 1.45;
+	word-break: break-all;
 }
 
 .track-item--interlude {
@@ -325,17 +333,6 @@ code {
 	color: var(--accent-dim);
 	flex-shrink: 0;
 	padding-top: 2px;
-}
-
-.cipher-line {
-	display: block;
-	font-size: 0.68rem;
-	letter-spacing: 0.15em;
-	color: var(--text-muted);
-	margin-top: 8px;
-	opacity: 0.75;
-	font-variant-numeric: tabular-nums;
-	user-select: none;
 }
 
 .detail-header {
