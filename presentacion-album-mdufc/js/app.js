@@ -163,11 +163,11 @@
 			var badge = document.createElement("span");
 			badge.className = "track-badge";
 			if (lastSongIdx >= 0) {
-				if (index < lastSongIdx) badge.textContent = "Listo";
+				if (index < lastSongIdx) badge.textContent = "Pasó";
 				else if (index === lastSongIdx) badge.textContent = "Ahora";
 				else badge.textContent = "···";
 			} else {
-				if (index < state.currentIndex) badge.textContent = "Listo";
+				if (index < state.currentIndex) badge.textContent = "Pasó";
 				else if (index > state.currentIndex) badge.textContent = "···";
 				else badge.textContent = "···";
 			}
