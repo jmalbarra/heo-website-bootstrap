@@ -5,12 +5,14 @@
 	var STORAGE_DEV = "presentacion_mdufc_dev_index";
 	var API_STATE = "api/state.php";
 
+	var MSG_FUTURO =
+		"Nomios está descifrando el mensaje…";
+
 	var state = {
 		setlist: null,
 		currentIndex: 0,
 		devMode: false,
 		pollTimer: null,
-		cipherTimers: [],
 		lastError: null,
 	};
 
@@ -56,36 +58,16 @@
 		window.location.hash = "song/" + encodeURIComponent(id);
 	}
 
-	function randomCipherString(len, seed) {
-		var chars = "Ø01Æ§µ¶†¥₿ΨΩχψ7890";
-		var out = "";
-		var x = seed;
-		for (var i = 0; i < len; i++) {
-			x = (x * 1103515245 + 12345 + i * 17) & 0x7fffffff;
-			out += chars[x % chars.length];
-		}
-		return out;
+	function isPausa(song) {
+		return song && song.kind === "pausa";
 	}
 
-	function clearCipherTimers() {
-		state.cipherTimers.forEach(function (id) {
-			clearInterval(id);
-		});
-		state.cipherTimers = [];
-	}
-
-	function attachCipherLines(rootEl) {
-		clearCipherTimers();
-		var lines = rootEl.querySelectorAll("[data-cipher]");
-		lines.forEach(function (el) {
-			var seed = parseInt(el.getAttribute("data-cipher"), 10) || 0;
-			function tick() {
-				el.textContent = randomCipherString(28, seed + Date.now() % 10000);
-			}
-			tick();
-			var id = setInterval(tick, 2200);
-			state.cipherTimers.push(id);
-		});
+	/** Último ítem que no es pausa, en o antes del cursor del operador (para “Ahora” / pasado). */
+	function lastNonPausaIndexAtOrBefore(cursor) {
+		var songs = state.setlist && state.setlist.songs ? state.setlist.songs : [];
+		var i = Math.min(Math.max(0, cursor), songs.length - 1);
+		while (i >= 0 && isPausa(songs[i])) i--;
+		return i;
 	}
 
 	function fetchState() {
@@ -140,8 +122,11 @@
 		var ul = $("#track-list");
 		ul.innerHTML = "";
 		var songs = state.setlist.songs || [];
+		var lastSongIdx = lastNonPausaIndexAtOrBefore(state.currentIndex);
 
 		songs.forEach(function (song, index) {
+			if (isPausa(song)) return;
+
 			var li = document.createElement("li");
 			var btn = document.createElement("button");
 			btn.type = "button";
@@ -149,10 +134,15 @@
 
 			var lockedFuture = index > state.currentIndex;
 
-			if (index < state.currentIndex) btn.classList.add("track-item--past");
-			else if (index === state.currentIndex) btn.classList.add("track-item--current");
-			else btn.classList.add("track-item--locked");
-			if (song.kind === "pausa") btn.classList.add("track-item--interlude");
+			if (lastSongIdx >= 0) {
+				if (index < lastSongIdx) btn.classList.add("track-item--past");
+				else if (index === lastSongIdx) btn.classList.add("track-item--current");
+				else btn.classList.add("track-item--locked");
+			} else {
+				if (index < state.currentIndex) btn.classList.add("track-item--past");
+				else if (index > state.currentIndex) btn.classList.add("track-item--locked");
+				else btn.classList.add("track-item--locked");
+			}
 
 			var row = document.createElement("div");
 			row.className = "track-row";
@@ -160,22 +150,21 @@
 			var title = document.createElement("span");
 			title.className = "track-title";
 			if (lockedFuture) {
-				title.classList.add("track-title--cipher");
-				title.setAttribute("data-cipher", String(index * 7919 + (song.title || "").length));
-				title.textContent = "";
+				title.classList.add("track-title--pending");
+				title.textContent = MSG_FUTURO;
 			} else {
 				title.textContent = song.title || "Sin título";
 			}
 
 			var badge = document.createElement("span");
 			badge.className = "track-badge";
-			if (song.kind === "pausa") {
-				if (index < state.currentIndex) badge.textContent = "—";
-				else if (index === state.currentIndex) badge.textContent = "Pausa";
+			if (lastSongIdx >= 0) {
+				if (index < lastSongIdx) badge.textContent = "Listo";
+				else if (index === lastSongIdx) badge.textContent = "Ahora";
 				else badge.textContent = "···";
 			} else {
 				if (index < state.currentIndex) badge.textContent = "Listo";
-				else if (index === state.currentIndex) badge.textContent = "Ahora";
+				else if (index > state.currentIndex) badge.textContent = "···";
 				else badge.textContent = "···";
 			}
 
@@ -190,7 +179,10 @@
 			} else {
 				btn.setAttribute("disabled", "disabled");
 				btn.setAttribute("aria-disabled", "true");
-				btn.setAttribute("aria-label", "Próximo tema aún no desbloqueado");
+				btn.setAttribute(
+					"aria-label",
+					"Información aún no disponible. Nomios está descifrando el mensaje."
+				);
 			}
 
 			li.appendChild(btn);
@@ -209,7 +201,6 @@
 			statusEl.classList.remove("status-bar--error");
 		}
 
-		attachCipherLines(listEl);
 	}
 
 	function renderDetail(id) {
@@ -221,6 +212,11 @@
 		var song = idx >= 0 ? state.setlist.songs[idx] : null;
 
 		if (!song || !isUnlocked(idx)) {
+			setHashList();
+			return;
+		}
+
+		if (isPausa(song)) {
 			setHashList();
 			return;
 		}
@@ -237,7 +233,6 @@
 			setHashList();
 		};
 
-		clearCipherTimers();
 	}
 
 	function render() {
