@@ -3,16 +3,24 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Operador — Presentación MDUFC</title>
+	<title>Operador — Mitos de un futuro cercano</title>
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="css/live.css">
 </head>
 <body>
+	<div id="matrix-bg" aria-hidden="true">
+		<canvas id="matrix-canvas"></canvas>
+		<div id="matrix-overlay"></div>
+	</div>
 	<div class="app-wrap">
+		<div class="brand-mark">
+			<img src="../images/ojo-goth-blanco.png" alt="Hacia el Ocaso" class="brand-mark__img" width="72" height="72" decoding="async">
+		</div>
 		<header class="header-block">
 			<p class="kicker">Control en vivo</p>
 			<h1 class="font-display">Operador</h1>
+			<p class="sub album-line">Mitos de un futuro cercano</p>
 			<p class="sub">Siguiente / anterior · mismo secreto que <code>config.php</code></p>
 		</header>
 
@@ -38,6 +46,7 @@
 			<p class="status-bar" id="operator-status"></p>
 		</div>
 	</div>
+	<script src="js/matrix-bg.js"></script>
 	<script src="js/operator.js"></script>
 </body>
 </html>

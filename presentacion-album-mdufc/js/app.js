@@ -150,6 +150,7 @@
 			if (index < state.currentIndex) btn.classList.add("track-item--past");
 			else if (index === state.currentIndex) btn.classList.add("track-item--current");
 			else btn.classList.add("track-item--locked");
+			if (song.kind === "pausa") btn.classList.add("track-item--interlude");
 
 			var row = document.createElement("div");
 			row.className = "track-row";
@@ -160,9 +161,15 @@
 
 			var badge = document.createElement("span");
 			badge.className = "track-badge";
-			if (index < state.currentIndex) badge.textContent = "Listo";
-			else if (index === state.currentIndex) badge.textContent = "Ahora";
-			else badge.textContent = "···";
+			if (song.kind === "pausa") {
+				if (index < state.currentIndex) badge.textContent = "—";
+				else if (index === state.currentIndex) badge.textContent = "Pausa";
+				else badge.textContent = "···";
+			} else {
+				if (index < state.currentIndex) badge.textContent = "Listo";
+				else if (index === state.currentIndex) badge.textContent = "Ahora";
+				else badge.textContent = "···";
+			}
 
 			row.appendChild(title);
 			row.appendChild(badge);
