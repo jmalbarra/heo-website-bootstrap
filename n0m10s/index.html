@@ -368,7 +368,8 @@
 				overflow-wrap: anywhere;
 			}
 			#terminal-input { min-width: 0; }
-			#terms-modal { padding: 16px; display: flex; }
+			/* No display:flex aquí: el # vence a .modal-overlay y dejaba el modal siempre visible en móvil */
+			#terms-modal { padding: 16px; }
 			#terms-modal > div { max-width: calc(100vw - 32px); padding: 20px; }
 		}
 		@media (max-width: 360px) {
