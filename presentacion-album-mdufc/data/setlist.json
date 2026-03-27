@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "title": "Presentación MDUFC",
+    "subtitle": "Hacia el Ocaso",
+    "eventLine": "En vivo — setlist"
+  },
+  "songs": [
+    {
+      "id": "ejemplo-1",
+      "title": "Primera luz",
+      "about": "Un tema sobre el instante antes de empezar, cuando el ruido baja y queda solo la expectativa.",
+      "lyrics": "(Letra de ejemplo — reemplazar antes del show.)\n\nVerso uno…\n\nEstribillo…\n\nVerso dos…"
+    },
+    {
+      "id": "ejemplo-2",
+      "title": "Mapa roto",
+      "about": "Sobre perder el rumbo y seguir igual, porque el destino a veces es el camino.",
+      "lyrics": "(Letra de ejemplo.)\n\nBloque A\n\nBloque B"
+    },
+    {
+      "id": "ejemplo-3",
+      "title": "Última llamada",
+      "about": "Cierre del set: todo lo que no se dijo y el eco que queda.",
+      "lyrics": "(Letra de ejemplo.)\n\nFinal…"
+    }
+  ]
+}
