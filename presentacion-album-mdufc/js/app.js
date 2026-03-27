@@ -147,6 +147,8 @@
 			btn.type = "button";
 			btn.className = "track-item";
 
+			var lockedFuture = index > state.currentIndex;
+
 			if (index < state.currentIndex) btn.classList.add("track-item--past");
 			else if (index === state.currentIndex) btn.classList.add("track-item--current");
 			else btn.classList.add("track-item--locked");
@@ -157,7 +159,13 @@
 
 			var title = document.createElement("span");
 			title.className = "track-title";
-			title.textContent = song.title || "Sin título";
+			if (lockedFuture) {
+				title.classList.add("track-title--cipher");
+				title.setAttribute("data-cipher", String(index * 7919 + (song.title || "").length));
+				title.textContent = "";
+			} else {
+				title.textContent = song.title || "Sin título";
+			}
 
 			var badge = document.createElement("span");
 			badge.className = "track-badge";
@@ -175,13 +183,6 @@
 			row.appendChild(badge);
 			btn.appendChild(row);
 
-			if (index > state.currentIndex) {
-				var cipher = document.createElement("span");
-				cipher.className = "cipher-line";
-				cipher.setAttribute("data-cipher", String(index * 7919 + (song.title || "").length));
-				btn.appendChild(cipher);
-			}
-
 			if (isUnlocked(index)) {
 				btn.addEventListener("click", function () {
 					setHashSong(song.id);
@@ -189,6 +190,7 @@
 			} else {
 				btn.setAttribute("disabled", "disabled");
 				btn.setAttribute("aria-disabled", "true");
+				btn.setAttribute("aria-label", "Próximo tema aún no desbloqueado");
 			}
 
 			li.appendChild(btn);

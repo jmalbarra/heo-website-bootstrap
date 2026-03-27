@@ -1,6 +1,6 @@
 /**
- * Fondo tipo lluvia Matrix (misma lógica base que n0m10s/index.html).
- * Requiere en el HTML: #matrix-bg > canvas#matrix-canvas + #matrix-overlay
+ * Fondo lluvia Matrix — misma lógica que n0m10s/index.html.
+ * Requiere: #matrix-bg > canvas#matrix-canvas + #matrix-overlay
  */
 (function () {
 	"use strict";
@@ -8,18 +8,28 @@
 	var canvas = document.getElementById("matrix-canvas");
 	if (!canvas) return;
 
-	var ctx = canvas.getContext("2d");
+	var ctx = canvas.getContext("2d", { alpha: true });
 	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	var charArray = chars.split("");
 	var fontSize = 14;
 	var drops = [];
-	var columns = 0;
-	var matrixInterval;
 
-	function resize() {
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
-		columns = Math.floor(canvas.width / fontSize);
+	function matrixViewportSize() {
+		var vv = window.visualViewport;
+		var w = window.innerWidth || document.documentElement.clientWidth || 320;
+		var h = window.innerHeight || document.documentElement.clientHeight || 480;
+		if (vv) {
+			w = Math.max(vv.width, w);
+			h = Math.max(vv.height, h);
+		}
+		return { w: Math.max(1, Math.round(w)), h: Math.max(1, Math.round(h)) };
+	}
+
+	function resizeMatrixCanvas() {
+		var size = matrixViewportSize();
+		canvas.width = size.w;
+		canvas.height = size.h;
+		var columns = Math.max(1, Math.floor(canvas.width / fontSize));
 		drops = [];
 		for (var i = 0; i < columns; i++) {
 			drops[i] = 1;
@@ -27,10 +37,12 @@
 	}
 
 	function drawMatrix() {
+		if (!canvas.width || !canvas.height || !drops.length) return;
 		ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		ctx.font = fontSize + "px JetBrains Mono, monospace";
-		for (var i = 0; i < drops.length; i++) {
+		var i;
+		for (i = 0; i < drops.length; i++) {
 			var char = charArray[Math.floor(Math.random() * charArray.length)];
 			var x = i * fontSize;
 			var y = drops[i] * fontSize;
@@ -41,7 +53,13 @@
 		}
 	}
 
-	resize();
-	window.addEventListener("resize", resize);
-	matrixInterval = setInterval(drawMatrix, 22);
+	resizeMatrixCanvas();
+	setInterval(drawMatrix, 22);
+	window.addEventListener("resize", resizeMatrixCanvas);
+	if (window.visualViewport) {
+		window.visualViewport.addEventListener("resize", resizeMatrixCanvas);
+	}
+	window.addEventListener("orientationchange", function () {
+		setTimeout(resizeMatrixCanvas, 150);
+	});
 })();
