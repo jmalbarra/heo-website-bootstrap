@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Presentación MDUFC — Hacia el Ocaso</title>
+	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/live.css">
+</head>
+<body>
+	<div class="app-wrap">
+		<div id="view-list">
+			<header class="header-block">
+				<p class="kicker" id="meta-event">En vivo</p>
+				<h1 id="meta-title">…</h1>
+				<p class="sub" id="meta-subtitle"></p>
+			</header>
+			<div class="panel">
+				<ul class="track-list" id="track-list"></ul>
+				<p class="status-bar" id="status-bar"></p>
+			</div>
+		</div>
+
+		<div id="view-detail" class="hidden">
+			<div class="panel">
+				<div class="detail-header">
+					<h2 id="detail-title"></h2>
+					<button type="button" class="btn btn-ghost" id="btn-back">← Volver</button>
+				</div>
+				<div class="about-block">
+					<p class="section-label">De qué habla</p>
+					<p id="about-text"></p>
+				</div>
+				<div class="lyrics-block">
+					<p class="section-label">Letra</p>
+					<pre class="lyrics-pre" id="lyrics-text"></pre>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/app.js"></script>
+</body>
+</html>

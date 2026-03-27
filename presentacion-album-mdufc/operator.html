@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Operador — Presentación MDUFC</title>
+	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/live.css">
+</head>
+<body>
+	<div class="app-wrap">
+		<header class="header-block">
+			<p class="kicker">Control en vivo</p>
+			<h1 class="font-display">Operador</h1>
+			<p class="sub">Siguiente / anterior · mismo secreto que <code>config.php</code></p>
+		</header>
+
+		<div class="panel">
+			<label class="section-label" for="operator-secret" style="display:block;margin-bottom:8px;">Secreto</label>
+			<input type="password" id="operator-secret" class="input-secret" placeholder="OPERATOR_SECRET" autocomplete="off">
+
+			<div class="operator-preview">
+				<p class="label">Tema actual (índice servidor)</p>
+				<p class="song-name" id="preview-song">—</p>
+				<p class="sub" id="preview-index" style="margin-top:8px;">—</p>
+			</div>
+
+			<div class="operator-actions">
+				<button type="button" class="btn" id="btn-prev">← Anterior</button>
+				<button type="button" class="btn btn-primary-solid" id="btn-next">Siguiente →</button>
+			</div>
+			<div class="operator-actions" style="margin-top:8px;">
+				<button type="button" class="btn btn-ghost" id="btn-reset">Ir al inicio</button>
+				<button type="button" class="btn btn-ghost" id="btn-refresh">Refrescar estado</button>
+			</div>
+
+			<p class="status-bar" id="operator-status"></p>
+		</div>
+	</div>
+	<script src="js/operator.js"></script>
+</body>
+</html>
