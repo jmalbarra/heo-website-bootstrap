@@ -23,7 +23,7 @@ El estado en vivo es solo el entero **`currentIndex`** (0 = primer tema). Se gua
 
 1. En el repo: **Settings → Secrets and variables → Actions → New repository secret**.
 2. Nombre: **`PRESENTACION_MDUFC_OPERATOR_SECRET`** · Valor: una cadena larga y aleatoria (la usás también al operar desde `operator.html`).
-3. Los workflows de deploy deben incluir el paso que genera **`includes/config.php`** antes del mirror SFTP. Si tu repo aún no tiene ese cambio en `.github/workflows/`, aplicá el parche: ver **[`APPLY_WORKFLOWS.md`](APPLY_WORKFLOWS.md)**.
+3. En cada deploy, [`.github/workflows/deploy-develop-to-stg.yaml`](../.github/workflows/deploy-develop-to-stg.yaml) y [`.github/workflows/deploy-main-to-prod.yaml`](../.github/workflows/deploy-main-to-prod.yaml) generan **`includes/config.php`** en el runner antes del mirror SFTP.
 
 Así no hace falta crear `config.php` a mano en el servidor ni volver a subirlo tras cada deploy.
 
