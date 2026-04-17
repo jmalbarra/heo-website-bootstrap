@@ -1796,6 +1796,8 @@ body.is-glitching::after {
 }
 .lab-fab__pulse {
   position: absolute;
+  left: 0.7rem;
+  top: 0.7rem;
   width: 42px; height: 42px;
   border-radius: 50%;
   background: var(--fab-red);
@@ -1803,7 +1805,6 @@ body.is-glitching::after {
   animation: lab-pulse 2.4s ease-out infinite;
   pointer-events: none;
   z-index: -1;
-  margin: 0.7rem;
 }
 @keyframes lab-pulse {
   0%   { transform: scale(1);   opacity: 0.45; }
