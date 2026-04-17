@@ -1735,15 +1735,15 @@ body.is-glitching::after {
 
 
 /* ============================================================
-   LAB FAB — botón flotante "Nomios te está esperando"
-   estética hacker / rojo oscuro
+   LAB FAB — "Nomios te está esperando"
+   Mr.Robot: negro + rojo + texto blanco para legibilidad
    ============================================================ */
 :root {
-  /* rojo oscuro estilo hacker / terminal antigua — no neón */
-  --fab-red:        #8b0d14;   /* crimson oscuro (texto base) */
-  --fab-red-hot:    #b81a23;   /* hover / glow peak */
-  --fab-red-deep:   #4a0509;   /* shadow/border base */
-  --fab-red-blood:  #1a0203;   /* más profundo */
+  --fab-red:        #e11d2e;   /* rojo puro (icono / acentos) */
+  --fab-red-hot:    #ff2040;   /* kicker + hover glow */
+  --fab-red-deep:   #6a0010;   /* icono gradiente deep */
+  --fab-red-dark:   #2a0006;   /* icono gradiente más deep */
+  --fab-ink:        #f5f5f5;   /* texto principal — blanco */
 }
 .lab-fab {
   position: fixed;
@@ -1752,20 +1752,18 @@ body.is-glitching::after {
   z-index: 900;
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.75rem;
   padding: 0.7rem 1.1rem 0.7rem 0.7rem;
-  background: linear-gradient(135deg, rgba(8, 2, 3, 0.97), rgba(22, 4, 6, 0.96));
-  border: 1px solid rgba(139, 13, 20, 0.55);
+  background: #050505;
+  border: 1px solid rgba(225, 29, 46, 0.55);
   border-radius: 999px;
-  color: #d97a80;
+  color: var(--fab-ink);
   text-decoration: none;
   font-family: var(--font-mono);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.7),
-    0 0 14px rgba(139, 13, 20, 0.2),
-    inset 0 0 0 1px rgba(139, 13, 20, 0.1);
+    0 10px 36px rgba(0, 0, 0, 0.8),
+    0 0 16px rgba(225, 29, 46, 0.22),
+    inset 0 0 0 1px rgba(225, 29, 46, 0.08);
   transform: translateY(120%) scale(0.85);
   opacity: 0;
   transition: transform 0.5s var(--ease-out), opacity 0.4s, box-shadow 0.4s, border-color 0.4s;
@@ -1778,9 +1776,9 @@ body.is-glitching::after {
 .lab-fab:hover {
   border-color: var(--fab-red-hot);
   box-shadow:
-    0 12px 44px rgba(0, 0, 0, 0.75),
-    0 0 24px rgba(184, 26, 35, 0.4),
-    inset 0 0 0 1px rgba(184, 26, 35, 0.15);
+    0 14px 48px rgba(0, 0, 0, 0.85),
+    0 0 28px rgba(255, 32, 64, 0.5),
+    inset 0 0 0 1px rgba(255, 32, 64, 0.18);
 }
 .lab-fab__icon {
   position: relative;
@@ -1789,47 +1787,47 @@ body.is-glitching::after {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: radial-gradient(circle at 32% 30%, var(--fab-red), var(--fab-red-deep) 75%, var(--fab-red-blood));
-  color: #e8aeb2;
+  background: radial-gradient(circle at 32% 28%, var(--fab-red), var(--fab-red-deep) 72%, var(--fab-red-dark));
+  color: var(--fab-ink);
   flex-shrink: 0;
   box-shadow:
-    0 0 10px rgba(139, 13, 20, 0.5),
-    inset 0 0 8px rgba(0, 0, 0, 0.6);
+    0 0 12px rgba(225, 29, 46, 0.55),
+    inset 0 0 8px rgba(0, 0, 0, 0.55);
 }
 .lab-fab__pulse {
   position: absolute;
   width: 42px; height: 42px;
   border-radius: 50%;
   background: var(--fab-red);
-  opacity: 0.35;
+  opacity: 0.45;
   animation: lab-pulse 2.4s ease-out infinite;
   pointer-events: none;
   z-index: -1;
   margin: 0.7rem;
 }
 @keyframes lab-pulse {
-  0%   { transform: scale(1);   opacity: 0.35; }
+  0%   { transform: scale(1);   opacity: 0.45; }
   70%  { transform: scale(1.9); opacity: 0; }
   100% { transform: scale(1.9); opacity: 0; }
 }
 .lab-fab__label {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 .lab-fab__kicker {
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--fab-red);
-  text-shadow: 0 0 6px rgba(139, 13, 20, 0.4);
+  color: var(--fab-red-hot);
+  text-shadow: 0 0 6px rgba(255, 32, 64, 0.35);
 }
 .lab-fab__text {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  color: #c86a6f;
+  color: var(--fab-ink);
   letter-spacing: 0.01em;
   white-space: nowrap;
 }
