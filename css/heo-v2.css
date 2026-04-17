@@ -25,6 +25,7 @@
 
   /* Tipografía */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-hero:    'Orbitron', 'Space Grotesk', system-ui, sans-serif; /* cyber/neuropol-like */
   --font-mono:    'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
 
   /* Layout */
@@ -302,11 +303,11 @@ body::after {
 }
 
 .hero__title {
-  font-family: var(--font-display);
-  font-size: clamp(2.75rem, 10vw, 7.5rem);
+  font-family: var(--font-hero);
+  font-size: clamp(2.1rem, 7.5vw, 5.5rem);
   font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.035em;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   margin-bottom: 1.75rem;
 }
@@ -521,7 +522,7 @@ body::after {
 }
 
 .section__title {
-  font-family: var(--font-display);
+  font-family: var(--font-hero);
   font-size: clamp(2.25rem, 5.5vw, 4.5rem);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -605,7 +606,7 @@ body::after {
 
 .show-featured__day {
   display: block;
-  font-family: var(--font-display);
+  font-family: var(--font-hero);
   font-size: clamp(2.75rem, 7vw, 5rem);
   font-weight: 700;
   color: var(--accent);
@@ -897,7 +898,7 @@ body::after {
 /* Grid de redes sociales */
 .social-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -1033,26 +1034,35 @@ body::after {
   filter: drop-shadow(0 0 10px rgba(34, 238, 201, 0.5));
 }
 
+.site-footer__manifesto {
+  flex: 1;
+  min-width: 220px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  margin: 0;
+}
+.site-footer__manifesto strong {
+  color: var(--text);
+  font-weight: 500;
+}
+.site-footer__amp {
+  color: var(--accent);
+  font-style: italic;
+  padding: 0 0.15em;
+  animation: breathe-text 4s ease-in-out infinite;
+}
+
 .site-footer__copy {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   color: var(--text-dim);
   letter-spacing: 0.06em;
+  flex-shrink: 0;
 }
-
-.site-footer__links {
-  display: flex;
-  gap: 1.5rem;
-}
-.site-footer__link {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: color 0.3s;
-}
-.site-footer__link:hover { color: var(--accent); }
 
 
 /* ============================================================
@@ -1338,7 +1348,7 @@ body::after { opacity: 0.065; }
   border-radius: 50%;
   pointer-events: none;
   z-index: 10000;
-  transform: translate(-50%, -50%);
+  will-change: transform;
   box-shadow: 0 0 8px var(--accent), 0 0 18px rgba(34,238,201,0.5);
   transition: width .15s var(--ease-out), height .15s var(--ease-out), background .15s;
 }
@@ -1350,7 +1360,7 @@ body::after { opacity: 0.065; }
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
+  will-change: transform;
   transition: width .3s var(--ease-out), height .3s var(--ease-out), border-color .3s, box-shadow .3s;
 }
 
@@ -1364,8 +1374,24 @@ body::after { opacity: 0.065; }
   border-color: var(--accent);
   box-shadow: 0 0 18px rgba(34,238,201,0.25);
 }
-.cursor-dot.clicking { transform: translate(-50%,-50%) scale(0.6); }
-.cursor-ring.clicking { transform: translate(-50%,-50%) scale(0.85); }
+/* Perf-lite: saca todos los FX pesados para GPUs viejas */
+.perf-lite .cursor-dot,
+.perf-lite .cursor-ring { display: none !important; }
+.perf-lite #ambient-canvas { display: none !important; }
+.perf-lite .scanlines { display: none !important; }
+.perf-lite .hero__scan { display: none !important; }
+.perf-lite body::before,
+.perf-lite .has-glitch::before,
+.perf-lite .has-glitch::after { animation: none !important; }
+.perf-lite .hero__title-line { text-shadow: none !important; }
+.perf-lite * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.15s !important;
+}
+@media (pointer: fine) {
+  .perf-lite, .perf-lite * { cursor: auto !important; }
+}
 
 /* --- Glitch en texto --- */
 .has-glitch {
@@ -1505,13 +1531,11 @@ body::after { opacity: 0.065; }
    ============================================================ */
 @keyframes page-glitch {
   0%   { transform: translate(0, 0); filter: none; }
-  10%  { transform: translate(-2px, 1px); filter: hue-rotate(8deg) saturate(1.1); }
-  20%  { transform: translate(3px, -2px) skewX(-0.6deg); filter: hue-rotate(-4deg); }
-  30%  { transform: translate(-1px, 2px); filter: brightness(1.15) contrast(1.08); }
+  12%  { transform: translate(0, 1px); filter: hue-rotate(8deg) saturate(1.1); }
+  25%  { transform: translate(0, -1px); filter: hue-rotate(-4deg) brightness(1.1); }
   45%  { transform: translate(0, 0); filter: none; }
-  55%  { transform: translate(2px, 0) skewX(0.4deg); filter: saturate(1.25); }
-  70%  { transform: translate(-3px, -1px); filter: hue-rotate(6deg); }
-  85%  { transform: translate(1px, 1px); filter: none; }
+  60%  { transform: translate(0, 1px); filter: saturate(1.25); }
+  78%  { transform: translate(0, 0); filter: hue-rotate(6deg); }
   100% { transform: translate(0, 0); filter: none; }
 }
 @keyframes page-glitch-overlay {
@@ -1609,7 +1633,7 @@ body.is-glitching::after {
 }
 
 .countdown__num {
-  font-family: var(--font-display);
+  font-family: var(--font-hero);
   font-size: clamp(1.9rem, 6vw, 3.25rem);
   font-weight: 700;
   line-height: 1;
@@ -1633,7 +1657,7 @@ body.is-glitching::after {
 }
 
 .countdown__sep {
-  font-family: var(--font-display);
+  font-family: var(--font-hero);
   font-size: clamp(1.4rem, 5vw, 2.5rem);
   color: var(--accent);
   font-weight: 700;
@@ -1709,3 +1733,97 @@ body.is-glitching::after {
   .video-grid--small { grid-template-columns: 1fr; }
 }
 
+
+/* ============================================================
+   LAB FAB — botón flotante tipo WhatsApp
+   ============================================================ */
+.lab-fab {
+  position: fixed;
+  right: clamp(1rem, 3vw, 1.75rem);
+  bottom: clamp(1rem, 3vw, 1.75rem);
+  z-index: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1.1rem 0.7rem 0.7rem;
+  background: linear-gradient(135deg, rgba(10, 12, 14, 0.95), rgba(20, 28, 32, 0.92));
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--font-display);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    0 0 18px rgba(34, 238, 201, 0.2);
+  transform: translateY(120%) scale(0.85);
+  opacity: 0;
+  transition: transform 0.5s var(--ease-out), opacity 0.4s, box-shadow 0.4s, border-color 0.4s;
+  will-change: transform, opacity;
+}
+.lab-fab.is-visible {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+.lab-fab:hover {
+  border-color: var(--accent);
+  box-shadow:
+    0 12px 44px rgba(0, 0, 0, 0.5),
+    0 0 32px rgba(34, 238, 201, 0.4);
+}
+.lab-fab__icon {
+  position: relative;
+  width: 42px; height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  flex-shrink: 0;
+  box-shadow: 0 0 14px rgba(34, 238, 201, 0.55);
+}
+.lab-fab__pulse {
+  position: absolute;
+  left: calc(clamp(1rem, 3vw, 1.75rem) * 0);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.45;
+  animation: lab-pulse 2.2s ease-out infinite;
+  pointer-events: none;
+  z-index: -1;
+  margin: 0.7rem;
+}
+@keyframes lab-pulse {
+  0%   { transform: scale(1);   opacity: 0.45; }
+  70%  { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.lab-fab__label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.lab-fab__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.lab-fab__text {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+@media (max-width: 540px) {
+  .lab-fab {
+    padding: 0.55rem;
+    gap: 0;
+  }
+  .lab-fab__label { display: none; }
+}
+.perf-lite .lab-fab__pulse { display: none; }
