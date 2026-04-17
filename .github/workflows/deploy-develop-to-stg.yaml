@@ -39,6 +39,6 @@ jobs:
         set net:max-retries 3
         set net:reconnect-interval-base 5
         cd htdocs/staging
-        mirror -R --ignore-time --parallel=10 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -X '.DS_Store' . .
+        mirror -R --ignore-time --parallel=10 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -x '^\.claude(/|$$)' -X '.DS_Store' -X 'serve.ps1' -X '.gitignore' . .
         bye
         EOF
