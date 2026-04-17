@@ -1735,8 +1735,14 @@ body.is-glitching::after {
 
 
 /* ============================================================
-   LAB FAB — botón flotante tipo WhatsApp
+   LAB FAB — botón flotante "Nomios te está esperando"
+   estética hacker / rojo oscuro
    ============================================================ */
+:root {
+  --fab-red:        #ff2e3d;
+  --fab-red-deep:   #8a0011;
+  --fab-red-blood:  #3a0007;
+}
 .lab-fab {
   position: fixed;
   right: clamp(1rem, 3vw, 1.75rem);
@@ -1746,17 +1752,18 @@ body.is-glitching::after {
   align-items: center;
   gap: 0.7rem;
   padding: 0.7rem 1.1rem 0.7rem 0.7rem;
-  background: linear-gradient(135deg, rgba(10, 12, 14, 0.95), rgba(20, 28, 32, 0.92));
-  border: 1px solid var(--accent-border);
+  background: linear-gradient(135deg, rgba(20, 4, 6, 0.96), rgba(42, 6, 10, 0.94));
+  border: 1px solid rgba(255, 46, 61, 0.45);
   border-radius: 999px;
-  color: var(--text);
+  color: #ffdde1;
   text-decoration: none;
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.45),
-    0 0 18px rgba(34, 238, 201, 0.2);
+    0 8px 32px rgba(0, 0, 0, 0.55),
+    0 0 18px rgba(255, 46, 61, 0.25),
+    inset 0 0 0 1px rgba(255, 46, 61, 0.08);
   transform: translateY(120%) scale(0.85);
   opacity: 0;
   transition: transform 0.5s var(--ease-out), opacity 0.4s, box-shadow 0.4s, border-color 0.4s;
@@ -1767,10 +1774,11 @@ body.is-glitching::after {
   opacity: 1;
 }
 .lab-fab:hover {
-  border-color: var(--accent);
+  border-color: var(--fab-red);
   box-shadow:
-    0 12px 44px rgba(0, 0, 0, 0.5),
-    0 0 32px rgba(34, 238, 201, 0.4);
+    0 12px 44px rgba(0, 0, 0, 0.6),
+    0 0 36px rgba(255, 46, 61, 0.55),
+    inset 0 0 0 1px rgba(255, 46, 61, 0.18);
 }
 .lab-fab__icon {
   position: relative;
@@ -1779,27 +1787,28 @@ body.is-glitching::after {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--accent);
-  color: var(--bg);
+  background: radial-gradient(circle at 30% 30%, var(--fab-red), var(--fab-red-deep) 70%, var(--fab-red-blood));
+  color: #ffe8ea;
   flex-shrink: 0;
-  box-shadow: 0 0 14px rgba(34, 238, 201, 0.55);
+  box-shadow:
+    0 0 14px rgba(255, 46, 61, 0.6),
+    inset 0 0 6px rgba(0, 0, 0, 0.45);
 }
 .lab-fab__pulse {
   position: absolute;
-  left: calc(clamp(1rem, 3vw, 1.75rem) * 0);
   width: 42px; height: 42px;
   border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.45;
+  background: var(--fab-red);
+  opacity: 0.5;
   animation: lab-pulse 2.2s ease-out infinite;
   pointer-events: none;
   z-index: -1;
   margin: 0.7rem;
 }
 @keyframes lab-pulse {
-  0%   { transform: scale(1);   opacity: 0.45; }
-  70%  { transform: scale(1.8); opacity: 0; }
-  100% { transform: scale(1.8); opacity: 0; }
+  0%   { transform: scale(1);   opacity: 0.5; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
 }
 .lab-fab__label {
   display: flex;
@@ -1809,15 +1818,29 @@ body.is-glitching::after {
 .lab-fab__kicker {
   font-family: var(--font-mono);
   font-size: 0.6rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--fab-red);
+  text-shadow: 0 0 8px rgba(255, 46, 61, 0.55);
 }
 .lab-fab__text {
-  font-size: 0.92rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   font-weight: 500;
-  color: var(--text);
-  letter-spacing: -0.005em;
+  color: #ffdde1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.lab-fab__caret {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--fab-red);
+  font-weight: 700;
+  animation: lab-caret 1s steps(2, end) infinite;
+}
+@keyframes lab-caret {
+  0%, 50%  { opacity: 1; }
+  51%, 100%{ opacity: 0; }
 }
 @media (max-width: 540px) {
   .lab-fab {
@@ -1827,3 +1850,4 @@ body.is-glitching::after {
   .lab-fab__label { display: none; }
 }
 .perf-lite .lab-fab__pulse { display: none; }
+.perf-lite .lab-fab__caret { animation: none; opacity: 1; }
