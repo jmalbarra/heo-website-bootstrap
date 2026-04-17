@@ -1,0 +1,6 @@
+# Claude Code local config (per-user, no deployar)
+.claude/
+
+# OS / editor
+.DS_Store
+Thumbs.db
