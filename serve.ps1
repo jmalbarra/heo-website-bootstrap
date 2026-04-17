@@ -17,7 +17,7 @@ $mimeTypes = @{
 while ($listener.IsListening) {
   $ctx  = $listener.GetContext()
   $path = $ctx.Request.Url.LocalPath
-  if ($path -eq '/') { $path = '/index.html' }
+  if ($path -eq '/') { $path = '/index_new.html' }
   $file = Join-Path $root ($path.TrimStart('/').Replace('/', [System.IO.Path]::DirectorySeparatorChar))
   if (Test-Path $file -PathType Leaf) {
     $ext  = [System.IO.Path]::GetExtension($file)
