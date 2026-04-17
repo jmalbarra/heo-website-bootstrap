@@ -9,6 +9,52 @@ const ACCENT_R = 34, ACCENT_G = 238, ACCENT_B = 201;
 const accent = (a) => `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},${a})`;
 const lerp   = (a, b, t) => a + (b - a) * t;
 const isMobile = () => window.innerWidth < 768;
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+/* ============================================================
+   PERF DETECTION
+   Flagea "perf-lite" si el dispositivo es débil o el FPS cae.
+   ============================================================ */
+const HEO = {
+  lite: false,
+  setLite(reason) {
+    if (this.lite) return;
+    this.lite = true;
+    document.body.classList.add('perf-lite');
+    console.info('[heo] perf-lite activado:', reason);
+  }
+};
+
+/* Detección estática al cargar */
+(function initPerfDetection() {
+  const cores = navigator.hardwareConcurrency || 4;
+  const mem   = navigator.deviceMemory || 4;
+  if (cores <= 2 || mem <= 2) HEO.setLite('low-end hardware');
+  if (prefersReducedMotion())  HEO.setLite('prefers-reduced-motion');
+})();
+
+/* Monitor de FPS: si cae sostenido, bajamos fx */
+(function initFpsWatchdog() {
+  if (HEO.lite) return;
+  let frames = 0, last = performance.now(), slowSeconds = 0;
+
+  function loop(now) {
+    frames++;
+    if (now - last >= 1000) {
+      const fps = frames * 1000 / (now - last);
+      frames = 0; last = now;
+      if (fps < 32) {
+        slowSeconds++;
+        if (slowSeconds >= 3) { HEO.setLite('fps<32 x3s'); return; }
+      } else {
+        slowSeconds = 0;
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
 
 
 /* ============================================================
@@ -43,7 +89,7 @@ const isMobile = () => window.innerWidth < 768;
   ];
 
   /* Partículas ascendentes — reducidas en móvil */
-  const PCOUNT = isMobile() ? 18 : 44;
+  const PCOUNT = isMobile() ? 12 : 28;
 
   function mkParticle(randomY = true) {
     return {
@@ -59,6 +105,11 @@ const isMobile = () => window.innerWidth < 768;
   const particles = Array.from({ length: PCOUNT }, () => mkParticle(true));
 
   function drawFrame() {
+    if (HEO.lite || document.hidden) {
+      ctx.clearRect(0, 0, W, H);
+      requestAnimationFrame(drawFrame);
+      return;
+    }
     ctx.clearRect(0, 0, W, H);
 
     /* --- Orbes --- */
@@ -305,6 +356,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
    ============================================================ */
 (function initCursor() {
   if (!window.matchMedia('(pointer: fine)').matches) return;
+  if (HEO.lite) return;
 
   const dot  = document.createElement('div');
   const ring = document.createElement('div');
@@ -314,24 +366,32 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
   let mx = -200, my = -200;
   let rx = -200, ry = -200;
+  let dotDirty = true;
 
-  /* Dot sigue directo */
+  /* mousemove: solo guarda coords — el render va en RAF */
   document.addEventListener('mousemove', e => {
     mx = e.clientX;
     my = e.clientY;
-    dot.style.left = mx + 'px';
-    dot.style.top  = my + 'px';
-  });
+    dotDirty = true;
+  }, { passive: true });
 
-  /* Ring con lerp */
-  function tickRing() {
-    rx = lerp(rx, mx, 0.11);
-    ry = lerp(ry, my, 0.11);
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(tickRing);
+  /* Un solo RAF para dot + ring, usando transform (mucho más rápido que top/left) */
+  function tick() {
+    if (HEO.lite) {
+      dot.style.display = 'none';
+      ring.style.display = 'none';
+      return;
+    }
+    if (dotDirty) {
+      dot.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%)`;
+      dotDirty = false;
+    }
+    rx = lerp(rx, mx, 0.18);
+    ry = lerp(ry, my, 0.18);
+    ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+    requestAnimationFrame(tick);
   }
-  tickRing();
+  tick();
 
   /* Hover en interactivos */
   function onEnter() { dot.classList.add('hovering');  ring.classList.add('hovering'); }
@@ -396,21 +456,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const body = document.body;
-  const MIN_GAP = 9000;   // 9s mínimo entre glitches
-  const MAX_GAP = 22000;  // 22s máximo
+  const MIN_GAP = 30000;  // 30s mínimo entre glitches
+  const MAX_GAP = 75000;  // 75s máximo
 
   function trigger() {
+    if (document.hidden || body.classList.contains('perf-lite')) { schedule(); return; }
     body.classList.add('is-glitching');
     setTimeout(() => body.classList.remove('is-glitching'), 650);
-
-    /* 25% de las veces: glitch doble rápido */
-    if (Math.random() < 0.25) {
-      setTimeout(() => {
-        body.classList.add('is-glitching');
-        setTimeout(() => body.classList.remove('is-glitching'), 650);
-      }, 900);
-    }
-
     schedule();
   }
 
@@ -419,8 +471,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     setTimeout(trigger, wait);
   }
 
-  /* Primer glitch entre 5-12s después de cargar */
-  setTimeout(trigger, 5000 + Math.random() * 7000);
+  /* Primer glitch entre 25-45s después de cargar */
+  setTimeout(trigger, 25000 + Math.random() * 20000);
 })();
 
 
@@ -433,3 +485,24 @@ window.addEventListener('resize', () => {
   document.documentElement.style.setProperty('--mx', '50%');
   document.documentElement.style.setProperty('--my', '50%');
 }, { passive: true });
+
+
+/* ============================================================
+   LAB FAB — aparece tras scrollear el hero
+   ============================================================ */
+(function initLabFab() {
+  const fab = document.getElementById('lab-fab');
+  if (!fab) return;
+
+  const hero = document.getElementById('inicio');
+  if (!hero) return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      /* Cuando el hero sale casi entero, mostramos el FAB */
+      fab.classList.toggle('is-visible', !e.isIntersecting);
+    });
+  }, { threshold: 0.15 });
+
+  io.observe(hero);
+})();
