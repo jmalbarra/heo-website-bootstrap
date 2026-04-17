@@ -390,6 +390,41 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 
 /* ============================================================
+   PAGE GLITCH — cada tanto la página parpadea
+   ============================================================ */
+(function initPageGlitch() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const body = document.body;
+  const MIN_GAP = 9000;   // 9s mínimo entre glitches
+  const MAX_GAP = 22000;  // 22s máximo
+
+  function trigger() {
+    body.classList.add('is-glitching');
+    setTimeout(() => body.classList.remove('is-glitching'), 650);
+
+    /* 25% de las veces: glitch doble rápido */
+    if (Math.random() < 0.25) {
+      setTimeout(() => {
+        body.classList.add('is-glitching');
+        setTimeout(() => body.classList.remove('is-glitching'), 650);
+      }, 900);
+    }
+
+    schedule();
+  }
+
+  function schedule() {
+    const wait = MIN_GAP + Math.random() * (MAX_GAP - MIN_GAP);
+    setTimeout(trigger, wait);
+  }
+
+  /* Primer glitch entre 5-12s después de cargar */
+  setTimeout(trigger, 5000 + Math.random() * 7000);
+})();
+
+
+/* ============================================================
    AMBIENT — aumentar intensidad de orbes
    ============================================================ */
 /* Los orbes ya están definidos en initAmbient().
