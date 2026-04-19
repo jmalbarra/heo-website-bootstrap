@@ -495,14 +495,16 @@ window.addEventListener('resize', () => {
   if (!fab) return;
 
   const hero = document.getElementById('inicio');
-  if (!hero) return;
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      /* Cuando el hero sale casi entero, mostramos el FAB */
-      fab.classList.toggle('is-visible', !e.isIntersecting);
-    });
-  }, { threshold: 0.15 });
+  function show() { fab.classList.add('is-visible'); }
+  function hide() { fab.classList.remove('is-visible'); }
 
-  io.observe(hero);
+  function update() {
+    if (!hero) { show(); return; }
+    const bottom = hero.getBoundingClientRect().bottom;
+    bottom < window.innerHeight * 0.15 ? show() : hide();
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
 })();
