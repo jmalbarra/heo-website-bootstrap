@@ -28,6 +28,7 @@
 
 	var glitchSeed = Date.now();
 	var hasImage = false;
+	var butterflyImg = new Image();
 
 	function seededRandom(seed) {
 		var s = seed % 2147483647;
@@ -170,97 +171,14 @@
 	}
 
 	function drawButterfly(cx, cy, scale, angle, alpha) {
+		if (!butterflyImg.complete || !butterflyImg.naturalWidth) return;
 		ctx.save();
 		ctx.translate(cx, cy);
 		ctx.rotate(angle);
-		ctx.scale(scale, scale);
 		ctx.globalAlpha = alpha;
-
-		var cWing = "rgba(60, 130, 255, 0.82)";
-		var cDeep = "rgba(30,  75, 200, 0.60)";
-		var cBody = "rgba(160, 210, 255, 0.75)";
-		var cAnt  = "rgba(160, 210, 255, 0.55)";
-
-		/* Ala superior izquierda */
-		ctx.beginPath();
-		ctx.moveTo(0, 0);
-		ctx.bezierCurveTo(-6, -20, -34, -22, -30, -4);
-		ctx.bezierCurveTo(-26,  6,  -8,  10,   0,  4);
-		ctx.closePath();
-		ctx.fillStyle = cWing;
-		ctx.fill();
-
-		/* Sombra interior ala sup izq */
-		ctx.beginPath();
-		ctx.moveTo(-2, 0);
-		ctx.bezierCurveTo(-6, -12, -22, -16, -22, -4);
-		ctx.bezierCurveTo(-20,  4,  -8,   8,  -2,  4);
-		ctx.closePath();
-		ctx.fillStyle = cDeep;
-		ctx.fill();
-
-		/* Ala superior derecha */
-		ctx.beginPath();
-		ctx.moveTo(0, 0);
-		ctx.bezierCurveTo( 6, -20, 34, -22, 30, -4);
-		ctx.bezierCurveTo(26,   6,  8,  10,  0,  4);
-		ctx.closePath();
-		ctx.fillStyle = cWing;
-		ctx.fill();
-
-		/* Sombra interior ala sup der */
-		ctx.beginPath();
-		ctx.moveTo(2, 0);
-		ctx.bezierCurveTo( 6, -12, 22, -16, 22, -4);
-		ctx.bezierCurveTo(20,   4,  8,   8,  2,  4);
-		ctx.closePath();
-		ctx.fillStyle = cDeep;
-		ctx.fill();
-
-		/* Ala inferior izquierda */
-		ctx.beginPath();
-		ctx.moveTo(-1, 4);
-		ctx.bezierCurveTo(-8,  8, -24, 12, -22, 24);
-		ctx.bezierCurveTo(-20, 32,  -4, 28,   0, 16);
-		ctx.closePath();
-		ctx.fillStyle = cWing;
-		ctx.fill();
-
-		/* Ala inferior derecha */
-		ctx.beginPath();
-		ctx.moveTo(1, 4);
-		ctx.bezierCurveTo( 8,  8, 24, 12, 22, 24);
-		ctx.bezierCurveTo(20, 32,  4, 28,  0, 16);
-		ctx.closePath();
-		ctx.fillStyle = cWing;
-		ctx.fill();
-
-		/* Cuerpo */
-		ctx.beginPath();
-		ctx.ellipse(0, 8, 2.5, 11, 0, 0, Math.PI * 2);
-		ctx.fillStyle = cBody;
-		ctx.fill();
-
-		/* Antenas */
-		ctx.strokeStyle = cAnt;
-		ctx.lineWidth = 1.5;
-		ctx.lineCap = "round";
-		ctx.beginPath();
-		ctx.moveTo(-1.5, -2);
-		ctx.quadraticCurveTo(-12, -20, -16, -28);
-		ctx.stroke();
-		ctx.beginPath();
-		ctx.moveTo(1.5, -2);
-		ctx.quadraticCurveTo(12, -20, 16, -28);
-		ctx.stroke();
-		ctx.fillStyle = cAnt;
-		ctx.beginPath();
-		ctx.arc(-16, -28, 2.5, 0, Math.PI * 2);
-		ctx.fill();
-		ctx.beginPath();
-		ctx.arc(16, -28, 2.5, 0, Math.PI * 2);
-		ctx.fill();
-
+		var w = 160 * scale;
+		var h = 144 * scale;
+		ctx.drawImage(butterflyImg, -w / 2, -h / 2, w, h);
 		ctx.restore();
 	}
 
@@ -401,6 +319,61 @@
 		if (hasImage) render();
 	};
 	logoImg.src = "../images/ojo-goth-blanco.png";
+
+	(function loadButterflyImg() {
+		var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180">'
+			+ '<defs>'
+			+ '<radialGradient id="gl" cx="52" cy="70" r="75" gradientUnits="userSpaceOnUse">'
+			+ '<stop offset="0%" stop-color="#b8daff"/>'
+			+ '<stop offset="40%" stop-color="#4488ff"/>'
+			+ '<stop offset="100%" stop-color="#0f2db0"/>'
+			+ '</radialGradient>'
+			+ '<radialGradient id="gr" cx="148" cy="70" r="75" gradientUnits="userSpaceOnUse">'
+			+ '<stop offset="0%" stop-color="#b8daff"/>'
+			+ '<stop offset="40%" stop-color="#4488ff"/>'
+			+ '<stop offset="100%" stop-color="#0f2db0"/>'
+			+ '</radialGradient>'
+			+ '</defs>'
+			/* Ala sup izq */
+			+ '<path d="M97,72 C80,50 45,22 22,42 C8,58 14,92 40,108 C60,118 82,112 97,105 Z" fill="url(#gl)" opacity="0.92"/>'
+			+ '<path d="M97,72 C80,50 45,22 22,42 C8,58 14,92 40,108 C60,118 82,112 97,105 Z" fill="white" opacity="0.10"/>'
+			/* Ala sup der */
+			+ '<path d="M103,72 C120,50 155,22 178,42 C192,58 186,92 160,108 C140,118 118,112 103,105 Z" fill="url(#gr)" opacity="0.92"/>'
+			+ '<path d="M103,72 C120,50 155,22 178,42 C192,58 186,92 160,108 C140,118 118,112 103,105 Z" fill="white" opacity="0.10"/>'
+			/* Ala inf izq */
+			+ '<path d="M95,105 C75,112 42,118 38,140 C34,158 58,164 78,156 C92,150 95,132 95,118 Z" fill="#1e5ce8" opacity="0.85"/>'
+			/* Ala inf der */
+			+ '<path d="M105,105 C125,112 158,118 162,140 C166,158 142,164 122,156 C108,150 105,132 105,118 Z" fill="#1e5ce8" opacity="0.85"/>'
+			/* Venas ala izq */
+			+ '<g stroke="#071a60" stroke-width="0.9" stroke-opacity="0.32" fill="none">'
+			+ '<line x1="97" y1="83" x2="22" y2="50"/>'
+			+ '<line x1="97" y1="89" x2="28" y2="97"/>'
+			+ '<line x1="97" y1="96" x2="55" y2="112"/>'
+			+ '</g>'
+			/* Venas ala der */
+			+ '<g stroke="#071a60" stroke-width="0.9" stroke-opacity="0.32" fill="none">'
+			+ '<line x1="103" y1="83" x2="178" y2="50"/>'
+			+ '<line x1="103" y1="89" x2="172" y2="97"/>'
+			+ '<line x1="103" y1="96" x2="145" y2="112"/>'
+			+ '</g>'
+			/* Cuerpo */
+			+ '<ellipse cx="100" cy="113" rx="3.5" ry="21" fill="#05101e" opacity="0.88"/>'
+			+ '<ellipse cx="100" cy="87" rx="4.5" ry="7" fill="#05101e" opacity="0.88"/>'
+			+ '<circle cx="100" cy="76" r="4" fill="#05101e" opacity="0.88"/>'
+			/* Antenas */
+			+ '<path d="M98,73 Q76,44 64,16" stroke="#05101e" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.82"/>'
+			+ '<path d="M102,73 Q124,44 136,16" stroke="#05101e" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.82"/>'
+			+ '<ellipse cx="63" cy="15" rx="4.5" ry="3" fill="#05101e" opacity="0.82"/>'
+			+ '<ellipse cx="137" cy="15" rx="4.5" ry="3" fill="#05101e" opacity="0.82"/>'
+			+ '</svg>';
+		var blob = new Blob([svg], { type: "image/svg+xml" });
+		var url = URL.createObjectURL(blob);
+		butterflyImg.onload = function () {
+			URL.revokeObjectURL(url);
+			if (hasImage) render();
+		};
+		butterflyImg.src = url;
+	}());
 
 	if (igLink) {
 		igLink.href = "https://www.instagram.com/heo.oficial/";
