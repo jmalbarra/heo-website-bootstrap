@@ -173,38 +173,92 @@
 		ctx.save();
 		ctx.translate(cx, cy);
 		ctx.rotate(angle);
-		/* Escala uniforme para no aplastar las formas */
 		ctx.scale(scale, scale);
 		ctx.globalAlpha = alpha;
-		var blue = "rgba(72, 148, 255, 0.72)";
-		var blueDeep = "rgba(40, 100, 220, 0.55)";
 
-		ctx.fillStyle = blue;
+		var cWing = "rgba(60, 130, 255, 0.82)";
+		var cDeep = "rgba(30,  75, 200, 0.60)";
+		var cBody = "rgba(160, 210, 255, 0.75)";
+		var cAnt  = "rgba(160, 210, 255, 0.55)";
+
+		/* Ala superior izquierda */
 		ctx.beginPath();
-		ctx.ellipse(-10, 2, 14, 20, -0.45, 0, Math.PI * 2);
-		ctx.ellipse(-8, -10, 9, 14, 0.25, 0, Math.PI * 2);
+		ctx.moveTo(0, 0);
+		ctx.bezierCurveTo(-6, -20, -34, -22, -30, -4);
+		ctx.bezierCurveTo(-26,  6,  -8,  10,   0,  4);
+		ctx.closePath();
+		ctx.fillStyle = cWing;
 		ctx.fill();
 
-		ctx.fillStyle = blueDeep;
+		/* Sombra interior ala sup izq */
 		ctx.beginPath();
-		ctx.ellipse(-11, 4, 8, 12, -0.5, 0, Math.PI * 2);
+		ctx.moveTo(-2, 0);
+		ctx.bezierCurveTo(-6, -12, -22, -16, -22, -4);
+		ctx.bezierCurveTo(-20,  4,  -8,   8,  -2,  4);
+		ctx.closePath();
+		ctx.fillStyle = cDeep;
 		ctx.fill();
 
-		ctx.fillStyle = blue;
+		/* Ala superior derecha */
 		ctx.beginPath();
-		ctx.ellipse(10, 2, 14, 20, 0.45, 0, Math.PI * 2);
-		ctx.ellipse(8, -10, 9, 14, -0.25, 0, Math.PI * 2);
+		ctx.moveTo(0, 0);
+		ctx.bezierCurveTo( 6, -20, 34, -22, 30, -4);
+		ctx.bezierCurveTo(26,   6,  8,  10,  0,  4);
+		ctx.closePath();
+		ctx.fillStyle = cWing;
 		ctx.fill();
 
-		ctx.fillStyle = blueDeep;
+		/* Sombra interior ala sup der */
 		ctx.beginPath();
-		ctx.ellipse(11, 4, 8, 12, 0.5, 0, Math.PI * 2);
+		ctx.moveTo(2, 0);
+		ctx.bezierCurveTo( 6, -12, 22, -16, 22, -4);
+		ctx.bezierCurveTo(20,   4,  8,   8,  2,  4);
+		ctx.closePath();
+		ctx.fillStyle = cDeep;
 		ctx.fill();
 
-		ctx.fillStyle = "rgba(180, 210, 255, 0.35)";
+		/* Ala inferior izquierda */
 		ctx.beginPath();
-		/* Cuerpo más redondo: con 3×14 y rotación fuerte parecía una raya aplastada */
-		ctx.ellipse(0, 0, 5, 11, 0, 0, Math.PI * 2);
+		ctx.moveTo(-1, 4);
+		ctx.bezierCurveTo(-8,  8, -24, 12, -22, 24);
+		ctx.bezierCurveTo(-20, 32,  -4, 28,   0, 16);
+		ctx.closePath();
+		ctx.fillStyle = cWing;
+		ctx.fill();
+
+		/* Ala inferior derecha */
+		ctx.beginPath();
+		ctx.moveTo(1, 4);
+		ctx.bezierCurveTo( 8,  8, 24, 12, 22, 24);
+		ctx.bezierCurveTo(20, 32,  4, 28,  0, 16);
+		ctx.closePath();
+		ctx.fillStyle = cWing;
+		ctx.fill();
+
+		/* Cuerpo */
+		ctx.beginPath();
+		ctx.ellipse(0, 8, 2.5, 11, 0, 0, Math.PI * 2);
+		ctx.fillStyle = cBody;
+		ctx.fill();
+
+		/* Antenas */
+		ctx.strokeStyle = cAnt;
+		ctx.lineWidth = 1.5;
+		ctx.lineCap = "round";
+		ctx.beginPath();
+		ctx.moveTo(-1.5, -2);
+		ctx.quadraticCurveTo(-12, -20, -16, -28);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.moveTo(1.5, -2);
+		ctx.quadraticCurveTo(12, -20, 16, -28);
+		ctx.stroke();
+		ctx.fillStyle = cAnt;
+		ctx.beginPath();
+		ctx.arc(-16, -28, 2.5, 0, Math.PI * 2);
+		ctx.fill();
+		ctx.beginPath();
+		ctx.arc(16, -28, 2.5, 0, Math.PI * 2);
 		ctx.fill();
 
 		ctx.restore();
