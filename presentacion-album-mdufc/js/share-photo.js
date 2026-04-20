@@ -29,7 +29,22 @@
 	var glitchSeed = Date.now();
 	var hasImage = false;
 
-	var activeFx = { glitch: true, vignette: true, chroma: false, particles: false };
+	var activeFx = { tint: true, glitch: true, vignette: true, chroma: false, particles: false, crt: false };
+
+	/* Patrón de fósforos RGB para el efecto CRT (se crea una sola vez) */
+	var crtPattern = null;
+	function getCRTPattern() {
+		if (crtPattern) return crtPattern;
+		var pat = document.createElement("canvas");
+		pat.width = 3;
+		pat.height = 1;
+		var pc = pat.getContext("2d");
+		pc.fillStyle = "#ff0000"; pc.fillRect(0, 0, 1, 1);
+		pc.fillStyle = "#00ff00"; pc.fillRect(1, 0, 1, 1);
+		pc.fillStyle = "#0000ff"; pc.fillRect(2, 0, 1, 1);
+		crtPattern = ctx.createPattern(pat, "repeat");
+		return crtPattern;
+	}
 
 	function seededRandom(seed) {
 		var s = seed % 2147483647;
@@ -89,7 +104,7 @@
 
 	function copyStripH(data, width, height, y0, stripH, dx) {
 		var rowBytes = width * 4;
-		var y, src, dst, x;
+		var y, src, x;
 		var temp = new Uint8ClampedArray(stripH * rowBytes);
 		for (y = 0; y < stripH; y++) {
 			if (y0 + y >= height) break;
@@ -104,69 +119,38 @@
 				src = x * 4;
 				var xs = (x + dx) % width;
 				if (xs < 0) xs += width;
-				dst = xs * 4;
-				data[(y0 + y) * rowBytes + src] = temp[y * rowBytes + dst];
+				var dst = xs * 4;
+				data[(y0 + y) * rowBytes + src]     = temp[y * rowBytes + dst];
 				data[(y0 + y) * rowBytes + src + 1] = temp[y * rowBytes + dst + 1];
 				data[(y0 + y) * rowBytes + src + 2] = temp[y * rowBytes + dst + 2];
 			}
 		}
 	}
 
-	function rgbShiftStrip(data, width, height, y0, stripH, dr, dg) {
-		var rowBytes = width * 4;
-		var y, x, i0;
-		var copy = new Uint8ClampedArray(data);
-		for (y = 0; y < stripH; y++) {
-			if (y0 + y >= height) break;
-			for (x = 0; x < width; x++) {
-				i0 = (y0 + y) * rowBytes + x * 4;
-				var xr = Math.max(0, Math.min(width - 1, x + dr));
-				var xg = Math.max(0, Math.min(width - 1, x + dg));
-				var ir = (y0 + y) * rowBytes + xr * 4;
-				var ig = (y0 + y) * rowBytes + xg * 4;
-				data[i0] = copy[ir];
-				data[i0 + 1] = copy[ig];
-				data[i0 + 2] = copy[i0 + 2];
-			}
-		}
-	}
-
+	/* Solo desplazamiento de píxeles — sin cambio de color */
 	function applyGlitch(imageData, width, height, seed) {
 		var rand = seededRandom(seed);
 		var data = imageData.data;
-		var n, y0, h, shift, i;
+		var n, y0, h, shift;
 
-		n = 10 + Math.floor(rand() * 10);
+		/* Bloques grandes y llamativos */
+		n = 3 + Math.floor(rand() * 4);
 		while (n--) {
-			y0 = Math.floor(rand() * (height - 6));
-			h = 2 + Math.floor(rand() * 18);
+			y0 = Math.floor(rand() * (height - 30));
+			h = 40 + Math.floor(rand() * 100);
 			if (y0 + h > height) h = height - y0;
-			shift = Math.floor((rand() - 0.5) * 36);
-			if (Math.abs(shift) > 1) copyStripH(data, width, height, y0, h, shift);
+			shift = Math.floor((rand() - 0.5) * 200);
+			if (Math.abs(shift) > 10) copyStripH(data, width, height, y0, h, shift);
 		}
 
-		n = 3 + Math.floor(rand() * 5);
+		/* Bloques medianos de relleno */
+		n = 4 + Math.floor(rand() * 4);
 		while (n--) {
-			y0 = Math.floor(rand() * (height - 4));
-			h = 1 + Math.floor(rand() * 6);
+			y0 = Math.floor(rand() * (height - 10));
+			h = 10 + Math.floor(rand() * 35);
 			if (y0 + h > height) h = height - y0;
-			rgbShiftStrip(data, width, height, y0, h, Math.floor((rand() - 0.5) * 10), Math.floor((rand() - 0.5) * 6));
-		}
-
-		for (i = 0; i < data.length; i += 4) {
-			if (rand() > 0.997) {
-				data[i] ^= 40;
-				data[i + 1] ^= 30;
-			}
-		}
-
-		for (y0 = 0; y0 < height; y0 += 2) {
-			for (i = 0; i < width; i++) {
-				var idx = (y0 * width + i) * 4;
-				data[idx] *= 0.88;
-				data[idx + 1] *= 0.9;
-				data[idx + 2] *= 0.92;
-			}
+			shift = Math.floor((rand() - 0.5) * 100);
+			if (Math.abs(shift) > 4) copyStripH(data, width, height, y0, h, shift);
 		}
 	}
 
@@ -232,6 +216,40 @@
 		ctx.restore();
 	}
 
+	function drawCRT() {
+		ctx.save();
+
+		/* Líneas de escaneo: 1px oscuro cada 3 filas */
+		ctx.globalCompositeOperation = "multiply";
+		ctx.fillStyle = "rgba(0,0,0,0.48)";
+		for (var y = 0; y < OUT_H; y += 3) {
+			ctx.fillRect(0, y, OUT_W, 1);
+		}
+
+		/* Fósforos RGB: columnas tenues R-G-B repetidas */
+		var pat = getCRTPattern();
+		if (pat) {
+			ctx.globalCompositeOperation = "screen";
+			ctx.globalAlpha = 0.022;
+			ctx.fillStyle = pat;
+			ctx.fillRect(0, 0, OUT_W, OUT_H);
+		}
+
+		/* Grano estático */
+		ctx.globalCompositeOperation = "source-over";
+		ctx.globalAlpha = 1;
+		for (var i = 0; i < 1600; i++) {
+			ctx.fillStyle = "rgba(255,255,255," + (Math.random() * 0.12).toFixed(3) + ")";
+			ctx.fillRect(
+				Math.floor(Math.random() * OUT_W),
+				Math.floor(Math.random() * OUT_H),
+				1, 1
+			);
+		}
+
+		ctx.restore();
+	}
+
 	function drawBranding() {
 		var logoSize = 112;
 		var pad = 36;
@@ -271,12 +289,13 @@
 		drawCoverImage(userImg, OUT_W, OUT_H);
 
 		var imageData = ctx.getImageData(0, 0, OUT_W, OUT_H);
-		applyAlbumColorGrade(imageData.data);
+		if (activeFx.tint)   applyAlbumColorGrade(imageData.data);
 		if (activeFx.glitch) applyGlitch(imageData, OUT_W, OUT_H, glitchSeed);
 		if (activeFx.chroma) applyChromaAberration(imageData.data, OUT_W, OUT_H);
 		ctx.putImageData(imageData, 0, 0);
 
-		if (activeFx.vignette) applyVignette();
+		if (activeFx.vignette)  applyVignette();
+		if (activeFx.crt)       drawCRT();
 		if (activeFx.particles) drawParticles(glitchSeed);
 
 		ctx.save();
