@@ -281,7 +281,7 @@
 		ctx.font = cellH + 'px "Geist Mono", monospace';
 		ctx.textBaseline = "top";
 
-		var row, col, r, g, b, ch, lumN;
+		var row, col, r, g, b, ch, lumN, rb, gb, bb;
 		for (row = 0; row < rows; row++) {
 			for (col = 0; col < cols; col++) {
 				i = (row * cols + col) * 4;
@@ -291,10 +291,15 @@
 				lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 				lumN = (lum - lumMin) / lumRange;
 				ch = chars[Math.round(lumN * last)];
-				r = Math.min(255, Math.round(r * 2.2));
-				g = Math.min(255, Math.round(g * 2.2));
-				b = Math.min(255, Math.round(b * 2.2));
-				ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+				rb = Math.min(255, Math.round(r * 2.2));
+				gb = Math.min(255, Math.round(g * 2.2));
+				bb = Math.min(255, Math.round(b * 2.2));
+				/* Fondo de celda: versión atenuada del color para que los
+				   huecos entre caracteres no sean negro puro */
+				ctx.fillStyle = "rgb(" + Math.round(rb * 0.28) + "," + Math.round(gb * 0.28) + "," + Math.round(bb * 0.28) + ")";
+				ctx.fillRect(col * cellW, row * cellH, cellW, cellH);
+				/* Caracter en el color boosteado */
+				ctx.fillStyle = "rgb(" + rb + "," + gb + "," + bb + ")";
 				ctx.fillText(ch, col * cellW, row * cellH);
 			}
 		}
