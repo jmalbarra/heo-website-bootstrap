@@ -255,7 +255,7 @@
 		var cellH = 10;
 		var cols = Math.floor(OUT_W / cellW);
 		var rows = Math.floor(OUT_H / cellH);
-		var chars = " .,:;=+*#%@";
+		var chars = ".,:;=+*#%@";
 		var last = chars.length - 1;
 
 		/* Samplear el canvas procesado a resolución de grilla */
@@ -266,13 +266,22 @@
 		offCtx.drawImage(canvas, 0, 0, cols, rows);
 		var pixels = offCtx.getImageData(0, 0, cols, rows).data;
 
-		/* Redibujar como caracteres coloreados sobre negro */
-		ctx.fillStyle = "#000";
+		/* Normalizar rango de luminosidad para usar siempre el ramp completo */
+		var lumMin = 1, lumMax = 0, i, lum;
+		for (i = 0; i < pixels.length; i += 4) {
+			lum = (0.299 * pixels[i] + 0.587 * pixels[i + 1] + 0.114 * pixels[i + 2]) / 255;
+			if (lum < lumMin) lumMin = lum;
+			if (lum > lumMax) lumMax = lum;
+		}
+		var lumRange = lumMax - lumMin || 1;
+
+		/* Redibujar como caracteres con colores boosteados */
+		ctx.fillStyle = "#050810";
 		ctx.fillRect(0, 0, OUT_W, OUT_H);
 		ctx.font = cellH + 'px "Geist Mono", monospace';
 		ctx.textBaseline = "top";
 
-		var row, col, i, r, g, b, lum, ch;
+		var row, col, r, g, b, ch, lumN;
 		for (row = 0; row < rows; row++) {
 			for (col = 0; col < cols; col++) {
 				i = (row * cols + col) * 4;
@@ -280,8 +289,11 @@
 				g = pixels[i + 1];
 				b = pixels[i + 2];
 				lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-				ch = chars[Math.round(lum * last)];
-				if (ch === " ") continue;
+				lumN = (lum - lumMin) / lumRange;
+				ch = chars[Math.round(lumN * last)];
+				r = Math.min(255, Math.round(r * 2.2));
+				g = Math.min(255, Math.round(g * 2.2));
+				b = Math.min(255, Math.round(b * 2.2));
 				ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
 				ctx.fillText(ch, col * cellW, row * cellH);
 			}
