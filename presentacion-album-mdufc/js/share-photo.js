@@ -290,7 +290,7 @@
 
 	function drawBranding() {
 		var logoSize = 112;
-		var pad = 36;
+		var pad = 56;
 		if (logoImg.complete && logoImg.naturalWidth > 0) {
 			ctx.save();
 			ctx.globalAlpha = 0.92;
@@ -301,20 +301,20 @@
 		}
 
 		ctx.save();
-		ctx.font = '500 32px "Space Grotesk", "Geist Mono", sans-serif';
+		ctx.font = '700 30px "Orbitron", "Space Grotesk", sans-serif';
 		ctx.fillStyle = "rgba(232, 232, 232, 0.92)";
 		ctx.shadowColor = "rgba(0,0,0,0.75)";
 		ctx.shadowBlur = 8;
 		ctx.shadowOffsetY = 2;
-		var text = "@heo.oficial";
+		var text = "@HEO.OFICIAL";
 		var tw = ctx.measureText(text).width;
-		ctx.fillText(text, OUT_W - tw - pad, OUT_H - pad);
+		ctx.fillText(text, OUT_W - tw - pad, OUT_H - pad - 10);
 
-		ctx.font = '22px "Geist Mono", monospace';
-		ctx.fillStyle = "rgba(34, 238, 201, 0.85)";
-		var sub = "Mitos de un futuro cercano";
+		ctx.font = '600 19px "Orbitron", "Space Grotesk", sans-serif';
+		ctx.fillStyle = "rgba(34, 238, 201, 0.88)";
+		var sub = "Mitos De Un Futuro Cercano";
 		var sw = ctx.measureText(sub).width;
-		ctx.fillText(sub, OUT_W - sw - pad, OUT_H - pad - 38);
+		ctx.fillText(sub, OUT_W - sw - pad, OUT_H - pad - 52);
 		ctx.restore();
 	}
 
