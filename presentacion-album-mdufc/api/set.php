@@ -52,7 +52,7 @@ $songs = isset($setlist['songs']) && is_array($setlist['songs']) ? $setlist['son
 $max = max(0, count($songs) - 1);
 
 $statePath = $root . '/data/state.json';
-$state = array('currentIndex' => 0, 'updatedAt' => 0);
+$state = array('currentIndex' => 0, 'updatedAt' => 0, 'enabled' => true);
 if (is_readable($statePath)) {
 	$prev = json_decode(file_get_contents($statePath), true);
 	if (is_array($prev)) {
@@ -62,6 +62,7 @@ if (is_readable($statePath)) {
 
 $idx = isset($state['currentIndex']) ? (int) $state['currentIndex'] : 0;
 $idx = max(0, min($max, $idx));
+$enabled = isset($state['enabled']) ? (bool) $state['enabled'] : true;
 
 switch ($action) {
 	case 'next':
@@ -73,6 +74,12 @@ switch ($action) {
 	case 'reset':
 		$idx = 0;
 		break;
+	case 'enable':
+		$enabled = true;
+		break;
+	case 'disable':
+		$enabled = false;
+		break;
 	default:
 		http_response_code(400);
 		echo json_encode(array('ok' => false, 'error' => 'bad_action'));
@@ -82,6 +89,7 @@ switch ($action) {
 $newState = array(
 	'currentIndex' => $idx,
 	'updatedAt' => time(),
+	'enabled' => $enabled,
 );
 
 $written = @file_put_contents($statePath, json_encode($newState, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n");
@@ -95,4 +103,5 @@ echo json_encode(array(
 	'ok' => true,
 	'currentIndex' => $idx,
 	'updatedAt' => $newState['updatedAt'],
+	'enabled' => $enabled,
 ), JSON_UNESCAPED_UNICODE);

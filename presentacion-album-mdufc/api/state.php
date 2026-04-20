@@ -9,6 +9,7 @@ if (!is_readable($path)) {
 	echo json_encode(array(
 		'currentIndex' => 0,
 		'updatedAt' => time(),
+		'enabled' => true,
 	), JSON_UNESCAPED_UNICODE);
 	exit;
 }
@@ -21,8 +22,10 @@ if (!is_array($data)) {
 
 $idx = isset($data['currentIndex']) ? (int) $data['currentIndex'] : 0;
 $updated = isset($data['updatedAt']) ? (int) $data['updatedAt'] : 0;
+$enabled = isset($data['enabled']) ? (bool) $data['enabled'] : true;
 
 echo json_encode(array(
 	'currentIndex' => $idx,
 	'updatedAt' => $updated,
+	'enabled' => $enabled,
 ), JSON_UNESCAPED_UNICODE);

@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/heo-v2.css">
+  <link rel="stylesheet" href="css/heo-v2.css?v=2">
 
   <!-- Meta Pixel -->
   <script>
@@ -50,12 +50,13 @@
       </a>
 
       <ul class="nav__menu" id="nav-menu" role="list">
-        <li><a href="#musica"   class="nav__link">Música</a></li>
-        <li><a href="#shows"    class="nav__link">Shows</a></li>
-        <li><a href="#videos"   class="nav__link">Videos</a></li>
-        <li><a href="#galeria"  class="nav__link">Fotos</a></li>
-        <li><a href="#nosotros" class="nav__link">Nosotros</a></li>
-        <li><a href="#contacto" class="nav__link">Contacto</a></li>
+        <li><a href="#musica"        class="nav__link">Música</a></li>
+        <li><a href="#shows"         class="nav__link">Shows</a></li>
+        <li><a href="#experiencias"  class="nav__link">Experiencias</a></li>
+        <li><a href="#videos"        class="nav__link">Videos</a></li>
+        <li><a href="#galeria"       class="nav__link">Fotos</a></li>
+        <li><a href="#nosotros"      class="nav__link">Nosotros</a></li>
+        <li><a href="#contacto"      class="nav__link">Contacto</a></li>
       </ul>
 
       <button class="nav__burger" id="nav-burger"
@@ -259,6 +260,39 @@
 
 
   <!-- ======================================================
+       EXPERIENCIAS
+       ====================================================== -->
+  <section id="experiencias" class="section">
+    <div class="container">
+      <header class="section__header">
+        <span class="section__label">// vivilo</span>
+        <h2 class="section__title">Experiencias</h2>
+      </header>
+      <div class="exp-grid">
+        <a href="presentacion-album-mdufc/index.html" class="exp-card reveal">
+          <span class="exp-card__tag">// en vivo</span>
+          <h3 class="exp-card__title">Cancionero en vivo</h3>
+          <p class="exp-card__desc">Seguí el show en tiempo real. Letra e info de cada tema a medida que suenan.</p>
+          <span class="exp-card__cta">Ver cancionero →</span>
+        </a>
+        <a href="presentacion-album-mdufc/share.html" class="exp-card reveal">
+          <span class="exp-card__tag">// tu foto</span>
+          <h3 class="exp-card__title">Tu foto para redes</h3>
+          <p class="exp-card__desc">Aplicá la estética del disco en tu foto y descargala lista para publicar.</p>
+          <span class="exp-card__cta">Crear imagen →</span>
+        </a>
+        <a href="n0m10s/" class="exp-card reveal">
+          <span class="exp-card__tag">// ia</span>
+          <h3 class="exp-card__title">Nomios</h3>
+          <p class="exp-card__desc">Una IA entrenada en las letras del disco. Preguntale lo que quieras.</p>
+          <span class="exp-card__cta">Entrar →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================================================
        VIDEOS
        ====================================================== -->
   <section id="videos" class="section">
@@ -452,14 +486,14 @@
           </div>
           <h3 class="member-card__name">Poli Abdusetir</h3>
           <p class="member-card__role">Bajo y voces</p>
-          <a href="https://www.instagram.com/kowalskiramiro"
+          <a href="https://www.instagram.com/loco_poli"
              class="member-card__ig"
              target="_blank" rel="noopener noreferrer"
              aria-label="Instagram de Poli Abdusetir">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
             </svg>
-            @kowalskiramiro
+            @loco_poli
           </a>
         </div>
 

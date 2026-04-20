@@ -483,6 +483,60 @@ code {
 	display: none !important;
 }
 
+.inactive-panel {
+	text-align: center;
+	padding: 36px 24px;
+}
+
+.inactive__icon {
+	font-size: 2.5rem;
+	color: var(--accent-dim);
+	margin-bottom: 16px;
+	animation: pulse-icon 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-icon {
+	0%, 100% { opacity: 0.4; }
+	50% { opacity: 1; }
+}
+
+.inactive__title {
+	font-family: "Space Grotesk", sans-serif;
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--text);
+	margin-bottom: 12px;
+}
+
+.inactive__msg {
+	font-size: 0.88rem;
+	color: var(--text-muted);
+	line-height: 1.6;
+	margin-bottom: 28px;
+}
+
+.inactive__actions {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	align-items: center;
+}
+
+.inactive__back {
+	margin-top: 28px;
+	font-size: 0.72rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.enabled-status {
+	font-weight: 600;
+	letter-spacing: 0.12em;
+}
+
+.enabled-status--on { color: var(--accent); }
+.enabled-status--off { color: #f0a0a8; }
+
 .dev-banner {
 	position: fixed;
 	bottom: 0;

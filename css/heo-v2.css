@@ -1045,6 +1045,62 @@ body::after {
   margin-top: 0.25rem;
 }
 
+/* Experiencias */
+.exp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.exp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-decoration: none;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+}
+
+.exp-card:hover {
+  border-color: var(--accent);
+  background: rgba(34, 238, 201, 0.04);
+  transform: translateY(-2px);
+}
+
+.exp-card__tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+}
+
+.exp-card__title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.exp-card__desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.exp-card__cta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-top: 0.25rem;
+}
+
 .site-footer {
   position: relative;
   z-index: 3;
@@ -1266,7 +1322,7 @@ body::after {
   .nav__menu {
     position: fixed;
     inset: 0;
-    background: rgba(5, 5, 7, 0.97);
+    background: #050507;
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     flex-direction: column;

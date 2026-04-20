@@ -180,10 +180,16 @@
 	color: var(--accent);
 }
 
-.share-back {
-	display: block;
-	text-align: center;
+.share-back-links {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px 24px;
 	margin-top: 24px;
+}
+
+.share-back {
+	display: inline-block;
 	font-size: 0.75rem;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;

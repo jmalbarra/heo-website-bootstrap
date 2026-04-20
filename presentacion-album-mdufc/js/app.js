@@ -11,6 +11,7 @@
 	var state = {
 		setlist: null,
 		currentIndex: 0,
+		enabled: true,
 		devMode: false,
 		pollTimer: null,
 		lastError: null,
@@ -94,6 +95,7 @@
 				var idx = parseInt(data.currentIndex, 10);
 				if (isNaN(idx)) idx = 0;
 				state.currentIndex = idx;
+				state.enabled = data.enabled !== false;
 				state.lastError = null;
 				render();
 			})
@@ -111,7 +113,18 @@
 		}
 	}
 
+	function renderInactive() {
+		var listEl = $("#view-list");
+		var detailEl = $("#view-detail");
+		var inactiveEl = $("#view-inactive");
+		if (listEl) listEl.classList.add("hidden");
+		if (detailEl) detailEl.classList.add("hidden");
+		if (inactiveEl) inactiveEl.classList.remove("hidden");
+	}
+
 	function renderList() {
+		var inactiveEl = $("#view-inactive");
+		if (inactiveEl) inactiveEl.classList.add("hidden");
 		var listEl = $("#view-list");
 		var detailEl = $("#view-detail");
 		if (!listEl || !detailEl) return;
@@ -241,6 +254,10 @@
 
 	function render() {
 		if (!state.setlist) return;
+		if (!state.enabled) {
+			renderInactive();
+			return;
+		}
 		var songs = state.setlist.songs || [];
 		var max = Math.max(0, songs.length - 1);
 		state.currentIndex = Math.min(Math.max(0, state.currentIndex), max);
