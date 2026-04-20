@@ -188,3 +188,26 @@
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 }
+
+.share-site-footer {
+	margin-top: 40px;
+	padding-top: 20px;
+	border-top: 1px solid rgba(34, 238, 201, 0.15);
+	text-align: center;
+}
+
+.share-site-footer__text {
+	font-size: 0.72rem;
+	color: var(--text-muted);
+	letter-spacing: 0.05em;
+	line-height: 1.6;
+}
+
+.share-site-footer__text strong {
+	color: rgba(255, 255, 255, 0.65);
+	font-weight: 500;
+}
+
+.share-site-footer__amp {
+	color: var(--accent);
+}
