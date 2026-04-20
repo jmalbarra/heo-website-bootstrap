@@ -29,7 +29,7 @@
 	var glitchSeed = Date.now();
 	var hasImage = false;
 
-	var activeFx = { tint: true, glitch: true, vignette: true, chroma: false, particles: false, crt: false };
+	var activeFx = { tint: true, glitch: true, vignette: true, chroma: false, particles: false, crt: false, ascii: false };
 
 	/* Patrón de fósforos RGB para el efecto CRT (se crea una sola vez) */
 	var crtPattern = null;
@@ -250,6 +250,44 @@
 		ctx.restore();
 	}
 
+	function drawASCII() {
+		var cellW = 8;
+		var cellH = 10;
+		var cols = Math.floor(OUT_W / cellW);
+		var rows = Math.floor(OUT_H / cellH);
+		var chars = " .,:;=+*#%@";
+		var last = chars.length - 1;
+
+		/* Samplear el canvas procesado a resolución de grilla */
+		var off = document.createElement("canvas");
+		off.width = cols;
+		off.height = rows;
+		var offCtx = off.getContext("2d");
+		offCtx.drawImage(canvas, 0, 0, cols, rows);
+		var pixels = offCtx.getImageData(0, 0, cols, rows).data;
+
+		/* Redibujar como caracteres coloreados sobre negro */
+		ctx.fillStyle = "#000";
+		ctx.fillRect(0, 0, OUT_W, OUT_H);
+		ctx.font = cellH + 'px "Geist Mono", monospace';
+		ctx.textBaseline = "top";
+
+		var row, col, i, r, g, b, lum, ch;
+		for (row = 0; row < rows; row++) {
+			for (col = 0; col < cols; col++) {
+				i = (row * cols + col) * 4;
+				r = pixels[i];
+				g = pixels[i + 1];
+				b = pixels[i + 2];
+				lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+				ch = chars[Math.round(lum * last)];
+				if (ch === " ") continue;
+				ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+				ctx.fillText(ch, col * cellW, row * cellH);
+			}
+		}
+	}
+
 	function drawBranding() {
 		var logoSize = 112;
 		var pad = 36;
@@ -297,6 +335,7 @@
 		if (activeFx.vignette)  applyVignette();
 		if (activeFx.crt)       drawCRT();
 		if (activeFx.particles) drawParticles(glitchSeed);
+		if (activeFx.ascii)     drawASCII();
 
 		ctx.save();
 		ctx.globalCompositeOperation = "overlay";
