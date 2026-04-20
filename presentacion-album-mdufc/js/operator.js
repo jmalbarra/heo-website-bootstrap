@@ -20,6 +20,7 @@
 	var state = {
 		setlist: null,
 		currentIndex: 0,
+		enabled: true,
 		devMode: false,
 	};
 
@@ -55,6 +56,23 @@
 		var s = songs[state.currentIndex];
 		el.textContent = s ? s.title : "—";
 		$("#preview-index").textContent = String(state.currentIndex + 1) + " / " + songs.length;
+		var toggleBtn = $("#btn-toggle");
+		if (toggleBtn) {
+			if (state.enabled) {
+				toggleBtn.textContent = "Desactivar cancionero";
+				toggleBtn.classList.remove("btn-primary-solid");
+				toggleBtn.classList.add("btn-ghost");
+			} else {
+				toggleBtn.textContent = "Activar cancionero";
+				toggleBtn.classList.add("btn-primary-solid");
+				toggleBtn.classList.remove("btn-ghost");
+			}
+		}
+		var statusEnabled = $("#enabled-status");
+		if (statusEnabled) {
+			statusEnabled.textContent = state.enabled ? "ACTIVO" : "INACTIVO";
+			statusEnabled.className = "enabled-status " + (state.enabled ? "enabled-status--on" : "enabled-status--off");
+		}
 	}
 
 	function setStatus(msg, isErr) {
@@ -73,6 +91,8 @@
 			if (action === "next") idx = Math.min(max, idx + 1);
 			else if (action === "prev") idx = Math.max(0, idx - 1);
 			else if (action === "reset") idx = 0;
+			else if (action === "enable") state.enabled = true;
+			else if (action === "disable") state.enabled = false;
 			localStorage.setItem(STORAGE_DEV, String(idx));
 			state.currentIndex = idx;
 			updatePreview();
@@ -104,11 +124,13 @@
 					throw new Error(err);
 				}
 				state.currentIndex = res.data.currentIndex;
+				state.enabled = res.data.enabled !== false;
 				try {
 					sessionStorage.setItem(STORAGE_SECRET, secret);
 				} catch (e) {}
 				updatePreview();
-				setStatus("Listo · índice " + state.currentIndex, false);
+				var label = state.enabled ? "activo" : "inactivo";
+				setStatus("Listo · índice " + state.currentIndex + " · cancionero " + label, false);
 			})
 			.catch(function (e) {
 				setStatus(e.message || "Falló la petición.", true);
@@ -133,8 +155,10 @@
 				var idx = parseInt(data.currentIndex, 10);
 				if (isNaN(idx)) idx = 0;
 				state.currentIndex = Math.min(Math.max(0, idx), maxIndex());
+				state.enabled = data.enabled !== false;
 				updatePreview();
-				setStatus("Estado remoto: índice " + state.currentIndex, false);
+				var label = state.enabled ? "activo" : "inactivo";
+				setStatus("Estado remoto: índice " + state.currentIndex + " · cancionero " + label, false);
 			})
 			.catch(function () {
 				setStatus("No se pudo leer api/state.php (¿servidor PHP local?)", true);
@@ -170,6 +194,7 @@
 				var idx = parseInt(data.currentIndex, 10);
 				if (isNaN(idx)) idx = 0;
 				state.currentIndex = Math.min(Math.max(0, idx), maxIndex());
+				state.enabled = data.enabled !== false;
 				updatePreview();
 				setStatus("Conectado.", false);
 			})
@@ -187,6 +212,13 @@
 			if (window.confirm("¿Volver al inicio del set (índice 0)?")) sendAction("reset");
 		});
 		$("#btn-refresh").addEventListener("click", syncFromServer);
+		$("#btn-toggle").addEventListener("click", function () {
+			var action = state.enabled ? "disable" : "enable";
+			var msg = state.enabled
+				? "¿Desactivar el cancionero? El público verá \"Sin evento activo\"."
+				: "¿Activar el cancionero?";
+			if (window.confirm(msg)) sendAction(action);
+		});
 	}
 
 	if (document.readyState === "loading") {

@@ -8,7 +8,7 @@
 	<title>Operador — Mitos de un futuro cercano</title>
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/live.css?v=6">
+	<link rel="stylesheet" href="css/live.css?v=7">
 </head>
 <body>
 	<div id="matrix-bg" aria-hidden="true">
@@ -44,6 +44,12 @@
 				<button type="button" class="btn btn-ghost" id="btn-reset">Ir al inicio</button>
 				<button type="button" class="btn btn-ghost" id="btn-refresh">Refrescar estado</button>
 			</div>
+			<div class="operator-actions" style="margin-top:16px;">
+				<button type="button" class="btn btn-ghost" id="btn-toggle">Desactivar cancionero</button>
+			</div>
+			<p style="text-align:center;margin-top:10px;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;">
+				Estado: <span id="enabled-status" class="enabled-status enabled-status--on">ACTIVO</span>
+			</p>
 
 			<p class="status-bar" id="operator-status"></p>
 		</div>
