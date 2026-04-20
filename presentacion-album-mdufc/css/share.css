@@ -132,6 +132,54 @@
 	color: var(--accent-dim);
 }
 
+.fx-panel {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px 10px;
+	margin-top: 16px;
+}
+
+.fx-panel__label {
+	font-size: 0.63rem;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	color: var(--text-muted);
+	flex-shrink: 0;
+}
+
+.fx-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.fx-pill {
+	padding: 5px 13px;
+	font-size: 0.7rem;
+	font-family: "Geist Mono", monospace;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	border-radius: 100px;
+	border: 1px solid var(--surface-border);
+	background: rgba(0, 0, 0, 0.28);
+	color: var(--text-muted);
+	cursor: pointer;
+	transition: background 0.18s, border-color 0.18s, color 0.18s;
+	line-height: 1;
+}
+
+.fx-pill:hover {
+	border-color: var(--accent-dim);
+	color: var(--text);
+}
+
+.fx-pill.is-active {
+	background: rgba(34, 238, 201, 0.1);
+	border-color: rgba(34, 238, 201, 0.55);
+	color: var(--accent);
+}
+
 .share-back {
 	display: block;
 	text-align: center;

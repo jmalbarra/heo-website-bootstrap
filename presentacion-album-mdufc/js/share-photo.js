@@ -29,6 +29,8 @@
 	var glitchSeed = Date.now();
 	var hasImage = false;
 
+	var activeFx = { glitch: true, vignette: true, chroma: false, particles: false };
+
 	function seededRandom(seed) {
 		var s = seed % 2147483647;
 		if (s <= 0) s += 2147483646;
@@ -38,7 +40,6 @@
 		};
 	}
 
-	/** Dibuja la imagen dentro del rectángulo sin deformar (como object-fit: contain). */
 	function drawImageContain(img, boxX, boxY, boxW, boxH) {
 		var iw = img.naturalWidth;
 		var ih = img.naturalHeight;
@@ -169,141 +170,66 @@
 		}
 	}
 
-	function drawButterfly(cx, cy, scale, angle, alpha, bseed) {
-		var rand = seededRandom(bseed || Math.floor(cx + cy));
-		ctx.save();
-		ctx.translate(cx, cy);
-		ctx.rotate(angle);
-		ctx.scale(scale, scale);
-		ctx.globalAlpha = alpha;
-
-		/* Silhouette de la mariposa como clip path */
-		ctx.beginPath();
-		ctx.moveTo(0, 0);
-		ctx.bezierCurveTo(-6, -20, -34, -22, -30, -4);
-		ctx.bezierCurveTo(-26, 6, -8, 10, 0, 4);
-		ctx.closePath();
-		ctx.moveTo(0, 0);
-		ctx.bezierCurveTo(6, -20, 34, -22, 30, -4);
-		ctx.bezierCurveTo(26, 6, 8, 10, 0, 4);
-		ctx.closePath();
-		ctx.moveTo(-1, 4);
-		ctx.bezierCurveTo(-8, 8, -24, 12, -22, 24);
-		ctx.bezierCurveTo(-20, 32, -4, 28, 0, 16);
-		ctx.closePath();
-		ctx.moveTo(1, 4);
-		ctx.bezierCurveTo(8, 8, 24, 12, 22, 24);
-		ctx.bezierCurveTo(20, 32, 4, 28, 0, 16);
-		ctx.closePath();
-		ctx.clip();
-
-		/* Base azul */
-		var bx = -35, by = -30, bw = 70, bh = 62;
-		ctx.fillStyle = "rgba(20, 60, 200, 0.55)";
-		ctx.fillRect(bx, by, bw, bh);
-
-		/* Bandas horizontales desplazadas — efecto P-frame corrupto */
-		var numBands = 14 + Math.floor(rand() * 10);
-		var yStep = bh / numBands;
-		for (var i = 0; i < numBands; i++) {
-			var bandY = by + i * yStep;
-			var bandH = yStep * (0.5 + rand() * 0.9);
-			var dx    = (rand() - 0.5) * 16;
-			var ct = rand();
-			var r, g, b, a;
-			if (ct < 0.60) {
-				r = Math.floor(15 + rand() * 55);
-				g = Math.floor(50 + rand() * 110);
-				b = Math.floor(185 + rand() * 70);
-				a = 0.35 + rand() * 0.50;
-			} else if (ct < 0.80) {
-				r = Math.floor(0  + rand() * 30);
-				g = Math.floor(170 + rand() * 70);
-				b = Math.floor(200 + rand() * 55);
-				a = 0.20 + rand() * 0.40;
-			} else {
-				var v = Math.floor(170 + rand() * 85);
-				r = g = b = v;
-				a = 0.08 + rand() * 0.16;
+	function applyChromaAberration(data, width, height) {
+		var copy = new Uint8ClampedArray(data);
+		var offset = Math.floor(width * 0.009);
+		var i, x, y, xr, xb, ir, ib;
+		for (y = 0; y < height; y++) {
+			for (x = 0; x < width; x++) {
+				i = (y * width + x) * 4;
+				xr = Math.min(width - 1, x + offset);
+				xb = Math.max(0, x - offset);
+				ir = (y * width + xr) * 4;
+				ib = (y * width + xb) * 4;
+				data[i]     = copy[ir];
+				data[i + 2] = copy[ib + 2];
 			}
-			ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + a + ")";
-			ctx.fillRect(bx + dx, bandY, bw, bandH);
 		}
+	}
 
-		/* Macro blocks */
-		var numBlocks = 5 + Math.floor(rand() * 9);
-		for (var bi = 0; bi < numBlocks; bi++) {
-			var mbx = bx + rand() * bw;
-			var mby = by + rand() * bh;
-			var mbw = 4 + rand() * 18;
-			var mbh = 2 + rand() * 10;
-			ctx.fillStyle = "rgba("
-				+ Math.floor(20 + rand() * 70) + ","
-				+ Math.floor(90 + rand() * 110) + ","
-				+ Math.floor(195 + rand() * 60) + ","
-				+ (0.45 + rand() * 0.55) + ")";
-			ctx.fillRect(mbx, mby, mbw, mbh);
-		}
-
-		/* RGB split / chromatic aberration */
-		ctx.globalCompositeOperation = "screen";
-		ctx.fillStyle = "rgba(0, 0, 255, 0.10)";
-		ctx.fillRect(bx - 4, by, bw, bh);
-		ctx.fillStyle = "rgba(0, 160, 255, 0.07)";
-		ctx.fillRect(bx + 4, by, bw, bh);
-
-		ctx.restore();
-
-		/* Cuerpo y antenas — fuera del clip */
+	function applyVignette() {
 		ctx.save();
-		ctx.translate(cx, cy);
-		ctx.rotate(angle);
-		ctx.scale(scale, scale);
-		ctx.globalAlpha = alpha * 0.85;
-		ctx.beginPath();
-		ctx.ellipse(0, 8, 2.5, 11, 0, 0, Math.PI * 2);
-		ctx.fillStyle = "rgba(160, 210, 255, 0.80)";
-		ctx.fill();
-		ctx.strokeStyle = "rgba(160, 210, 255, 0.60)";
-		ctx.lineWidth = 1.5;
-		ctx.lineCap = "round";
-		ctx.beginPath();
-		ctx.moveTo(-1.5, -2);
-		ctx.quadraticCurveTo(-12, -20, -16, -28);
-		ctx.stroke();
-		ctx.beginPath();
-		ctx.moveTo(1.5, -2);
-		ctx.quadraticCurveTo(12, -20, 16, -28);
-		ctx.stroke();
-		ctx.fillStyle = "rgba(160, 210, 255, 0.60)";
-		ctx.beginPath();
-		ctx.arc(-16, -28, 2.5, 0, Math.PI * 2);
-		ctx.fill();
-		ctx.beginPath();
-		ctx.arc(16, -28, 2.5, 0, Math.PI * 2);
-		ctx.fill();
+		ctx.globalCompositeOperation = "multiply";
+		var g = ctx.createRadialGradient(OUT_W * 0.5, OUT_H * 0.42, OUT_H * 0.12, OUT_W * 0.5, OUT_H * 0.5, OUT_W * 0.86);
+		g.addColorStop(0, "rgba(255,255,255,1)");
+		g.addColorStop(0.45, "rgba(210,210,210,1)");
+		g.addColorStop(1, "rgba(0,0,0,1)");
+		ctx.fillStyle = g;
+		ctx.fillRect(0, 0, OUT_W, OUT_H);
 		ctx.restore();
 	}
 
-	function drawButterflies(seed) {
-		var rand = seededRandom(seed + 777);
-		var positions = [
-			[0.12, 0.18, 0.85],
-			[0.82, 0.22, 0.7],
-			[0.2, 0.55, 0.65],
-			[0.75, 0.5, 0.55],
-			[0.45, 0.72, 0.75],
-			[0.88, 0.78, 0.6],
-			[0.08, 0.85, 0.5]
-		];
-		var k, px, py, sc, ang;
-		for (k = 0; k < positions.length; k++) {
-			px = positions[k][0] * OUT_W + (rand() - 0.5) * 40;
-			py = positions[k][1] * OUT_H + (rand() - 0.5) * 40;
-			sc = positions[k][2] * (0.9 + rand() * 0.35);
-			ang = (rand() - 0.5) * 0.85;
-			drawButterfly(px, py, sc, ang, 0.75 + rand() * 0.2, seed + k * 137);
+	function drawParticles(seed) {
+		var rand = seededRandom(seed + 999);
+		var count = 70;
+		var k, px, py, radius, alpha;
+		ctx.save();
+		for (k = 0; k < count; k++) {
+			px = rand() * OUT_W;
+			py = rand() * OUT_H;
+			radius = 1 + rand() * 3.5;
+			alpha = 0.18 + rand() * 0.52;
+			ctx.beginPath();
+			ctx.arc(px, py, radius, 0, Math.PI * 2);
+			if (rand() > 0.65) {
+				ctx.fillStyle = "rgba(255,255,255," + alpha.toFixed(2) + ")";
+			} else {
+				ctx.fillStyle = "rgba(" + ACCENT_R + "," + ACCENT_G + "," + ACCENT_B + "," + alpha.toFixed(2) + ")";
+			}
+			ctx.fill();
 		}
+		ctx.strokeStyle = "rgba(" + ACCENT_R + "," + ACCENT_G + "," + ACCENT_B + ",0.28)";
+		ctx.lineWidth = 0.8;
+		for (k = 0; k < 10; k++) {
+			px = rand() * OUT_W;
+			py = rand() * OUT_H;
+			var len = 18 + rand() * 70;
+			ctx.beginPath();
+			ctx.moveTo(px, py);
+			ctx.lineTo(px + len * (rand() - 0.5), py + len * (rand() - 0.5));
+			ctx.stroke();
+		}
+		ctx.restore();
 	}
 
 	function drawBranding() {
@@ -346,10 +272,12 @@
 
 		var imageData = ctx.getImageData(0, 0, OUT_W, OUT_H);
 		applyAlbumColorGrade(imageData.data);
-		applyGlitch(imageData, OUT_W, OUT_H, glitchSeed);
+		if (activeFx.glitch) applyGlitch(imageData, OUT_W, OUT_H, glitchSeed);
+		if (activeFx.chroma) applyChromaAberration(imageData.data, OUT_W, OUT_H);
 		ctx.putImageData(imageData, 0, 0);
 
-		drawButterflies(glitchSeed);
+		if (activeFx.vignette) applyVignette();
+		if (activeFx.particles) drawParticles(glitchSeed);
 
 		ctx.save();
 		ctx.globalCompositeOperation = "overlay";
@@ -418,11 +346,21 @@
 		});
 	}
 
+	var fxPills = document.querySelectorAll(".fx-pill[data-fx]");
+	Array.prototype.forEach.call(fxPills, function (btn) {
+		btn.addEventListener("click", function () {
+			var fx = btn.getAttribute("data-fx");
+			if (!(fx in activeFx)) return;
+			activeFx[fx] = !activeFx[fx];
+			btn.classList.toggle("is-active", activeFx[fx]);
+			render();
+		});
+	});
+
 	logoImg.onload = function () {
 		if (hasImage) render();
 	};
 	logoImg.src = "../images/ojo-goth-blanco.png";
-
 
 	if (igLink) {
 		igLink.href = "https://www.instagram.com/heo.oficial/";
