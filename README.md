@@ -71,6 +71,7 @@ Rutas relativas al dominio. En GitHub podés abrir el archivo con el segundo enl
 
 - Estética oscura, acento cian `#22eec9`, fuentes Geist / Space Grotesk.
 - API de chat configurada en el propio `index` (variable `NOMIOS_CHAT`).
+- **La lógica de IA de Nomios** (prompt del sistema, configuración del modelo, etc.) vive en el repo separado **[`nomios-ai`](https://github.com/jmalbarra/nomios-ai)**. Si necesitás cambiar el comportamiento del chat, ese es el lugar.
 
 ---
 
@@ -124,6 +125,13 @@ flowchart LR
 
 - **Push a `develop`** → despliegue a **staging** (`htdocs/staging`).
 - **Push a `main`** → despliegue a **producción** y también se refleja en staging según el workflow.
+
+### Infraestructura
+
+| Qué | Dónde / Proveedor |
+|-----|-------------------|
+| **Dominio** | Comprado en **GoDaddy** |
+| **Hosting** | **InfinityFree** (htdocs raíz = producción) |
 
 Los workflows usan **checkout**, **lftp mirror** con comparación por tamaño (`--ignore-time`) y exclusiones (`.git`, `.github`), para no resubir todo el repo en cada corrida.
 
