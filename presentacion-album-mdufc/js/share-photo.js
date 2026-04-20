@@ -416,6 +416,27 @@
 		});
 	}
 
+	var btnShare = document.getElementById("btn-share");
+	if (btnShare && navigator.canShare) {
+		/* Mostrar el botón solo si el navegador soporta compartir archivos */
+		var testFile = new File([""], "t.png", { type: "image/png" });
+		if (navigator.canShare({ files: [testFile] })) {
+			btnShare.hidden = false;
+		}
+		btnShare.addEventListener("click", function () {
+			if (!hasImage) return;
+			canvas.toBlob(function (blob) {
+				if (!blob) return;
+				var file = new File([blob], "hacia-el-ocaso-mitos.png", { type: "image/png" });
+				navigator.share({
+					files: [file],
+					title: "Mitos De Un Futuro Cercano — Hacia el Ocaso",
+					text: "Mi foto con la estética de @heo.oficial"
+				}).catch(function () {});
+			}, "image/png");
+		});
+	}
+
 	var fxPills = document.querySelectorAll(".fx-pill[data-fx]");
 	Array.prototype.forEach.call(fxPills, function (btn) {
 		btn.addEventListener("click", function () {
