@@ -1,0 +1,445 @@
+/* ═══════════════════════════════════════════════════
+   PLAYER PAGE — Hacia el Ocaso
+   Winamp-inspired cyberpunk media player
+═══════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { height: 100%; }
+
+body {
+  background: #050507;
+  color: #22eec9;
+  font-family: "Geist Mono", "Courier New", monospace;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Scanlines */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0, 0, 0, 0.07) 2px, rgba(0, 0, 0, 0.07) 4px
+  );
+}
+
+/* Ambient radial glow */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 40%, rgba(34, 238, 201, 0.05) 0%, transparent 65%),
+    radial-gradient(ellipse 100% 60% at 50% 100%, rgba(34, 238, 201, 0.03) 0%, transparent 70%);
+}
+
+.player-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 370px;
+  padding: 28px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.player-header {
+  display: flex;
+  justify-content: center;
+}
+
+.player-logo {
+  opacity: 0.85;
+  filter: drop-shadow(0 0 16px rgba(34, 238, 201, 0.4));
+}
+
+/* ═══════════════════════════════════════════════════
+   WINAMP WIDGET
+═══════════════════════════════════════════════════ */
+.winamp {
+  width: 100%;
+  background: #161918;
+  border: 1px solid rgba(34, 238, 201, 0.32);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.7),
+    0 0 60px rgba(34, 238, 201, 0.1),
+    0 28px 70px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+/* ── Title bar ──────────────────────── */
+.winamp__titlebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: linear-gradient(180deg, #1a2620 0%, #0f1410 100%);
+  border-bottom: 1px solid rgba(34, 238, 201, 0.18);
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  cursor: default;
+}
+
+.winamp__tb-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(34, 238, 201, 0.45);
+  box-shadow: 0 0 6px rgba(34, 238, 201, 0.4);
+  flex-shrink: 0;
+}
+
+.winamp__tb-name  { color: #22eec9; font-weight: 600; }
+.winamp__tb-sep   { color: rgba(34, 238, 201, 0.25); }
+.winamp__tb-album {
+  flex: 1;
+  color: rgba(232, 232, 232, 0.38);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.52rem;
+}
+
+.winamp__tb-wbtns {
+  display: flex;
+  gap: 3px;
+}
+.winamp__tb-wbtns span {
+  width: 13px;
+  height: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(34, 238, 201, 0.07);
+  border: 1px solid rgba(34, 238, 201, 0.18);
+  border-radius: 1px;
+  font-size: 0.44rem;
+  color: rgba(34, 238, 201, 0.35);
+  line-height: 1;
+}
+
+/* ── LCD Screen ─────────────────────── */
+.winamp__screen {
+  background: #030604;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid rgba(34, 238, 201, 0.1);
+  box-shadow: inset 0 3px 12px rgba(0, 0, 0, 0.8);
+}
+
+/* Visualizer canvas */
+#wp-viz {
+  display: block;
+  width: 100%;
+  height: 54px;
+  image-rendering: pixelated;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+/* Track info */
+.winamp__info {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.winamp__marquee-outer {
+  overflow: hidden;
+  white-space: nowrap;
+  height: 1.15em;
+  mask-image: linear-gradient(90deg, transparent 0, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 8%, black 92%, transparent 100%);
+}
+
+.winamp__marquee {
+  display: inline-block;
+  font-size: 0.67rem;
+  letter-spacing: 0.06em;
+  color: #22eec9;
+  text-shadow: 0 0 10px rgba(34, 238, 201, 0.55);
+  animation: wp-scroll 22s linear infinite;
+  will-change: transform;
+}
+
+@keyframes wp-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.winamp__timerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.winamp__time {
+  font-family: "Orbitron", monospace;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #22eec9;
+  text-shadow: 0 0 14px rgba(34, 238, 201, 0.75);
+  min-width: 36px;
+}
+
+.winamp__trackn {
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  color: rgba(34, 238, 201, 0.38);
+}
+
+/* Seek bar */
+.winamp__seekwrap { margin-top: 7px; }
+
+.winamp__seek {
+  height: 7px;
+  background: #090c08;
+  border: 1px solid rgba(34, 238, 201, 0.16);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.winamp__seek-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(34, 238, 201, 0.5) 0%, #22eec9 100%);
+  border-radius: 1px;
+  transition: width 0.2s linear;
+  box-shadow: 3px 0 10px rgba(34, 238, 201, 0.4);
+}
+
+/* ── Controls ────────────────────────── */
+.winamp__controls {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  background: linear-gradient(180deg, #171b18 0%, #121410 100%);
+  border-bottom: 1px solid rgba(34, 238, 201, 0.08);
+}
+
+.winamp__btns {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+}
+
+.wp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 24px;
+  background: linear-gradient(180deg, #232724 0%, #191b18 100%);
+  border: 1px solid rgba(34, 238, 201, 0.2);
+  border-radius: 2px;
+  color: rgba(34, 238, 201, 0.7);
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s, color 0.1s;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+    0 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.wp-btn:hover {
+  background: linear-gradient(180deg, #2c312d 0%, #1e2220 100%);
+  border-color: rgba(34, 238, 201, 0.48);
+  color: #22eec9;
+  box-shadow:
+    0 0 10px rgba(34, 238, 201, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.wp-btn:active {
+  transform: translateY(1px);
+  background: linear-gradient(180deg, #191b18 0%, #232724 100%);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.wp-btn--play {
+  width: 44px;
+  background: linear-gradient(180deg, #1d2e2a 0%, #131e1b 100%);
+  border-color: rgba(34, 238, 201, 0.32);
+}
+
+.wp-btn--play:hover {
+  background: linear-gradient(180deg, #243830 0%, #182520 100%);
+}
+
+.winamp__vol {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.winamp__vol-lbl {
+  font-size: 0.5rem;
+  letter-spacing: 0.22em;
+  color: rgba(34, 238, 201, 0.32);
+}
+
+#wp-vol {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 64px;
+  height: 4px;
+  background: #090c08;
+  border: 1px solid rgba(34, 238, 201, 0.16);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+#wp-vol::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 16px;
+  background: #22eec9;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(34, 238, 201, 0.55);
+  cursor: pointer;
+}
+
+#wp-vol::-moz-range-thumb {
+  width: 10px;
+  height: 16px;
+  background: #22eec9;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+}
+
+/* ── Playlist ────────────────────────── */
+.winamp__playlist { background: #0c0e0b; }
+
+.winamp__pl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  font-size: 0.53rem;
+  letter-spacing: 0.2em;
+  color: rgba(34, 238, 201, 0.45);
+  background: linear-gradient(180deg, #111410 0%, #0c0e0b 100%);
+  border-bottom: 1px solid rgba(34, 238, 201, 0.08);
+}
+
+.winamp__pl-count { color: rgba(34, 238, 201, 0.28); }
+
+.winamp__pl-list {
+  list-style: none;
+  max-height: 210px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 238, 201, 0.2) transparent;
+}
+
+.winamp__pl-list::-webkit-scrollbar { width: 3px; }
+.winamp__pl-list::-webkit-scrollbar-thumb {
+  background: rgba(34, 238, 201, 0.2);
+  border-radius: 2px;
+}
+
+.wp-pl-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+  color: rgba(232, 232, 232, 0.42);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(34, 238, 201, 0.04);
+  transition: background 0.12s, color 0.12s;
+}
+
+.wp-pl-item:hover {
+  background: rgba(34, 238, 201, 0.05);
+  color: rgba(232, 232, 232, 0.78);
+}
+
+.wp-pl-item.is-active {
+  background: rgba(34, 238, 201, 0.09);
+  color: #22eec9;
+}
+
+.wp-pl-num {
+  font-size: 0.55rem;
+  color: rgba(34, 238, 201, 0.28);
+  min-width: 22px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.wp-pl-item.is-active .wp-pl-num::after {
+  content: " ▶";
+}
+
+.wp-pl-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wp-pl-dur {
+  font-size: 0.55rem;
+  color: rgba(34, 238, 201, 0.28);
+  min-width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+.player-footer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player-footer__hint {
+  font-size: 0.63rem;
+  letter-spacing: 0.1em;
+  color: rgba(34, 238, 201, 0.32);
+}
+
+.player-footer__hint span {
+  color: rgba(34, 238, 201, 0.55);
+}
+
+.player-footer__back {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(34, 238, 201, 0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.player-footer__back:hover { color: #22eec9; }
+
+@media (min-width: 420px) {
+  .player-wrap { max-width: 400px; }
+}
