@@ -63,6 +63,8 @@ body::before {
 }
 
 .player-logo {
+  height: 48px;
+  width: auto;
   opacity: 0.85;
   filter: drop-shadow(0 0 16px rgba(34, 238, 201, 0.4));
 }
@@ -417,7 +419,11 @@ body::before {
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(34, 238, 201, 0.08);
+  width: 100%;
 }
 
 .player-footer__hint {
@@ -428,6 +434,45 @@ body::before {
 
 .player-footer__hint span {
   color: rgba(34, 238, 201, 0.55);
+}
+
+.player-footer__socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-footer__social {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: rgba(34, 238, 201, 0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.player-footer__social:hover { color: #22eec9; }
+
+.player-footer__dot {
+  font-size: 0.55rem;
+  color: rgba(34, 238, 201, 0.2);
+}
+
+.player-footer__manifesto {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: rgba(232, 232, 232, 0.25);
+  line-height: 1.6;
+}
+
+.player-footer__manifesto strong {
+  color: rgba(232, 232, 232, 0.4);
+  font-weight: 600;
+}
+
+.player-footer__copy {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: rgba(34, 238, 201, 0.18);
 }
 
 .player-footer__back {
