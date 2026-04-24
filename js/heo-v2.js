@@ -508,3 +508,49 @@ window.addEventListener('resize', () => {
   window.addEventListener('scroll', update, { passive: true });
   update();
 })();
+
+
+/* ============================================================
+   EXPERIENCIAS — MATRIX RAIN BACKGROUND
+   Cae sobre el fondo de la sección, detrás de las tarjetas
+   ============================================================ */
+(function initExpMatrix() {
+  const el = document.getElementById('exp-matrix');
+  if (!el) return;
+  const ctx   = el.getContext('2d');
+  const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ01ムメモヤユヨ10';
+  const FS    = 11;
+  let drops   = [];
+
+  function resize() {
+    el.width  = el.offsetWidth;
+    el.height = el.offsetHeight;
+    const cols = Math.floor(el.width / FS);
+    while (drops.length < cols) drops.push(Math.random() * -40);
+    drops.length = cols;
+  }
+
+  window.addEventListener('resize', () => {
+    clearTimeout(el._rt);
+    el._rt = setTimeout(resize, 150);
+  });
+  resize();
+
+  function tick() {
+    ctx.fillStyle = 'rgba(5,5,7,0.08)';
+    ctx.fillRect(0, 0, el.width, el.height);
+    ctx.font = FS + "px 'Courier New', monospace";
+    for (let i = 0; i < drops.length; i++) {
+      const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+      const y  = Math.floor(drops[i]) * FS;
+      ctx.fillStyle = y < FS * 2
+        ? 'rgba(200,255,245,0.4)'
+        : 'rgba(34,238,201,0.09)';
+      ctx.fillText(ch, i * FS, y);
+      if (y > el.height && Math.random() > 0.974) drops[i] = 0;
+      drops[i] += 0.35;
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();

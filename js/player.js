@@ -381,6 +381,50 @@
   if (btnNext) btnNext.addEventListener("click", goNext);
 
   /* ═══════════════════════════════════════════════════════════════
+     MATRIX RAIN BACKGROUND
+  ═══════════════════════════════════════════════════════════════ */
+  (function initMatrixRain() {
+    var el = document.getElementById("matrix-rain");
+    if (!el) return;
+    var rCtx  = el.getContext("2d");
+    var CHARS = "アイウエオカキクケコサシスセソタチツテトナニヌネノ01ムメモヤユヨ10";
+    var FS    = 11;
+    var drops = [];
+
+    function resizeMR() {
+      el.width  = window.innerWidth;
+      el.height = window.innerHeight;
+      var cols  = Math.floor(el.width / FS);
+      while (drops.length < cols) drops.push(Math.random() * -60);
+      drops.length = cols;
+    }
+
+    window.addEventListener("resize", function () {
+      clearTimeout(el._rt);
+      el._rt = setTimeout(resizeMR, 150);
+    });
+    resizeMR();
+
+    function tickMR() {
+      rCtx.fillStyle = "rgba(5,5,7,0.065)";
+      rCtx.fillRect(0, 0, el.width, el.height);
+      rCtx.font = FS + "px 'Courier New', monospace";
+      for (var i = 0; i < drops.length; i++) {
+        var ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+        var y  = Math.floor(drops[i]) * FS;
+        rCtx.fillStyle = y < FS * 2
+          ? "rgba(200,255,245,0.55)"
+          : "rgba(34,238,201,0.13)";
+        rCtx.fillText(ch, i * FS, y);
+        if (y > el.height && Math.random() > 0.974) drops[i] = 0;
+        drops[i] += 0.4;
+      }
+      requestAnimationFrame(tickMR);
+    }
+    tickMR();
+  }());
+
+  /* ═══════════════════════════════════════════════════════════════
      INIT
   ═══════════════════════════════════════════════════════════════ */
   function init() {
