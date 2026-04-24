@@ -1,0 +1,38 @@
+# ────────────────────────────────────────────────────────────
+# CACHE CONTROL — Hacia el Ocaso
+# HTML: nunca cachear (siempre pide la versión actual)
+# CSS/JS/imágenes: cachear 1 semana (usar ?v=X para invalidar)
+# ────────────────────────────────────────────────────────────
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # HTML — sin caché
+  ExpiresByType text/html                 "access plus 0 seconds"
+
+  # CSS y JS — 1 semana (invalidar con ?v=X al actualizar)
+  ExpiresByType text/css                  "access plus 1 week"
+  ExpiresByType application/javascript    "access plus 1 week"
+  ExpiresByType text/javascript           "access plus 1 week"
+
+  # Imágenes y fuentes — 1 mes
+  ExpiresByType image/jpeg                "access plus 1 month"
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType image/webp                "access plus 1 month"
+  ExpiresByType image/svg+xml             "access plus 1 month"
+  ExpiresByType image/x-icon              "access plus 1 month"
+  ExpiresByType font/woff2                "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # HTML: forzar revalidación siempre
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+    Header set Pragma "no-cache"
+  </FilesMatch>
+
+  # CSS/JS: cacheable pero validable
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
