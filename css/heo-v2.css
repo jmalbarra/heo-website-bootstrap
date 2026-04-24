@@ -1046,6 +1046,24 @@ body::after {
 }
 
 /* Experiencias */
+.exp-section {
+  position: relative;
+  overflow: hidden;
+}
+
+#exp-matrix {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.exp-section .container {
+  position: relative;
+  z-index: 1;
+}
+
 .exp-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

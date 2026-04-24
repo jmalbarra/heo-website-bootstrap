@@ -412,6 +412,15 @@ body::before {
   flex-shrink: 0;
 }
 
+/* ── Matrix rain background canvas ──── */
+#matrix-rain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
 /* ══════════════════════════════════════
    FOOTER
 ══════════════════════════════════════ */
@@ -420,9 +429,9 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding-top: 4px;
-  border-top: 1px solid rgba(34, 238, 201, 0.08);
+  gap: 14px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(34, 238, 201, 0.1);
   width: 100%;
 }
 
