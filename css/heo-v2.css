@@ -1006,8 +1006,23 @@ body::after {
 @media (max-width: 480px) {
   .social-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
   .social-card { min-height: 120px; padding: 1.1rem 1rem; }
-  .contact-hero__email { font-size: 1.15rem; }
   .contact-hero__prompt { display: none; }
+  .contact-hero {
+    padding: 1.2rem 1.25rem;
+    gap: 0.5rem 0.75rem;
+    align-items: center;
+  }
+  .contact-hero__email {
+    font-size: 1rem;
+    order: 1;
+    flex: 1;
+    min-width: 0;
+  }
+  .contact-hero__arrow { order: 2; flex-shrink: 0; }
+  .contact-hero__tag {
+    order: 3;
+    flex-basis: 100%;
+  }
 }
 
 
