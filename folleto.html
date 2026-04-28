@@ -142,7 +142,7 @@
 
     .band-name {
       font-family: 'Orbitron', monospace;
-      font-size: 2.05rem;
+      font-size: 2.3rem;
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -189,7 +189,7 @@
     }
 
     .album-title {
-      font-size: 1.85rem;
+      font-size: 2rem;
       font-weight: 700;
       letter-spacing: -0.01em;
       color: #e8e8e8;
@@ -206,7 +206,7 @@
       font-family: 'Geist Mono', monospace;
       font-size: 0.6rem;
       letter-spacing: 0.22em;
-      color: rgba(232,232,232,0.22);
+      color: rgba(232,232,232,0.5);
       margin-bottom: 2rem;
     }
 
@@ -225,7 +225,7 @@
 
     .event-heading {
       font-family: 'Orbitron', monospace;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -235,8 +235,8 @@
     }
 
     .event-desc {
-      font-size: 0.8rem;
-      color: rgba(232,232,232,0.38);
+      font-size: 0.9rem;
+      color: rgba(232,232,232,0.75);
       text-align: center;
       line-height: 1.65;
       max-width: 300px;
@@ -279,21 +279,59 @@
       border-right: 2px solid #22eec9;
     }
 
-    #qr-canvas { display: block; border-radius: 2px; }
+    #qr-img { display: block; border-radius: 2px; width: 230px; height: 230px; }
 
     .qr-cta {
       font-family: 'Geist Mono', monospace;
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(34,238,201,0.5);
+      color: rgba(34,238,201,0.75);
     }
 
     .qr-url {
       font-family: 'Geist Mono', monospace;
-      font-size: 0.52rem;
+      font-size: 0.62rem;
       letter-spacing: 0.05em;
-      color: rgba(232,232,232,0.2);
+      color: rgba(232,232,232,0.55);
+    }
+
+    /* Otras experiencias */
+    .extras {
+      width: 100%;
+      margin-bottom: 1.2rem;
+    }
+    .extras__label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(34,238,201,0.5);
+      margin-bottom: 0.65rem;
+      display: block;
+      text-align: center;
+    }
+    .extras__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .extras__item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      color: rgba(232,232,232,0.72);
+      padding: 0.45rem 0.75rem;
+      border: 1px solid rgba(34,238,201,0.1);
+      border-radius: 3px;
+      background: rgba(34,238,201,0.025);
+    }
+    .extras__item span {
+      color: rgba(34,238,201,0.6);
+      flex-shrink: 0;
     }
 
     /* Footer row */
@@ -313,9 +351,9 @@
     }
     .sheet-footer span {
       font-family: 'Geist Mono', monospace;
-      font-size: 0.52rem;
+      font-size: 0.62rem;
       letter-spacing: 0.15em;
-      color: rgba(34,238,201,0.28);
+      color: rgba(34,238,201,0.5);
     }
 
     /* Print */
@@ -333,8 +371,8 @@
     /* Responsive */
     @media (max-width: 640px) {
       .sheet { width: 100%; padding: 2.5rem 1.75rem 2rem; }
-      .band-name { font-size: 1.55rem; }
-      .album-title { font-size: 1.45rem; }
+      .band-name { font-size: 1.7rem; }
+      .album-title { font-size: 1.55rem; }
     }
   </style>
 </head>
@@ -353,7 +391,7 @@
 
       <!-- Logo + banda -->
       <img src="images/ojo-goth-blanco.png" alt="Hacia el Ocaso" class="logo">
-      <span class="band-eyebrow">Buenos Aires · Metal</span>
+      <span class="band-eyebrow">Buenos Aires, Argentina</span>
       <h1 class="band-name">Hacia el Ocaso</h1>
 
       <!-- Divider -->
@@ -379,10 +417,19 @@
       <!-- QR Code -->
       <div class="qr-wrap">
         <div class="qr-frame">
-          <canvas id="qr-canvas"></canvas>
+          <img id="qr-img" alt="QR — Cancionero en vivo">
         </div>
         <span class="qr-cta">Escaneá para entrar</span>
         <span class="qr-url">haciaelocaso.com/presentacion-album-mdufc</span>
+      </div>
+
+      <!-- Otras experiencias -->
+      <div class="extras">
+        <span class="extras__label">// más en haciaelocaso.com</span>
+        <div class="extras__list">
+          <div class="extras__item"><span>▶</span> Escuchá el disco completo en el sitio</div>
+          <div class="extras__item"><span>◈</span> Creá tu foto con la estética del álbum</div>
+        </div>
       </div>
 
       <div class="sheet-divider"></div>
@@ -397,15 +444,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <script>
-    QRCode.toCanvas(
-      document.getElementById('qr-canvas'),
-      'https://haciaelocaso.com/presentacion-album-mdufc/index.html',
-      {
-        width: 230,
-        margin: 2,
-        color: { dark: '#22eec9', light: '#050507' }
-      }
-    );
+    window.addEventListener('load', function () {
+      QRCode.toDataURL(
+        'https://haciaelocaso.com/presentacion-album-mdufc/index.html',
+        { width: 230, margin: 2, color: { dark: '#22eec9', light: '#050507' } },
+        function (err, url) {
+          if (!err) document.getElementById('qr-img').src = url;
+        }
+      );
+    });
   </script>
 
 </body>
