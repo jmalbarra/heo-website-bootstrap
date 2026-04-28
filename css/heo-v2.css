@@ -1046,23 +1046,6 @@ body::after {
 }
 
 /* Experiencias */
-.exp-section {
-  position: relative;
-  overflow: hidden;
-}
-
-#exp-matrix {
-  position: absolute;
-  inset: 0;
-  display: block;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.exp-section .container {
-  position: relative;
-  z-index: 1;
-}
 
 .exp-grid {
   display: grid;
@@ -1965,10 +1948,10 @@ body.is-glitching::after {
 }
 @media (max-width: 540px) {
   .lab-fab {
-    padding: 0.55rem;
-    gap: 0;
+    padding: 0.55rem 0.85rem 0.55rem 0.55rem;
+    gap: 0.4rem;
   }
-  .lab-fab__label { display: none; }
+  .lab-fab__text { display: none; }
 }
 .perf-lite .lab-fab__pulse { display: none; }
 .perf-lite .lab-fab__caret { animation: none; opacity: 1; }
