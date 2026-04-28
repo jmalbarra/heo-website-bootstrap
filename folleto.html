@@ -206,7 +206,7 @@
       font-family: 'Geist Mono', monospace;
       font-size: 0.6rem;
       letter-spacing: 0.22em;
-      color: rgba(232,232,232,0.5);
+      color: rgba(232,232,232,0.55);
       margin-bottom: 2rem;
     }
 
@@ -279,7 +279,7 @@
       border-right: 2px solid #22eec9;
     }
 
-    #qr-img { display: block; border-radius: 2px; width: 230px; height: 230px; }
+    #qr-img { display: block; border-radius: 2px; }
 
     .qr-cta {
       font-family: 'Geist Mono', monospace;
@@ -417,7 +417,7 @@
       <!-- QR Code -->
       <div class="qr-wrap">
         <div class="qr-frame">
-          <img id="qr-img" alt="QR — Cancionero en vivo">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOYAAADmCAIAAABOCG7sAAAFoElEQVR4nO3dwW3cMBAF0DjIwiXklFZSfFrJKV2kAAnwZDLk8q/fO6+0tPeDgEbk8O3xeP8COb4+ewDwb0SWMCJLGJEljMgSRmQJI7KEEVnCiCxhRJYwIkuYb5UP/fjza/U4PvT7+8/ehVODLw7g+nXXC9tDqozh9ubtCzerjNMsSxiRJYzIEkZkCSOyhBFZwpSKXLfaVaeKwYLLVI1p6ZAGxzD4u5z5E5tlCSOyhBFZwogsYUSWMP2KwdXS1R7tr6vcvFJVGHx83r8AZerP2fwT3zLLEkZkCSOyhBFZwogsYSYrBk93+1haecgd3P3SLj70HupP2P2ymVmWMCJLGJEljMgSRmQJ81IVg6VvwNvliHbxYfDmS/cXbGaWJYzIEkZkCSOyhBFZwogsYSaLXGdWUqZG1a6gDW74ud5q6YafqxN+YrMsYUSWMCJLGJEljMgSpl8xOHALR3uDSvu5u3er9rKYpbeqXHUCsyxhRJYwIksYkSWMyBKmVDE44c1yxQlNMCsGW4T8zzc2PnMCsyxhRJYwIksYkSWMyBLm7fF4//BDxW4OSx/YzzycsvdPOKFZZ+7PZ5YljMgSRmQJI7KEEVnC7G7WecKxmptfuA8+m7f3KUz9Oe3VEcWrKuM0yxJGZAkjsoQRWcKILGFEljD9ZTFX7WUcU4tLlpa9brUXwUzdfPDrKpb+fEVmWcKILGFEljAiSxiRJcza1hubu1IOblCp3GfW0vrAgZWNNrMsYUSWMCJLGJEljMgSZrL1RtuBx0i0n8TbZ4c8/QSOE9ZsVJhlCSOyhBFZwogsYUSWMGsPBG0fqzk1gOLXtY/WWNrycmp1xK3BU1GvlpYazLKEEVnCiCxhRJYwIkuYyV0Jgz0o22OoXDi1CaL+sYrKGAb/UZsrG4PlCLMsYUSWMCJLGJEljMgSRmQJUypyDTbrLOrdanCDygm7SpaWinoGe6m0mWUJI7KEEVnCiCxhRJYwk603Bk9YHTzeY/Mz9dXLt94Y3AdlIw0vSGQJI7KEEVnCiCxh+q03rk54L381tc1jsNYxuEtnsGwyeIBKbwBFZlnCiCxhRJYwIksYkSXMZLPO3mr/9s3b7+4HDS4MmCo+LG290R651ht8XiJLGJEljMgSRmQJI7KE6Re5lm5QWdoUdmpIs6b+wMHdL0uX77SZZQkjsoQRWcKILGFEljC7l8UUb3U1WB9Y2uRiaQOLwbVBuQfkmmUJI7KEEVnCiCxhRJYwk2sMTmgcOXWrzRtUihdex3BC642KwXGaZQkjsoQRWcKILGFEljBHNOucOt6jaOmWh6VtRiufWbp7YmlRqMgsSxiRJYzIEkZkCSOyhJmsGAw+vS7dg1D5uralixOe3qjhhPNazLKEEVnCiCxhRJYwIksYkSXMZJGron2kyeBJL8ULK/fZXJlq1/5SqmM20vCCRJYwIksYkSWMyBLm7fF4f/YYmjY341h9q6kB3JpasTR4+u4tFQNekMgSRmQJI7KEEVnClNYYbH4KvlXpU3mrd7JF+9394MkWm89A3dzFQ+sNPguRJYzIEkZkCSOyhJk83mPQ4Gr/3jj3r0PoHd2x+f3+rcHzXK0x4AWJLGFEljAiSxiRJczaZp1FU8WHwWfezY/PRe0FDJWFFoOWroUwyxJGZAkjsoQRWcKILGFEljC7m3XuVykDbT45Z/Bo383LYk7YUmWWJYzIEkZkCSOyhBFZwrxUxWDw7JD2cpPNrTeuBsfZvnnxwh6zLGFEljAiSxiRJYzIEqZ0vEe7S0Lb4IGgPZuPzSje6ulblZ4+gC9mWeKILGFEljAiSxiRJUy/YrDZ4Lv7isGNA5Wr2jYfZXpCcxOzLGFEljAiSxiRJYzIEkZkCVMqcsE5zLKEEVnCiCxhRJYwIksYkSWMyBJGZAkjsoQRWcKILGH+Asmz3M+zele5AAAAAElFTkSuQmCC" alt="QR — Cancionero en vivo" width="230" height="230">
         </div>
         <span class="qr-cta">Escaneá para entrar</span>
         <span class="qr-url">haciaelocaso.com/presentacion-album-mdufc</span>
@@ -442,18 +442,6 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-  <script>
-    window.addEventListener('load', function () {
-      QRCode.toDataURL(
-        'https://haciaelocaso.com/presentacion-album-mdufc/index.html',
-        { width: 230, margin: 2, color: { dark: '#22eec9', light: '#050507' } },
-        function (err, url) {
-          if (!err) document.getElementById('qr-img').src = url;
-        }
-      );
-    });
-  </script>
 
 </body>
 </html>
