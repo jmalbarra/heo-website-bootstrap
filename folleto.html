@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Folleto — Hacia el Ocaso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #020204;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      gap: 1.25rem;
+    }
+
+    .print-btn {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(34, 238, 201, 0.55);
+      background: transparent;
+      border: 1px solid rgba(34, 238, 201, 0.22);
+      border-radius: 3px;
+      padding: 0.55rem 1.4rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .print-btn:hover { color: #22eec9; border-color: rgba(34, 238, 201, 0.55); }
+
+    /* ── Sheet (A4-ish: 600×850) ───────────────────── */
+    .sheet {
+      width: 600px;
+      min-height: 850px;
+      background: #050507;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(34, 238, 201, 0.18);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.9),
+        0 0 80px rgba(34, 238, 201, 0.07),
+        0 40px 120px rgba(0,0,0,0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 3.5rem 2.5rem;
+    }
+
+    /* Grid lines */
+    .sheet::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(34, 238, 201, 0.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 238, 201, 0.016) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Scanlines */
+    .sheet::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.055) 2px, rgba(0,0,0,0.055) 4px
+      );
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Ambient glow top */
+    .glow {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 340px;
+      background: radial-gradient(ellipse 90% 65% at 50% 0%,
+        rgba(34, 238, 201, 0.07), transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Corner brackets */
+    .corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      z-index: 6;
+    }
+    .corner--tl { top: 14px; left: 14px;
+      border-top: 1.5px solid rgba(34,238,201,0.7);
+      border-left: 1.5px solid rgba(34,238,201,0.7); }
+    .corner--tr { top: 14px; right: 14px;
+      border-top: 1.5px solid rgba(34,238,201,0.7);
+      border-right: 1.5px solid rgba(34,238,201,0.7); }
+    .corner--bl { bottom: 14px; left: 14px;
+      border-bottom: 1.5px solid rgba(34,238,201,0.7);
+      border-left: 1.5px solid rgba(34,238,201,0.7); }
+    .corner--br { bottom: 14px; right: 14px;
+      border-bottom: 1.5px solid rgba(34,238,201,0.7);
+      border-right: 1.5px solid rgba(34,238,201,0.7); }
+
+    /* ── Content ─────────────────────────────────────── */
+    .inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo {
+      width: 78px;
+      height: 78px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 22px rgba(34, 238, 201, 0.45));
+      margin-bottom: 1.1rem;
+      margin-top: 0.25rem;
+    }
+
+    .band-eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: rgba(34, 238, 201, 0.65);
+      margin-bottom: 0.55rem;
+    }
+
+    .band-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.05rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #e8e8e8;
+      text-shadow: 0 0 50px rgba(34, 238, 201, 0.22);
+      text-align: center;
+      line-height: 1;
+      margin-bottom: 1.6rem;
+    }
+
+    /* Divider */
+    .divider {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.7rem;
+    }
+    .divider__line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(34,238,201,0.28) 30%,
+        rgba(34,238,201,0.28) 70%,
+        transparent);
+    }
+    .divider__dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: #22eec9;
+      box-shadow: 0 0 10px rgba(34,238,201,0.9);
+      flex-shrink: 0;
+    }
+
+    /* Album */
+    .album-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(34, 238, 201, 0.5);
+      margin-bottom: 0.55rem;
+    }
+
+    .album-title {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #e8e8e8;
+      text-align: center;
+      line-height: 1.18;
+      margin-bottom: 0.3rem;
+    }
+    .album-title em {
+      font-style: normal;
+      color: #22eec9;
+    }
+
+    .album-meta {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: rgba(232,232,232,0.22);
+      margin-bottom: 2rem;
+    }
+
+    /* Event section */
+    .event-pill {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #22eec9;
+      border: 1px solid rgba(34,238,201,0.28);
+      border-radius: 999px;
+      padding: 0.28rem 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .event-heading {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #e8e8e8;
+      text-align: center;
+      margin-bottom: 0.55rem;
+    }
+
+    .event-desc {
+      font-size: 0.8rem;
+      color: rgba(232,232,232,0.38);
+      text-align: center;
+      line-height: 1.65;
+      max-width: 300px;
+      margin-bottom: 2rem;
+    }
+
+    /* QR */
+    .qr-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .qr-frame {
+      position: relative;
+      padding: 14px;
+      border: 1px solid rgba(34,238,201,0.22);
+      border-radius: 4px;
+      background: rgba(5,5,7,0.6);
+    }
+    /* extra corner accents on QR frame */
+    .qr-frame::before,
+    .qr-frame::after,
+    .qr-frame .qr-corner-bl,
+    .qr-frame .qr-corner-tr {
+      content: '';
+      position: absolute;
+      width: 14px; height: 14px;
+    }
+    .qr-frame::before {
+      top: -1px; left: -1px;
+      border-top: 2px solid #22eec9;
+      border-left: 2px solid #22eec9;
+    }
+    .qr-frame::after {
+      bottom: -1px; right: -1px;
+      border-bottom: 2px solid #22eec9;
+      border-right: 2px solid #22eec9;
+    }
+
+    #qr-canvas { display: block; border-radius: 2px; }
+
+    .qr-cta {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(34,238,201,0.5);
+    }
+
+    .qr-url {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.05em;
+      color: rgba(232,232,232,0.2);
+    }
+
+    /* Footer row */
+    .sheet-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent, rgba(34,238,201,0.12) 50%, transparent);
+      margin: 1rem 0 0.9rem;
+    }
+
+    .sheet-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .sheet-footer span {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.15em;
+      color: rgba(34,238,201,0.28);
+    }
+
+    /* Print */
+    @media print {
+      body { background: #050507; padding: 0; gap: 0; justify-content: flex-start; }
+      .print-btn { display: none; }
+      .sheet {
+        width: 100%;
+        min-height: 100vh;
+        border: none;
+        box-shadow: none;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .sheet { width: 100%; padding: 2.5rem 1.75rem 2rem; }
+      .band-name { font-size: 1.55rem; }
+      .album-title { font-size: 1.45rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn" onclick="window.print()">Imprimir / Guardar como PDF</button>
+
+  <div class="sheet">
+    <div class="glow"></div>
+    <div class="corner corner--tl"></div>
+    <div class="corner corner--tr"></div>
+    <div class="corner corner--bl"></div>
+    <div class="corner corner--br"></div>
+
+    <div class="inner">
+
+      <!-- Logo + banda -->
+      <img src="images/ojo-goth-blanco.png" alt="Hacia el Ocaso" class="logo">
+      <span class="band-eyebrow">Buenos Aires · Metal</span>
+      <h1 class="band-name">Hacia el Ocaso</h1>
+
+      <!-- Divider -->
+      <div class="divider">
+        <div class="divider__line"></div>
+        <div class="divider__dot"></div>
+        <div class="divider__line"></div>
+      </div>
+
+      <!-- Álbum -->
+      <span class="album-label">// álbum</span>
+      <h2 class="album-title">Mitos de un <em>Futuro Cercano</em></h2>
+      <span class="album-meta">LP.03 · 2026</span>
+
+      <!-- Evento -->
+      <span class="event-pill">// cancionero en vivo</span>
+      <h3 class="event-heading">Seguí el show en tiempo real</h3>
+      <p class="event-desc">
+        Letra e información de cada tema a medida que suenan.<br>
+        Abrí desde tu celular antes de que empiece el show.
+      </p>
+
+      <!-- QR Code -->
+      <div class="qr-wrap">
+        <div class="qr-frame">
+          <canvas id="qr-canvas"></canvas>
+        </div>
+        <span class="qr-cta">Escaneá para entrar</span>
+        <span class="qr-url">haciaelocaso.com/presentacion-album-mdufc</span>
+      </div>
+
+      <div class="sheet-divider"></div>
+
+      <div class="sheet-footer">
+        <span>@heo.oficial</span>
+        <span>haciaelocaso.com</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script>
+    QRCode.toCanvas(
+      document.getElementById('qr-canvas'),
+      'https://haciaelocaso.com/presentacion-album-mdufc/index.html',
+      {
+        width: 230,
+        margin: 2,
+        color: { dark: '#22eec9', light: '#050507' }
+      }
+    );
+  </script>
+
+</body>
+</html>
