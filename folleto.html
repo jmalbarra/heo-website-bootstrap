@@ -358,13 +358,18 @@
 
     /* Print */
     @media print {
-      body { background: #050507; padding: 0; gap: 0; justify-content: flex-start; }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      body { background: #050507 !important; padding: 0; gap: 0; justify-content: flex-start; }
       .print-btn { display: none; }
       .sheet {
-        width: 100%;
+        width: 100% !important;
         min-height: 100vh;
         border: none;
         box-shadow: none;
+        background: #050507 !important;
       }
     }
 
