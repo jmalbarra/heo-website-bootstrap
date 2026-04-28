@@ -279,7 +279,7 @@
       border-right: 2px solid #22eec9;
     }
 
-    #qr-img { display: block; border-radius: 2px; width: 230px; height: 230px; }
+    #qr-canvas { display: block; border-radius: 2px; }
 
     .qr-cta {
       font-family: 'Geist Mono', monospace;
@@ -294,50 +294,6 @@
       font-size: 0.52rem;
       letter-spacing: 0.05em;
       color: rgba(232,232,232,0.2);
-    }
-
-    /* Otras experiencias */
-    .extras {
-      width: 100%;
-      margin-bottom: 1.2rem;
-    }
-    .extras__label {
-      font-family: 'Geist Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(34,238,201,0.4);
-      margin-bottom: 0.65rem;
-      display: block;
-      text-align: center;
-    }
-    .extras__list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-    .extras__item {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'Geist Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.05em;
-      color: rgba(232,232,232,0.32);
-      padding: 0.4rem 0.75rem;
-      border: 1px solid rgba(34,238,201,0.07);
-      border-radius: 3px;
-      background: rgba(34,238,201,0.02);
-    }
-    .extras__item::before {
-      content: '→';
-      color: rgba(34,238,201,0.4);
-      font-size: 0.55rem;
-      flex-shrink: 0;
-    }
-    .extras__item span {
-      color: rgba(34,238,201,0.55);
-      margin-right: 0.2rem;
     }
 
     /* Footer row */
@@ -397,7 +353,7 @@
 
       <!-- Logo + banda -->
       <img src="images/ojo-goth-blanco.png" alt="Hacia el Ocaso" class="logo">
-      <span class="band-eyebrow">Buenos Aires, Argentina</span>
+      <span class="band-eyebrow">Buenos Aires · Metal</span>
       <h1 class="band-name">Hacia el Ocaso</h1>
 
       <!-- Divider -->
@@ -423,20 +379,10 @@
       <!-- QR Code -->
       <div class="qr-wrap">
         <div class="qr-frame">
-          <img id="qr-img" alt="QR — Cancionero en vivo">
+          <canvas id="qr-canvas"></canvas>
         </div>
         <span class="qr-cta">Escaneá para entrar</span>
         <span class="qr-url">haciaelocaso.com/presentacion-album-mdufc</span>
-      </div>
-
-      <!-- Otras experiencias -->
-      <div class="extras">
-        <span class="extras__label">// más en haciaelocaso.com</span>
-        <div class="extras__list">
-          <div class="extras__item"><span>▶</span> Escuchá el disco completo en el sitio</div>
-          <div class="extras__item"><span>◈</span> Creá tu foto con la estética del álbum</div>
-          <div class="extras__item"><span>⬡</span> Nomios — IA entrenada en las letras del disco</div>
-        </div>
       </div>
 
       <div class="sheet-divider"></div>
@@ -451,15 +397,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <script>
-    window.addEventListener('load', function () {
-      QRCode.toDataURL(
-        'https://haciaelocaso.com/presentacion-album-mdufc/index.html',
-        { width: 230, margin: 2, color: { dark: '#22eec9', light: '#050507' } },
-        function (err, url) {
-          if (!err) document.getElementById('qr-img').src = url;
-        }
-      );
-    });
+    QRCode.toCanvas(
+      document.getElementById('qr-canvas'),
+      'https://haciaelocaso.com/presentacion-album-mdufc/index.html',
+      {
+        width: 230,
+        margin: 2,
+        color: { dark: '#22eec9', light: '#050507' }
+      }
+    );
   </script>
 
 </body>
