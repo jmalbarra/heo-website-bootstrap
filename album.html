@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#050507">
+  <meta name="description" content="Escuchá Mitos De Un Futuro Cercano — el nuevo álbum de Hacia el Ocaso. Sigue sonando con la pantalla apagada.">
+  <title>Mitos De Un Futuro Cercano — Hacia el Ocaso</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/player.css">
+</head>
+<body>
+
+  <canvas id="matrix-rain" aria-hidden="true"></canvas>
+
+  <div class="player-wrap">
+
+    <div class="player-header">
+      <img src="images/ojo-goth-blanco.png" alt="" class="player-logo" aria-hidden="true">
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         WINAMP WIDGET
+    ════════════════════════════════════════ -->
+    <div class="winamp" id="winamp" role="region" aria-label="Reproductor — Mitos De Un Futuro Cercano">
+
+      <!-- Title bar -->
+      <div class="winamp__titlebar" aria-hidden="true">
+        <span class="winamp__tb-dot"></span>
+        <span class="winamp__tb-name">WINAMP</span>
+        <span class="winamp__tb-sep">·</span>
+        <span class="winamp__tb-album">HACIA EL OCASO</span>
+        <div class="winamp__tb-wbtns">
+          <span>_</span><span>□</span><span>×</span>
+        </div>
+      </div>
+
+      <!-- LCD Screen -->
+      <div class="winamp__screen">
+        <canvas id="wp-viz" height="54" aria-hidden="true"></canvas>
+
+        <div class="winamp__info">
+          <div class="winamp__marquee-outer" aria-live="polite" aria-atomic="true">
+            <span id="wp-marquee" class="winamp__marquee"></span>
+          </div>
+          <div class="winamp__timerow">
+            <span class="winamp__time" id="wp-elapsed" aria-label="Tiempo transcurrido">0:00</span>
+            <span class="winamp__trackn" id="wp-trackn">01 / 01</span>
+            <span class="winamp__time" id="wp-total" aria-label="Duración total">–:––</span>
+          </div>
+        </div>
+
+        <div class="winamp__seekwrap">
+          <div class="winamp__seek" id="wp-seek"
+               role="slider" aria-label="Posición de reproducción"
+               aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="winamp__seek-fill" id="wp-seek-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="winamp__controls">
+        <div class="winamp__btns">
+          <button class="wp-btn" id="wp-prev" aria-label="Anterior" title="Anterior">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <rect x="0" y="1" width="2.5" height="12"/>
+              <polygon points="13,1 2.5,7 13,13"/>
+            </svg>
+          </button>
+          <button class="wp-btn wp-btn--play" id="wp-play" aria-label="Reproducir">
+            <svg class="ic-play" width="13" height="13" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <polygon points="2,1 13,7 2,13"/>
+            </svg>
+            <svg class="ic-pause" width="13" height="13" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true" hidden>
+              <rect x="1" y="1" width="4" height="12"/>
+              <rect x="9" y="1" width="4" height="12"/>
+            </svg>
+          </button>
+          <button class="wp-btn" id="wp-stop" aria-label="Detener" title="Detener">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">
+              <rect x="0" y="0" width="10" height="10"/>
+            </svg>
+          </button>
+          <button class="wp-btn" id="wp-next" aria-label="Siguiente" title="Siguiente">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <rect x="11.5" y="1" width="2.5" height="12"/>
+              <polygon points="1,1 11.5,7 1,13"/>
+            </svg>
+          </button>
+        </div>
+        <div class="winamp__vol">
+          <span class="winamp__vol-lbl" aria-hidden="true">VOL</span>
+          <input type="range" id="wp-vol" min="0" max="100" value="85" aria-label="Volumen">
+        </div>
+      </div>
+
+      <!-- Playlist -->
+      <div class="winamp__playlist">
+        <div class="winamp__pl-header" aria-hidden="true">
+          <span>▌PL▐ MITOS DE UN FUTURO CERCANO</span>
+          <span id="wp-pl-count" class="winamp__pl-count"></span>
+        </div>
+        <ul class="winamp__pl-list" id="wp-playlist"
+            role="listbox" aria-label="Lista de reproducción"></ul>
+      </div>
+
+    </div><!-- /winamp -->
+
+    <footer class="player-footer">
+      <p class="player-footer__hint">
+        ▶ Sigue sonando con la <span>pantalla apagada</span>
+      </p>
+
+      <div class="player-footer__socials">
+        <a href="https://www.instagram.com/heo.oficial" class="player-footer__social" target="_blank" rel="noopener noreferrer">IG @heo.oficial</a>
+        <span class="player-footer__dot" aria-hidden="true">·</span>
+        <a href="https://youtube.com/@heo.oficial?si=mq6pF5UyD4K3u-4Y" class="player-footer__social" target="_blank" rel="noopener noreferrer">YT @heo.oficial</a>
+      </div>
+
+      <p class="player-footer__manifesto">
+        Hecho por <strong>Hacia el Ocaso</strong> &mdash; mezclando máquinas <span aria-hidden="true">&amp;</span> corazón humano.
+      </p>
+
+      <p class="player-footer__copy">&copy; 2026 HEO</p>
+
+      <a href="index_new.html" class="player-footer__back">← Volver al sitio</a>
+    </footer>
+
+  </div><!-- /player-wrap -->
+
+  <audio id="wp-audio" preload="none"></audio>
+
+  <script src="js/player.js"></script>
+</body>
+</html>
