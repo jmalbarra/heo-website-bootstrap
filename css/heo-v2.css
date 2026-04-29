@@ -818,6 +818,9 @@ body::after {
   line-height: 1.8;
   color: var(--text-muted);
   font-size: 1.05rem;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 .band-bio em  { color: var(--text); font-style: normal; }
 .band-bio strong { color: var(--accent); font-weight: 600; }
