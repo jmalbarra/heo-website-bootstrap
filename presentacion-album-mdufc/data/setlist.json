@@ -1,137 +1,128 @@
 {
   "meta": {
-    "title": "Mitos de un futuro cercano",
+    "title": "Mitos De Un Futuro Cercano",
     "subtitle": "Hacia el Ocaso",
     "eventLine": "Presentación del disco · show en vivo"
   },
   "songs": [
     {
-      "id": "intro-nomios-v2",
-      "title": "Mensaje de Nomios",
-      "about": "Luces: blackout → prendidas lentas. Color: verde azulado / teal holográfico (~2:00).\n\nEscenario vacío; track con texturas frías y digitales. Nomios “despierta”: diagnósticos, mide energía del público, pide participación para “abrir el canal”. Mezcla guía espiritual y asistente tecnológico.\n\nIdeas: voz con modulación tipo AI + delay corto; barra de energía cuando gritan; destellos verdes tipo glitch orgánico.",
-      "lyrics": "(Track + voz Nomios — no letra fija.)",
-      "kind": "song",
-      "duration": "2:00"
+      "id": "nomios-intro-v2",
+      "title": "Nomios Intro v2.0",
+      "about": "Interludio instrumental. Nomios despierta y abre el portal del show.",
+      "lyrics": "",
+      "kind": "interlude"
     },
     {
       "id": "cae-el-velo",
       "title": "Cae el Velo",
-      "about": "Luces: cian vibrante. Intro movida; entran Damu, Demi, Nelo y Poli uno por uno saludando y agitando. Al entrar Juanma la canción explota — primer contacto fuerte con la banda (~3:37).\n\nIdeas: humo bajo “portal”; golpe de luz por entrada; transición directa al cierre.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "3:37"
+      "about": "El despertar de una vida inauténtica. El momento en que uno rompe las cadenas de una existencia ficticia y reconoce que el brillo que creía que lo definía era en realidad su prisión.",
+      "lyrics": "Perdí pedazos de mí, y en el vacío vi morir mis deseos.\nEn la máquina de la ilusión, era engranaje frío y sin corazón.\nAhora puedo ver que,\nComienza a romperse la diferencia entre la carne y los cristales que separan al ser.\nLos fantasmas duermen. Voy olvidando al mundo y sus llantos, que brotan al palidecer.\n\n[ No puedo volver a esa mentira.\nNo puedo volver.\nYa no estoy ciego: tengo un alma, y me guía.\nEste es mi tiempo. No puedo volver. ]\n\nCae el velo y puedo entender que estas cadenas no me ataban al suelo.\nConsumiéndome en una ficción, el brillo en mi rostro fue mi prisión.\nAhora puedo ver que,\nSe disuelven las redes que tejen y conectan lo que nunca estuvo destinado a ser.\nDebo saltar al abismo. Este es un espejismo del que quiero escapar.\n\n[ No puedo volver a esa mentira.\nNo puedo volver.\nYa no estoy ciego: tengo un alma, y me guía.\nEste es mi tiempo. No puedo volver. ]\n\n---Breakdown---\n\n[ No puedo volver a esa mentira.\nNo puedo volver.\nYa no estoy ciego, tengo un alma y me guía.\nEste es mi tiempo. No puedo volver. ]\n\n[ No puedo volver a esa mentira.\nNo puedo volver.\nYa no estoy ciego, tengo un alma y me guía.\nEste es mi tiempo. No puedo volver. ]",
+      "kind": "song"
     },
     {
       "id": "espejos",
       "title": "Espejos",
-      "about": "Color rosa/fucsia. Arranca pegado al cierre anterior, sin respiro. Tema de reflejos, loops y espejismo emocional (~2:40).\n\nIdeas: visuales duplicados / espejo; strobe suave en pre-coro como espejos rotos.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "2:40"
-    },
-    {
-      "id": "metamorfosis",
-      "title": "Metamorfosis",
-      "about": "Color verde esperanza. Intro reconocible; pedir brazos izquierda/derecha para “activar el cambio”. Ritual de transformación colectiva (~3:54).\n\nIdeas: crisálidas / glitch orgánico; corte con “Respiren… transformemos”.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "3:54"
+      "about": "Un pedido de perdón a quien fue herido por la propia ceguera emocional. La dolorosa toma de conciencia de haber lastimado a quien más se amaba y el deseo de convertirse en las alas que antes le quitaste.",
+      "lyrics": "Te pido perdón por no ser la persona que quisieras que fuera.\nPero por favor, no te vayas hoy.\n\nAyer escuché tus gritos mientras te ahogabas en este mar que yo llené.\nTe traje la lluvia y del sol te alejé.\n\n¿Qué tan ciego pude ser?\n¿Qué tan sordo pude ser?\nSi las señales que me dabas dejaban marcada mi piel.\n\nY ahora estoy mirándome a través de mi espejo,\nno me veo más que rodeado de mis demonios\nsin la luz que emanaban tus ojos.\n\n(Que emanaban tus ojos)\n\nTe pido perdón por no ser la persona que quisieras que fuera.\nPero por favor, no te vayas hoy.\n\nClavé una daga en tu espalda, lo sé.\n\n¿Qué tan ciego pude ser?\n¿Qué tan sordo pude ser?\nSi las señales que me dabas dejaban marcada mi piel.\n\nQuiero que tengas fe en mí,\ny quiero ser las alas en tu espalda.\nQuiero ser quien te aleje de toda esta sangre derramada.",
+      "kind": "song"
     },
     {
       "id": "mitos-futuro-cercano",
-      "title": "Mitos de un futuro cercano",
-      "about": "Blackout + FX de tormenta. Blanco / azul tormenta. Ambiente de tormenta: gotas, truenos digitales, tensión — primer quiebre fuerte (~4:24).\n\nIdeas: lluvia proyectada; viento panorámico.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "4:24"
+      "title": "Mitos De Un Futuro Cercano",
+      "about": "Atrapado entre el recuerdo de lo que fue y un presente que se derrumba. La imposibilidad de escapar: el pasado no suelta, la realidad asfixia, y el tiempo se acaba.",
+      "lyrics": "Un frágil recuerdo\nquedó de lo que fuimos.\nEl final nos alcanzó,\ny cuando despierto vuelvo a verte.\nNo puedo escapar de vos.\n\nNada es igual, parece irreal.\nNo nos queda tanto tiempo.\nLos mares gritan toda la verdad\ne ignoran los lamentos.\n\n[ Un momento más.\nNo quiero despertar\ny ahogarme en soledad.\nTan sólo un momento más\ntratando de escapar de esta realidad. ]\n\nNo quedan cimientos\nTu imagen se derrumbó\nArde todo alrededor\nel silencio se hizo hoy presente\nLa noche nos abrazó\n\nNada es igual, no sirve esperar.\nNo hay salida de este infierno\nen la penumbra, vi el tiempo volar.\nPrefiero vivir en sueños\n\n[ Un momento más.\nNo quiero despertar\ny ahogarme en soledad.\nTan sólo un momento más\ntratando de escapar de esta realidad. ]\n\nparece irreal y todo esto ya me empieza a asfixiar\nno importa que tan fuerte grite\nviene por mi, viene por mi\nlas voces mudas confirmaron las dudas\nen la noche oscura las culpas se ocultan\npero no queda más tiempo\nte van a encontrar, me van a encontrar\n\n[ Un momento más.\nNo quiero despertar\ny ahogarme en soledad.\nTan sólo un momento más\ntratando de escapar de esta realidad. ]\n[ Un momento más.\nNo quiero despertar\ny ahogarme en soledad.\nTan sólo un momento más\ntratando de escapar de esta realidad. ]",
+      "kind": "song"
     },
     {
       "id": "la-conexion",
       "title": "La Conexión",
-      "about": "Rosa/rojo. Medio rave, íntimo, denso (~3:15).\n\nIdeas: láseres bajos; visuales tipo corazón digital; semioscuridad.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "3:15"
+      "about": "El amor como fuerza cósmica que trasciende el ego y las vidas pasadas. Dos almas que se encuentran en el momento exacto marcado por algo más grande que ellas mismas.",
+      "lyrics": "(Viendo nacer)\nLa conexión de almas,\n(Almas)\nlas cuerdas que mueven montañas.\n(Sin miedo a perder)\nAgnóstica de un triste final.\n(Amar)\nEnigma aún sin descifrar.\n\nSiento que no quema este fuego.\nCenizas, restos del ego.\nNo hay quien gane el juego.\nNos veo nacer, de nuevo.\n\nLa ceremonia consagra\nla algoritmia heredada de vidas pasadas.\nSin prisa y sin calma, se encuentran las almas en horas pactadas.\nLas cifras son doradas.\nLa carne el núcleo resguarda.\nSe funden ciegas miradas.\nSin nudos entrar al Nirvana.\n\n(Viendo nacer)\nLa conexión de almas,\n(Almas)\nlas cuerdas que mueven montañas.\n(Sin miedo a perder)\nAgnósticas de un triste final.\n(Amar)\nEnigma aún sin descifrar.\n(Viendo nacer)\nLa conexión de almas,\n(Almas)\nlas cuerdas que mueven montañas.\n(Sin miedo a perder)\nAgnóstica de un triste final.\n(Amar)\nEnigma aún sin descifrar.\n\nLaten en silencio miedos\nviendo como cae el velo.\nSe dejan ver sinceros.\nbuscando ser eternos.\n\n<<< SOLO NELO RAVE >>>\n\n(Viendo nacer)\nLa conexión de almas,\n(Almas)\nlas cuerdas que mueven montañas.\n(Sin miedo a perder)\nAgnósticas de un triste final.\n(Amar)\nEnigma aún sin descifrar.\n(Viendo nacer)\nLa conexión de almas,\n(Almas)\nlas cuerdas que mueven montañas.\n(Sin miedo a perder)\nAgnóstica de un triste final.\n(Amar)\nEnigma aún sin descifrar.",
+      "kind": "song"
     },
     {
       "id": "lo-que-siento",
-      "title": "Lo que siento",
-      "about": "Rosa/violeta. Pegado a La Conexión; explosivo, “maricoteca”. Saltar al máximo en estribos; en el puente: agacharse y el “uoooooh” (~3:09).\n\nIdeas: confeti o polvo lumínico al final; mantra corto.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "3:09"
+      "title": "Lo Que Siento",
+      "about": "La aceptación dolorosa del presente. Nada —ni el lamento, ni la negación, ni huir— va a cambiar lo que se siente. Un reconocimiento honesto de que el dolor es real y hay que mirarlo de frente.",
+      "lyrics": "Vean! Los paisajes perdieron todo el color.\nVean! Los manjares no tienen ya su sabor.\nLo siento,\n\npero el pasado no siempre es mejor.\nVivir en lamentos (lamentos) por lo que ocurrió, no va a cambiar lo que siento.\nNegar que el futuro va a ser peor, no va a cambiar lo que siento.\nHuir de toda esta situación, no va a cambiar lo que siento.\n\nY es cierto, que el destino nada nos deparó.\nEl mañana es etéreo… horizontes desiertos alrededor.\nTambién es cierto, que cegados caemos ante el dolor.\nGritamos en silencio, buscando una salida en nuestro interior,\ny no hay nada,\n\npero el pasado no siempre es mejor.\nVivir en lamentos (lamentos) por lo que ocurrió, no va a cambiar lo que siento.\nNegar que el futuro va a ser peor, no va a cambiar lo que siento.\nHuir de toda esta situación, no va a cambiar lo que siento.\n\npero el pasado no siempre es mejor\nvivir en lamentos (lamentos) por lo que ocurrió, no va a cambiar lo que siento\nBuscar ver el sol cuando anocheció,\nno va a cambiar lo que siento\nHuir de toda esta situación\nno va a cambiar lo que siento",
+      "kind": "song"
     },
     {
       "id": "trascender",
       "title": "Trascender",
-      "about": "Blackout íntimo. Violeta/blanco. Speech breve: no bajar los brazos, comunidad, resistir juntos (~2:44).\n\nIdeas: estrellas lentas; halo blanco en Juanma en el speech.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "2:44"
+      "about": "Liberarse de relaciones y voces que dictaban quién debías ser. Cortar las raíces que te paralizaban, volver a confiar en uno mismo, y demostrar que la caída más dura puede convertirse en el inicio de algo que florece.",
+      "lyrics": "La tormenta se acercaba.\nPensé que ese era el final.\n\nEl cielo se derrumbaba.\nYa no podía ver.\n\nCada una de mis decisiones,\ncontaminada por tus intenciones,\npero pude ver el bosque,\ny ahora estoy...\n\nEscapando lejos de mi ayer,\nvuelvo a confiar hoy en mi ser.\nCorto las raíces de mis pies.\nNo voy a caer, no voy a caer.\n\nEl sol me guía hacia el amanecer.\nCreí que no había nada más que hacer.\nVuelvo a confiar hoy en mi ser.\nMe verás vencer, voy a trascender.\n\nMuchas voces opinaban\nsobre quién yo tendría que ser,\npero pude abrir mis ojos,\ny con cada paso voy...\n\nEscapando lejos de mi ayer,\nvuelvo a confiar hoy en mi ser.\nCorto las raíces de mis pies.\nNo voy a caer, no voy a caer.\n\nEl sol me guía hacia el amanecer.\nCreí que no había nada más que hacer.\nVuelvo a confiar hoy en mi ser.\nMe verás vencer, voy a trascender.\n\n(Hey!) Pensaste que me daría por vencido.\n(que) en silencio quedaría en el olvido.\n\n(Hey!) Nunca miraste hacia atrás.\nDestruyendo todo vas,\nSin mirar al costado. Sino,\n\n(que) poco te importó si estaba adormecido,\n(ni) que el corazón tenía entumecido,\n(pero) sin tropezar ayer con vos,\ntodo esto que soy yo hoy\njamás habría visto florecido.\n\nEscapando lejos de mi ayer,\nvuelvo a confiar hoy en mi ser.\nCorto las raíces de mis pies.\nNo voy a caer, no voy a caer.\n\nEl sol me guía hacia el amanecer.\nCreí que no había nada más que hacer.\nVuelvo a confiar hoy en mi ser.\nMe verás vencer, voy a trascender.",
+      "kind": "song"
     },
     {
       "id": "en-las-sombras",
-      "title": "En las sombras",
-      "about": "Azul en versos; blanco+violeta en estribos. Vuelve la vibra “cumpleañito”, movido (~3:40).\n\nIdeas: humo fino; sombras moviéndose atrás.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "3:40"
+      "title": "En Las Sombras",
+      "about": "Un abrazo para quienes atraviesan su momento más oscuro. Un recordatorio de que nunca estás solo: siempre hay alguien siguiendo tus pasos, y que todos vamos hacia el mismo lugar.",
+      "lyrics": "Siempre que solos estamos\nen las sombras,\nno importa lo que digan los demás,\n\nporque solos vinimos a este mundo, y\nporque solos mañana nos vamos de acá.\nFuimos hechos solo para brillar.\n\nCuando estés cansado de luchar,\ncuando tus ojos ya no quieran llorar,\npor favor no pierdas el control.\n(el control)\nRecordá que siempre alguien a tu lado está,\nsiguiendo todos tus pasos va.\nJuntos vamos hacia el mismo lugar.\n\nSiempre que solos estamos\nen las sombras,\nno importa lo que vean los demás,\n\nCuando enfrentes tus miedos más profundos,\ncuando pienses solamente en abandonar,\nsigue firme ante la adversidad.\n\nCuando estés cansado de luchar,\ncuando tus ojos ya no quieran llorar,\npor favor no pierdas el control.\n(el control)\nRecordá que siempre alguien a tu lado está,\nsiguiendo todos tus pasos va.\nJuntos vamos hacia el mismo lugar.\n\nCuando ya te duela respirar,\ny no puedas dar ni un paso más,\ncuando tu luz quieras apagar,\ncontagia tu brillo a los demás.\n\nCuando las sombras te asfixien y no puedas ni pensar,\ncuando nadie a tu alrededor te vaya a apoyar,\ncontagiá tu brillo a los demás.\nLa vida es una, vivamos ya.\nSiempre a tu lado, alguien va a empujar.\nnunca estás solo, sólo hay que buscar.\n\nCuando estés cansado de luchar,\ncuando tus ojos ya no quieran llorar,\npor favor no pierdas el control.\n(el control)\nRecordá que siempre alguien a tu lado está,\nsiguiendo todos tus pasos va.\nJuntos vamos hacia el mismo lugar.\n\nCuando estés cansado y ni los brazos puedas levantar,\ncuando tus piernas se quiebren y no pares de temblar,\ncuando el horizonte, de repente, se empiece a alejar,\npor favor, no pierdas...\n\n(el control)\n\nCuando estés cansado de luchar,\ncuando tus ojos ya no quieran llorar,\npor favor no pierdas el control.\n(el control)\nRecordá que siempre alguien a tu lado está,\nsiguiendo todos tus pasos va.\nJuntos vamos hacia el mismo lugar.\n\nLugar.",
+      "kind": "song"
+    },
+    {
+      "id": "here-to-stay",
+      "title": "Here to Stay (Korn cover)",
+      "about": "Versión en vivo del clásico de Korn (Issues, 1999). Dolor, rabia y autodestrucción en su punto límite. La lucha interna de quien llegó al fondo y aun así sigue en pie.",
+      "lyrics": "(Cover de Korn)",
+      "kind": "song"
+    },
+    {
+      "id": "nomios-fatal-error",
+      "title": "NOMIOS FATAL ERROR",
+      "about": "Interludio instrumental.",
+      "lyrics": "",
+      "kind": "interlude"
     },
     {
       "id": "gaia",
       "title": "Gaia",
-      "about": "Rojo/blanco. Subterráneo; siluetas inquietantes (~2:24).\n\nIdeas: destellos blancos como truenos; grietas, raíces, magma.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "2:24"
+      "about": "",
+      "lyrics": "",
+      "kind": "song"
     },
     {
       "id": "cifra",
       "title": "Cifra",
-      "about": "Rojo/naranja. Continúa el mood de siluetas (~3:05).\n\nIdeas: números cayendo como código roto; pulsos naranjas al kick.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "3:05"
+      "about": "",
+      "lyrics": "",
+      "kind": "song"
     },
     {
       "id": "sicofante",
       "title": "Sicofante",
-      "about": "Blackout mutante. Rojo/azul. Intro psycho EDM + flashes; Juanma explica el tema (detractores, comunidad, resistencia) → pausa → tema (~2:45).\n\nIdeas: láser azul “corta” el escenario; whispers distorsionados.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "2:45"
+      "about": "",
+      "lyrics": "",
+      "kind": "song"
     },
     {
       "id": "parias",
       "title": "Parias",
-      "about": "Verde planta oscuro. Silencio y arranque directo; funde con riff pre-Parias (~2:54).\n\nIdeas: ciudades abandonadas / concreto fisurado; golpes verdes en breakdowns.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "2:54"
+      "about": "",
+      "lyrics": "",
+      "kind": "song"
     },
     {
       "id": "lagrimas",
-      "title": "Lágrimas (largo)",
-      "about": "Rojo/blanco. Caos y catarsis (~3:30).\n\nIdeas: strobes controlados; agua + fracturas lumínicas.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "3:30"
+      "title": "Lágrimas",
+      "about": "",
+      "lyrics": "",
+      "kind": "song"
     },
     {
       "id": "erial",
       "title": "Erial",
-      "about": "Verde/amarillo. Repite ritual de intro; agradecimientos finales — “este disco es de ustedes” (~3:44).\n\nIdeas: sol naciente glitch; luz amarilla suave en siluetas.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "3:44"
+      "about": "",
+      "lyrics": "",
+      "kind": "song"
     },
     {
-      "id": "madmo",
-      "title": "MADMO",
-      "about": "Blanco/azul. Cierre energético; corte mágico habitual (~4:00).\n\nIdeas: flash blanco absoluto → blackout; pantalla “Gracias por abrir el portal”.",
-      "lyrics": "(Sumar letra definitiva cuando esté lista para el release.)",
-      "kind": "song",
-      "duration": "4:00"
+      "id": "mas-alla-de-mis-ojos",
+      "title": "Más Allá De Mis Ojos",
+      "about": "",
+      "lyrics": "",
+      "kind": "song"
     }
   ]
 }
