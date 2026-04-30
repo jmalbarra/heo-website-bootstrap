@@ -35,7 +35,7 @@
 | **Assets globales** | `css/`, `js/`, `images/`, `fonts/` compartidos por el sitio clásico. |
 | **CI/CD** | GitHub Actions: mirror SFTP a staging (`develop`) y producción (`main`). |
 
-La **`index.html`** de la raíz [redirige a Linktree](index.html) (`linktr.ee/haciaelocaso`). El sitio “completo” con navegación está en [`index_hidden.html`](index_hidden.html) (y el resto de `.html` en raíz).
+La **`index.html`** de la raíz es el home principal del sitio con navegación completa. La versión anterior (redirect a Linktree) quedó archivada en [`index_20260430.html`](index_20260430.html).
 
 ---
 
@@ -45,8 +45,8 @@ Rutas relativas al dominio. En GitHub podés abrir el archivo con el segundo enl
 
 | Página | Rol |
 |--------|-----|
-| [`/`](index.html) | Redirección a [Linktree](https://linktr.ee/haciaelocaso). |
-| [`/index_hidden.html`](index_hidden.html) | Home con layout completo (plantilla principal). |
+| [`/`](index.html) | Home principal del sitio con navegación completa. |
+| [`/index_20260430.html`](index_20260430.html) | Redirect viejo a Linktree (archivado). |
 | [`/musica.html`](musica.html) | Música / discografía. |
 | [`/shows.html`](shows.html) | Shows y fechas. |
 | [`/nosotros.html`](nosotros.html) | Banda. |
