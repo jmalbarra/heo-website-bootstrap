@@ -63,6 +63,21 @@ Rutas relativas al dominio. En GitHub podés abrir el archivo con el segundo enl
 
 ## Experiencias especiales
 
+### manager — Panel interno ⚠️ OCULTO
+
+| Qué | Dónde |
+|-----|--------|
+| Redirección al panel de gestión interno de la banda. | **[`manager/index.html`](manager/index.html)** → en vivo: `/manager/` |
+
+- **Destino:** [`heo-band-manager.vercel.app`](https://heo-band-manager.vercel.app)
+- **Acceso:** Solo por URL directa — no está linkeado en ninguna parte del sitio.
+- **Indexación:** `noindex, nofollow` — no aparece en buscadores.
+- La página solo contiene un redirect inmediato (meta refresh + JS); no tiene contenido propio.
+
+> ⚠️ No agregar este link al nav ni a ninguna página pública.
+
+---
+
 ### n0m10s — Terminal y Nomios
 
 | Qué | Dónde |
@@ -95,6 +110,7 @@ Documentación detallada: **[`presentacion-album-mdufc/README.md`](presentacion-
 heo-website-bootstrap/
 ├── .github/workflows/          # Deploy SFTP (develop → staging, main → prod)
 ├── css/, js/, images/, fonts/   # Sitio principal
+├── manager/                    # Redirect oculto → heo-band-manager.vercel.app
 ├── n0m10s/                     # Experiencia Nomios
 ├── presentacion-album-mdufc/
 │   ├── index.html, operator.html, share.html
