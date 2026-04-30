@@ -1337,11 +1337,11 @@ body::after {
 
 /* Mobile */
 @media (max-width: 768px) {
-  /* Menú mobile overlay */
+  /* Menú mobile overlay — fuera del <nav> para evitar que backdrop-filter rompa position:fixed */
   .nav__menu {
     position: fixed;
     inset: 0;
-    background: #050507;
+    background: rgba(5, 5, 7, 0.97);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     flex-direction: column;
@@ -1349,7 +1349,7 @@ body::after {
     gap: 2.75rem;
     transform: translateX(100%);
     transition: transform 0.45s var(--ease-out);
-    z-index: 199;
+    z-index: 210;
   }
   .nav__menu.open { transform: translateX(0); }
 
