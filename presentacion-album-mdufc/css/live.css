@@ -552,3 +552,17 @@ code {
 	border-top: 1px solid rgba(255, 200, 120, 0.25);
 	z-index: 100;
 }
+
+.home-back {
+	text-align: center;
+	font-size: 0.7rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	margin-top: 20px;
+	padding-top: 16px;
+	border-top: 1px solid rgba(34, 238, 201, 0.08);
+	opacity: 0.55;
+	transition: opacity 0.2s;
+}
+.home-back:hover { opacity: 1; }
+.home-back a { color: var(--accent); text-decoration: none; }
