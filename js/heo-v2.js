@@ -499,14 +499,13 @@ window.addEventListener('resize', () => {
   function show() { fab.classList.add('is-visible'); }
   function hide() { fab.classList.remove('is-visible'); }
 
-  function update() {
-    if (!hero) { show(); return; }
-    const bottom = hero.getBoundingClientRect().bottom;
-    bottom < window.innerHeight * 0.15 ? show() : hide();
-  }
+  if (!hero) { show(); return; }
 
-  window.addEventListener('scroll', update, { passive: true });
-  update();
+  const io = new IntersectionObserver(
+    ([entry]) => entry.isIntersecting ? hide() : show(),
+    { threshold: 0 }
+  );
+  io.observe(hero);
 })();
 
 
