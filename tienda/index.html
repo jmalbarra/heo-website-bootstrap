@@ -530,26 +530,33 @@
     var PHONE = '5491134815776';
 
     var PRODUCTS = [
-      { id: 'buzo-clasico',      name: 'Buzo Clásico',      cat: 'Clásico',     color: 'rgba(34,238,201,0.12)' },
-      { id: 'buzo-alternativo',  name: 'Buzo Alternativo',  cat: 'Clásico',     color: 'rgba(34,238,201,0.12)' },
-      { id: 'remera-clasica',    name: 'Remera Clásica',    cat: 'Clásico',     color: 'rgba(34,238,201,0.12)' },
-      { id: 'pupera-v1',         name: 'Pupera v1',         cat: 'Clásico',     color: 'rgba(34,238,201,0.12)' },
-      { id: 'gorrito',           name: 'Gorrito',           cat: 'Accesorio',   color: 'rgba(245,197,66,0.12)' },
-      { id: 'encendedor',        name: 'Encendedor',        cat: 'Accesorio',   color: 'rgba(245,197,66,0.12)' },
-      { id: 'llaveros',          name: 'Llaveros',          cat: 'Accesorio',   color: 'rgba(245,197,66,0.12)' },
-      { id: 'puas-arkham',       name: 'Púas Arkham',       cat: 'Accesorio',   color: 'rgba(245,197,66,0.12)' },
-      { id: 'stickers',          name: 'Stickers',          cat: 'Accesorio',   color: 'rgba(245,197,66,0.12)' },
-      { id: 'buzo-cev-v1',       name: 'Buzo CeV v1',       cat: 'Cae el Velo', color: 'rgba(180,79,255,0.12)' },
-      { id: 'remera-cev-v1',     name: 'Remera CeV v1',     cat: 'Cae el Velo', color: 'rgba(180,79,255,0.12)' },
-      { id: 'buzo-mdufc-v1',     name: 'Buzo MDUFC v1',     cat: 'MDUFC',       color: 'rgba(255,107,53,0.12)'  },
-      { id: 'remera-mdufc-v1',   name: 'Remera MDUFC v1',   cat: 'MDUFC',       color: 'rgba(255,107,53,0.12)'  },
+      { id: 'buzo-a01',                  name: 'BUZO_A01',                  cat: 'Clásico',     img: '../images/merch/BUZO_A01.png' },
+      { id: 'buzo-a02',                  name: 'BUZO_A02',                  cat: 'Clásico',     img: '../images/merch/BUZO_A02.png' },
+      { id: 'buzo-a03',                  name: 'BUZO_A03',                  cat: 'Clásico',     img: '../images/merch/BUZO_A03.png' },
+      { id: 'buzo-a04',                  name: 'BUZO_A04',                  cat: 'Clásico',     img: '../images/merch/BUZO_A04.png' },
+      { id: 'buzo-b01',                  name: 'BUZO_B01',                  cat: 'Clásico',     img: '../images/merch/BUZO_B01.png' },
+      { id: 'buzo-cev-a01',              name: 'BUZO_CeV_A01',              cat: 'Cae el Velo', img: '../images/merch/BUZO_CeV_A01.png' },
+      { id: 'buzo-cev-b01',              name: 'BUZO_CeV_B01',              cat: 'Cae el Velo', img: '../images/merch/BUZO_CeV_B01.png' },
+      { id: 'crop-top-oversize-a01',     name: 'CROP-TOP-OVERSIZE_A01',     cat: 'Clásico',     img: '../images/merch/CROP-TOP-OVERSIZE_A01.png' },
+      { id: 'crop-top-oversize-a0x',     name: 'CROP-TOP-OVERSIZE_A0X',     cat: 'Clásico',     img: '../images/merch/CROP-TOP-OVERSIZE_A0X.png' },
+      { id: 'crop-top-oversize-cev-a01', name: 'CROP-TOP-OVERSIZE_CeV_A01', cat: 'Cae el Velo', img: '../images/merch/CROP-TOP-OVERSIZE_CeV_A01.png' },
+      { id: 'crop-top-oversize-cev-a03', name: 'CROP-TOP-OVERSIZE_CeV_A03', cat: 'Cae el Velo', img: '../images/merch/CROP-TOP-OVERSIZE_CeV_A03.png' },
+      { id: 'crop-top-a01',              name: 'CROP-TOP_A01',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A01.png' },
+      { id: 'crop-top-a02',              name: 'CROP-TOP_A02',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A02.png' },
+      { id: 'crop-top-a07',              name: 'CROP-TOP_A07',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A07.png' },
+      { id: 'crop-top-cev-a04',          name: 'CROP-TOP_CeV_A04',          cat: 'Cae el Velo', img: '../images/merch/CROP-TOP_CeV_A04.png' },
+      { id: 'remera-baby-tee-a01',       name: 'REMERA-BABY-TEE_A01',       cat: 'Clásico',     img: '../images/merch/REMERA-BABY-TEE_A01.png' },
+      { id: 'remera-baby-tee-a08',       name: 'REMERA-BABY-TEE_A08',       cat: 'Clásico',     img: '../images/merch/REMERA-BABY-TEE_A08.png' },
+      { id: 'remera-baby-tee-cev-a01',   name: 'REMERA-BABY-TEE_CeV_A01',   cat: 'Cae el Velo', img: '../images/merch/REMERA-BABY-TEE_CeV_A01.png' },
+      { id: 'remera-baby-tee-cev-a06',   name: 'REMERA-BABY-TEE_CeV_A06',   cat: 'Cae el Velo', img: '../images/merch/REMERA-BABY-TEE_CeV_A06.png' },
+      { id: 'remera-oversize-a01',       name: 'REMERA-OVERSIZE_A01',       cat: 'Clásico',     img: '../images/merch/REMERA-OVERSIZE_A01.png' },
+      { id: 'remera-oversize-a02',       name: 'REMERA-OVERSIZE_A02',       cat: 'Clásico',     img: '../images/merch/REMERA-OVERSIZE_A02.png' },
+      { id: 'remera-oversize-cev-b01',   name: 'REMERA-OVERSIZE_CeV_B01',   cat: 'Cae el Velo', img: '../images/merch/REMERA-OVERSIZE_CeV_B01.png' },
     ];
 
     var CAT_COLORS = {
       'Clásico':     '#22eec9',
-      'Accesorio':   '#f5c542',
       'Cae el Velo': '#b44fff',
-      'MDUFC':       '#ff6b35',
     };
 
     var cart = [];
@@ -653,14 +660,11 @@
     function renderProducts() {
       var grid = document.getElementById('product-grid');
       grid.innerHTML = PRODUCTS.map(function (p) {
-        var catColor = CAT_COLORS[p.cat] || '#22eec9';
-        return '<div class="product-card" data-product-id="' + p.id + '" style="--card-color:' + p.color + '">' +
-          '<div class="product-card__image" style="--card-color:' + p.color + '">' +
-            '<svg class="product-card__placeholder-icon" viewBox="0 0 48 48" fill="none" stroke="' + catColor + '" stroke-width="1.5" aria-hidden="true">' +
-              '<rect x="8" y="6" width="32" height="36" rx="2"/>' +
-              '<path d="M16 6v4a8 8 0 0 0 16 0V6"/>' +
-            '</svg>' +
-            '<span class="product-card__placeholder-label">' + p.name + '</span>' +
+        var catColor  = CAT_COLORS[p.cat] || '#22eec9';
+        var cardColor = p.cat === 'Cae el Velo' ? 'rgba(180,79,255,0.12)' : 'rgba(34,238,201,0.12)';
+        return '<div class="product-card" data-product-id="' + p.id + '" style="--card-color:' + cardColor + '">' +
+          '<div class="product-card__image">' +
+            '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
           '</div>' +
           '<div class="product-card__body">' +
             '<p class="product-card__cat" style="color:' + catColor + '">' + p.cat + '</p>' +
