@@ -373,6 +373,16 @@
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
+    .cart-item__thumb {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      background: #111115;
+      border-radius: 3px;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
     .cart-item__name {
       flex: 1;
       font-family: 'Space Grotesk', sans-serif;
@@ -598,7 +608,7 @@
       { id: 'buzo-cev-a01',              name: 'BUZO_CeV_A01',              cat: 'Cae el Velo', img: '../images/merch/BUZO_CeV_A01.png' },
       { id: 'buzo-cev-b01',              name: 'BUZO_CeV_B01',              cat: 'Cae el Velo', img: '../images/merch/BUZO_CeV_B01.png' },
       { id: 'crop-top-oversize-a01',     name: 'CROP-TOP-OVERSIZE_A01',     cat: 'Clásico',     img: '../images/merch/CROP-TOP-OVERSIZE_A01.png' },
-      { id: 'crop-top-oversize-a0x',     name: 'CROP-TOP-OVERSIZE_A0X',     cat: 'Clásico',     img: '../images/merch/CROP-TOP-OVERSIZE_A0X.png' },
+      { id: 'crop-top-oversize-a00',     name: 'CROP-TOP-OVERSIZE_A00',     cat: 'Clásico',     img: '../images/merch/CROP-TOP-OVERSIZE_A0X.png' },
       { id: 'crop-top-oversize-cev-a01', name: 'CROP-TOP-OVERSIZE_CeV_A01', cat: 'Cae el Velo', img: '../images/merch/CROP-TOP-OVERSIZE_CeV_A01.png' },
       { id: 'crop-top-oversize-cev-a03', name: 'CROP-TOP-OVERSIZE_CeV_A03', cat: 'Cae el Velo', img: '../images/merch/CROP-TOP-OVERSIZE_CeV_A03.png' },
       { id: 'crop-top-a01',              name: 'CROP-TOP_A01',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A01.png' },
@@ -626,10 +636,10 @@
       return cart.reduce(function (s, i) { return s + i.qty; }, 0);
     }
 
-    function addToCart(id, name) {
+    function addToCart(id, name, img) {
       var existing = cart.find(function (i) { return i.id === id; });
       if (existing) { existing.qty++; }
-      else { cart.push({ id: id, name: name, qty: 1 }); }
+      else { cart.push({ id: id, name: name, img: img || '', qty: 1 }); }
       refreshUI();
       flashAdded(id);
     }
@@ -667,6 +677,7 @@
       btn.disabled = false;
       body.innerHTML = cart.map(function (item) {
         return '<div class="cart-item">' +
+          (item.img ? '<img class="cart-item__thumb" src="' + item.img + '" alt="' + item.name + '" loading="lazy">' : '') +
           '<span class="cart-item__name">' + item.name + '</span>' +
           '<div class="cart-item__controls">' +
             '<button class="cart-item__btn" data-action="dec" data-id="' + item.id + '" aria-label="Restar uno">−</button>' +
@@ -727,9 +738,9 @@
             '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
           '</div>' +
           '<div class="product-card__body">' +
-            '<p class="product-card__cat" style="color:' + catColor + '">' + p.cat + '</p>' +
+            (p.cat !== 'Clásico' ? '<p class="product-card__cat" style="color:' + catColor + '">' + p.cat + '</p>' : '') +
             '<h3 class="product-card__name">' + p.name + '</h3>' +
-            '<button class="product-card__add" data-id="' + p.id + '" data-name="' + p.name + '">+ Agregar al carrito</button>' +
+            '<button class="product-card__add" data-id="' + p.id + '" data-name="' + p.name + '" data-img="' + p.img + '">+ Agregar al carrito</button>' +
           '</div>' +
         '</div>';
       }).join('');
@@ -749,7 +760,7 @@
       document.getElementById('product-grid').addEventListener('click', function (e) {
         var btn = e.target.closest('.product-card__add');
         if (!btn) return;
-        addToCart(btn.dataset.id, btn.dataset.name);
+        addToCart(btn.dataset.id, btn.dataset.name, btn.dataset.img);
       });
 
       /* Cart body: qty controls + remove */
