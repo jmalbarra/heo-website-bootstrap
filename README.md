@@ -29,10 +29,12 @@
 
 | Bloque | Descripción |
 |--------|-------------|
-| **Sitio principal** | Páginas HTML con plantilla Colorlib: música, fechas, prensa, fotos, videos, contacto, etc. |
+| **Sitio principal** | `index.html` home con todas las secciones: música, shows, experiencias, videos, fotos, nosotros, contacto. |
+| **`tienda/`** | Catálogo de merch con carrito y checkout por WhatsApp a Nelo. 22 productos con imagen real. |
 | **`n0m10s/`** | Experiencia “Matrix” + terminal: login, chat con Nomios (API externa). |
 | **`presentacion-album-mdufc/`** | Show en vivo: setlist con desbloqueo, letras, operador, y **foto para redes** (share). |
-| **Assets globales** | `css/`, `js/`, `images/`, `fonts/` compartidos por el sitio clásico. |
+| **`manager/`** | Redirect oculto (noindex) al panel interno de la banda en Vercel. |
+| **Assets globales** | `css/`, `js/`, `images/` (incluyendo `merch/`), `fonts/`. |
 | **CI/CD** | GitHub Actions: mirror SFTP a staging (`develop`) y producción (`main`). |
 
 La **`index.html`** de la raíz es el home principal del sitio con navegación completa. La versión anterior (redirect a Linktree) quedó archivada en [`index_20260430.html`](index_20260430.html).
@@ -45,19 +47,11 @@ Rutas relativas al dominio. En GitHub podés abrir el archivo con el segundo enl
 
 | Página | Rol |
 |--------|-----|
-| [`/`](index.html) | Home principal del sitio con navegación completa. |
+| [`/`](index.html) | Home principal: música, shows, experiencias, videos, fotos, nosotros, contacto. |
+| [`/tienda/`](tienda/index.html) | Tienda de merch oficial con carrito y checkout por WhatsApp. |
 | [`/index_20260430.html`](index_20260430.html) | Redirect viejo a Linktree (archivado). |
-| [`/musica.html`](musica.html) | Música / discografía. |
-| [`/shows.html`](shows.html) | Shows y fechas. |
-| [`/nosotros.html`](nosotros.html) | Banda. |
-| [`/fotos.html`](fotos.html) | Fotos. |
-| [`/videos.html`](videos.html) | Videos embebidos (YouTube). |
-| [`/gallery.html`](gallery.html) | Galería / embeds Spotify. |
-| [`/prensa.html`](prensa.html) | Prensa. |
-| [`/contact.html`](contact.html) | Contacto. |
-| [`/youtube.html`](youtube.html) | Página / utilidad YouTube. |
 | [`/spotify.html`](spotify.html) | Redirección al álbum en Spotify. |
-| [`/single.html`](single.html), [`/pricing.html`](pricing.html) | Páginas de plantilla (Colorlib). |
+| [`/single.html`](single.html), [`/pricing.html`](pricing.html) | Páginas de plantilla (Colorlib, legacy). |
 
 ---
 
@@ -90,7 +84,21 @@ Rutas relativas al dominio. En GitHub podés abrir el archivo con el segundo enl
 
 ---
 
-### Presentación en vivo — *Mitos de un futuro cercano*
+### Tienda — Merch oficial
+
+| Qué | Dónde |
+|-----|--------|
+| Catálogo de merch con carrito y checkout automático por WhatsApp. | **[`tienda/index.html`](tienda/index.html)** → en vivo: `/tienda/` |
+
+- **22 productos** con imagen real en `images/merch/` — nombre = filename sin extensión.
+- Categorías: **Clásico** (teal) y **Cae el Velo** (violeta).
+- Carrito lateral con thumbnails; checkout genera mensaje preformateado a Nelo en WhatsApp (+54 9 11 3481-5776).
+- Click en imagen abre lightbox de zoom.
+- PDF con QR para mesa de merch: [`tienda/tienda-qr.pdf`](tienda/tienda-qr.pdf).
+
+---
+
+### Presentación en vivo — *Mitos De Un Futuro Cercano*
 
 Mini app para el show: temas que se desbloquean según el avance, letras y texto “de qué habla”. PHP + JSON en servidor; modo dev con `?dev=1`.
 
@@ -109,14 +117,21 @@ Documentación detallada: **[`presentacion-album-mdufc/README.md`](presentacion-
 ```
 heo-website-bootstrap/
 ├── .github/workflows/          # Deploy SFTP (develop → staging, main → prod)
-├── css/, js/, images/, fonts/   # Sitio principal
+├── css/, js/, fonts/           # Sitio principal
+├── images/
+│   ├── merch/                  # Fotos de productos (22 PNG)
+│   └── ...                     # Resto de assets del sitio
+├── tienda/                     # Tienda de merch
+│   ├── index.html
+│   └── tienda-qr.pdf           # Flyer con QR para mesa de merch
 ├── manager/                    # Redirect oculto → heo-band-manager.vercel.app
 ├── n0m10s/                     # Experiencia Nomios
 ├── presentacion-album-mdufc/
 │   ├── index.html, operator.html, share.html
 │   ├── api/, data/, includes/  # PHP, estado, setlist
 │   └── README.md
-├── *.html                      # Páginas raíz del sitio
+├── index.html                  # Home principal
+├── index_20260430.html         # Redirect viejo a Linktree (archivado)
 └── README.md                   # Este archivo
 ```
 
