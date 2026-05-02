@@ -44,12 +44,14 @@ for s in songs:
     else:
         song_num += 1
         feat_html = ""
+        wrap_class = "title-wrap"
         if sid in FEATS:
             feat_html = f'<span class="feat">{FEATS[sid]}</span>'
+            wrap_class = "title-wrap title-wrap--with-feat"
         row = f"""
         <div class="row row--song">
           <span class="num">{song_num:02d}</span>
-          <span class="title-wrap">
+          <span class="{wrap_class}">
             <span class="song-title">{title}</span>
             {feat_html}
           </span>
@@ -157,6 +159,9 @@ html_src = f"""<!DOCTYPE html>
     flex-direction: column;
     gap: 1px;
   }}
+  .title-wrap--with-feat {{
+    gap: 4px;
+  }}
   .song-title {{
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
@@ -235,7 +240,6 @@ html_src = f"""<!DOCTYPE html>
     <img class="header__logo" src="{logo_src}" alt="HEO">
     <div class="header__band">Hacia el Ocaso</div>
     <div class="header__album">Mitos De Un Futuro Cercano</div>
-    <div class="header__event">Presentación del disco · show en vivo</div>
     <div class="header__venue">2 de Mayo · La Tangente · Buenos Aires</div>
   </header>
 
