@@ -140,7 +140,7 @@ html_src = f"""<!DOCTYPE html>
   .dsong {{
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 30px;
     letter-spacing: 0.02em;
     color: #f0f0f5;
     line-height: 1.15;
