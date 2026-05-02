@@ -94,8 +94,8 @@ html_src = f"""<!DOCTYPE html>
     flex-shrink: 0;
   }}
   .header__logo {{
-    width: 62px;
     height: 62px;
+    width: auto;
     filter: drop-shadow(0 0 8px rgba(34,238,201,0.7));
   }}
   .header__band {{
@@ -118,6 +118,13 @@ html_src = f"""<!DOCTYPE html>
     font-size: 9px;
     letter-spacing: 0.28em;
     color: rgba(240,240,245,0.45);
+    text-transform: uppercase;
+  }}
+  .header__venue {{
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    color: rgba(34,238,201,0.6);
     text-transform: uppercase;
   }}
 
@@ -229,6 +236,7 @@ html_src = f"""<!DOCTYPE html>
     <div class="header__band">Hacia el Ocaso</div>
     <div class="header__album">Mitos De Un Futuro Cercano</div>
     <div class="header__event">Presentación del disco · show en vivo</div>
+    <div class="header__venue">2 de Mayo · La Tangente · Buenos Aires</div>
   </header>
 
   <div class="list">
