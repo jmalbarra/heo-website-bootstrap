@@ -59,11 +59,11 @@
 		var toggleBtn = $("#btn-toggle");
 		if (toggleBtn) {
 			if (state.enabled) {
-				toggleBtn.textContent = "Desactivar cancionero";
+				toggleBtn.textContent = "Desactivar letras en vivo";
 				toggleBtn.classList.remove("btn-primary-solid");
 				toggleBtn.classList.add("btn-ghost");
 			} else {
-				toggleBtn.textContent = "Activar cancionero";
+				toggleBtn.textContent = "Activar letras en vivo";
 				toggleBtn.classList.add("btn-primary-solid");
 				toggleBtn.classList.remove("btn-ghost");
 			}
@@ -130,7 +130,7 @@
 				} catch (e) {}
 				updatePreview();
 				var label = state.enabled ? "activo" : "inactivo";
-				setStatus("Listo · índice " + state.currentIndex + " · cancionero " + label, false);
+				setStatus("Listo · índice " + state.currentIndex + " · evento " + label, false);
 			})
 			.catch(function (e) {
 				setStatus(e.message || "Falló la petición.", true);
@@ -158,7 +158,7 @@
 				state.enabled = data.enabled !== false;
 				updatePreview();
 				var label = state.enabled ? "activo" : "inactivo";
-				setStatus("Estado remoto: índice " + state.currentIndex + " · cancionero " + label, false);
+				setStatus("Estado remoto: índice " + state.currentIndex + " · evento " + label, false);
 			})
 			.catch(function () {
 				setStatus("No se pudo leer api/state.php (¿servidor PHP local?)", true);
@@ -215,8 +215,8 @@
 		$("#btn-toggle").addEventListener("click", function () {
 			var action = state.enabled ? "disable" : "enable";
 			var msg = state.enabled
-				? "¿Desactivar el cancionero? El público verá \"Sin evento activo\"."
-				: "¿Activar el cancionero?";
+				? "¿Desactivar las letras en vivo? El público verá \"Sin evento activo\"."
+				: "¿Activar las letras en vivo?";
 			if (window.confirm(msg)) sendAction(action);
 		});
 	}

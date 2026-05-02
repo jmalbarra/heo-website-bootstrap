@@ -5,12 +5,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 	<meta http-equiv="Pragma" content="no-cache">
-	<title>Mitos De Un Futuro Cercano — Hacia el Ocaso</title>
+	<title>Letras en vivo — 2/05 · La Tangente · Hacia el Ocaso</title>
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/live.css?v=7">
+	<link rel="stylesheet" href="css/live.css?v=8">
 </head>
 <body>
+	<div id="welcome-popup" class="popup-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+		<div class="popup-panel">
+			<p class="popup-tag">// letras en vivo</p>
+			<h2 class="popup-title" id="popup-title">2 de Mayo · La Tangente</h2>
+			<p class="popup-body">Estás viendo las letras del show <strong>en tiempo real</strong>, sincronizadas con lo que toca la banda. Cada tema se desbloquea cuando suena. Tocá cualquier canción para ver letra e info.</p>
+			<button type="button" class="btn btn-primary-solid popup-enter" id="popup-enter">Entrar →</button>
+		</div>
+	</div>
+
 	<div id="matrix-bg" aria-hidden="true">
 		<canvas id="matrix-canvas"></canvas>
 		<div id="matrix-overlay"></div>
@@ -23,7 +32,7 @@
 			<div class="panel inactive-panel">
 				<p class="inactive__icon" aria-hidden="true">◌</p>
 				<h2 class="inactive__title">Sin evento activo</h2>
-				<p class="inactive__msg">No hay cancionero en vivo en este momento.<br>Volvé cuando haya show.</p>
+				<p class="inactive__msg">No hay letras en vivo en este momento.<br>Volvé cuando haya show.</p>
 				<div class="inactive__actions">
 					<a href="https://tickets.latangente.com.ar/musica/hacia-el-ocaso"
 					   class="btn btn-primary-solid"
@@ -72,6 +81,18 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	(function () {
+		if (!sessionStorage.getItem("heo-welcome-seen")) {
+			var popup = document.getElementById("welcome-popup");
+			if (popup) popup.classList.remove("hidden");
+			document.getElementById("popup-enter").addEventListener("click", function () {
+				popup.classList.add("hidden");
+				sessionStorage.setItem("heo-welcome-seen", "1");
+			});
+		}
+	})();
+	</script>
 	<script>
 	(function () {
 		var bust = "_=" + Date.now();
