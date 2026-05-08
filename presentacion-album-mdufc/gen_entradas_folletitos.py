@@ -33,20 +33,20 @@ FLYER = f"""
 <div class="flyer">
   <img class="flyer__poster" src="{flyer_src}" alt="Valor Interior · Hacia el Ocaso · Resiliencia">
   <div class="flyer__bottom">
-    <div class="flyer__cta">
-      Conseguí tus entradas<br>escaneando este QR →
-    </div>
     <div class="flyer__qr-block">
       <div class="flyer__qr-wrap">
         <img class="flyer__qr" src="{qr_wa}" alt="QR WhatsApp">
       </div>
-      <span class="flyer__qr-label">entradas</span>
+      <span class="flyer__qr-label">entradas por WhatsApp</span>
+    </div>
+    <div class="flyer__cta">
+      ← escaneá<br>estos QRs →
     </div>
     <div class="flyer__qr-block">
       <div class="flyer__qr-wrap">
         <img class="flyer__qr" src="{qr_ig}" alt="QR Instagram">
       </div>
-      <span class="flyer__qr-label">@heo.oficial</span>
+      <span class="flyer__qr-label">DM a @heo.oficial</span>
     </div>
   </div>
 </div>
