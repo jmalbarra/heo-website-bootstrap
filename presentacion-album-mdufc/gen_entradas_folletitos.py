@@ -48,9 +48,6 @@ FLYER = f"""
       </div>
       <span class="flyer__qr-label">@heo.oficial</span>
     </div>
-    <div class="flyer__qr-wrap">
-      <img class="flyer__qr" src="{qr_src}" alt="QR WhatsApp">
-    </div>
   </div>
 </div>
 """
