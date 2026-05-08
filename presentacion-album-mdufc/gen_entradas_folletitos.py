@@ -40,7 +40,7 @@ FLYER = f"""
       <span class="flyer__qr-label">Entradas por WhatsApp</span>
     </div>
     <div class="flyer__cta">
-      ← escaneá<br>estos QRs →
+      Escaneá cualquiera<br>de estos QRs para<br>conseguir tu entrada.
     </div>
     <div class="flyer__qr-block">
       <div class="flyer__qr-wrap">
@@ -101,7 +101,7 @@ html_src = f"""<!DOCTYPE html>
 
   .flyer__cta {{
     font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.05em;
     color: rgba(240,240,245,0.9);
     line-height: 1.7;
