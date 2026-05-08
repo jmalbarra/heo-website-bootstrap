@@ -82,9 +82,10 @@ html_src = f"""<!DOCTYPE html>
 
   .flyer__bottom {{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
-    padding: 8px 10px;
+    gap: 8px;
+    padding: 10px 12px;
     background: #0a0a0a;
     border-top: 1px solid #1a1a1f;
     flex-shrink: 0;
@@ -99,22 +100,23 @@ html_src = f"""<!DOCTYPE html>
   }}
 
   .flyer__qr {{
-    width: 62px;
-    height: 62px;
+    width: 72px;
+    height: 72px;
   }}
 
   .flyer__cta {{
     font-family: 'Share Tech Mono', monospace;
-    font-size: 7.5px;
+    font-size: 9px;
     letter-spacing: 0.08em;
-    color: rgba(240,240,245,0.6);
+    color: rgba(240,240,245,0.65);
     line-height: 1.8;
+    text-align: center;
   }}
 
   .flyer__cta strong {{
     color: #f0f0f5;
     font-weight: normal;
-    font-size: 8.5px;
+    font-size: 10px;
   }}
 </style>
 </head>
