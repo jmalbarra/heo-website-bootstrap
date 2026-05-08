@@ -37,7 +37,7 @@ FLYER = f"""
       <div class="flyer__qr-wrap">
         <img class="flyer__qr" src="{qr_wa}" alt="QR WhatsApp">
       </div>
-      <span class="flyer__qr-label">entradas por WhatsApp</span>
+      <span class="flyer__qr-label">Entradas por WhatsApp</span>
     </div>
     <div class="flyer__cta">
       ← escaneá<br>estos QRs →
@@ -101,10 +101,10 @@ html_src = f"""<!DOCTYPE html>
 
   .flyer__cta {{
     font-family: 'Share Tech Mono', monospace;
-    font-size: 8.5px;
-    letter-spacing: 0.07em;
-    color: rgba(240,240,245,0.65);
-    line-height: 1.8;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: rgba(240,240,245,0.9);
+    line-height: 1.7;
     text-align: center;
     flex: 1;
   }}
