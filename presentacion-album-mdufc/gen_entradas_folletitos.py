@@ -5,9 +5,9 @@ import base64, io, pathlib
 import qrcode
 from weasyprint import HTML, CSS
 
-ROOT = pathlib.Path(__file__).parent
-LOGO = ROOT.parent / "images" / "ojo-goth-blanco.png"
-OUT  = ROOT / "entradas-folletitos.pdf"
+ROOT   = pathlib.Path(__file__).parent
+FLYER_IMG = ROOT.parent / "images" / "WhatsApp Image 2026-05-08 at 12.42.14.jpeg"
+OUT    = ROOT / "entradas-folletitos.pdf"
 
 WA_NUMBER  = "5491124564111"
 WA_MESSAGE = "Hola! Quiero comprar mi entrada para Valor Interior + Hacia el Ocaso + Resiliencia en Niceto el 24 de Mayo"
@@ -17,29 +17,28 @@ WA_URL = f"https://wa.me/{WA_NUMBER}?text={WA_MESSAGE.replace(' ', '%20').replac
 qr = qrcode.QRCode(version=None, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=8, border=2)
 qr.add_data(WA_URL)
 qr.make(fit=True)
-qr_img = qr.make_image(fill_color="#050507", back_color="#f0f0f5")
+qr_img = qr.make_image(fill_color="#0a0a0a", back_color="#f0f0f5")
 buf = io.BytesIO()
 qr_img.save(buf, format="PNG")
 qr_b64 = base64.b64encode(buf.getvalue()).decode()
 qr_src = f"data:image/png;base64,{qr_b64}"
 
-# ── Logo ──
-logo_b64 = base64.b64encode(LOGO.read_bytes()).decode()
-logo_src  = f"data:image/png;base64,{logo_b64}"
+# ── Flyer image ──
+flyer_b64 = base64.b64encode(FLYER_IMG.read_bytes()).decode()
+flyer_src  = f"data:image/jpeg;base64,{flyer_b64}"
 
 FLYER = f"""
 <div class="flyer">
-  <div class="flyer__top">
-    <img class="flyer__logo" src="{logo_src}" alt="HEO">
-    <div class="flyer__bands">Valor Interior · Hacia el Ocaso · Resiliencia</div>
-    <div class="flyer__event">Niceto · 24 de Mayo · Buenos Aires</div>
-  </div>
-  <div class="flyer__qr-wrap">
-    <img class="flyer__qr" src="{qr_src}" alt="QR WhatsApp">
-  </div>
-  <div class="flyer__cta">
-    Conseguí tus entradas en <strong>@heo.oficial</strong><br>
-    o escaneando este QR
+  <img class="flyer__poster" src="{flyer_src}" alt="Valor Interior · Hacia el Ocaso · Resiliencia">
+  <div class="flyer__bottom">
+    <div class="flyer__qr-wrap">
+      <img class="flyer__qr" src="{qr_src}" alt="QR WhatsApp">
+    </div>
+    <div class="flyer__cta">
+      Conseguí tus entradas en<br>
+      <strong>@heo.oficial</strong><br>
+      o escaneando este QR
+    </div>
   </div>
 </div>
 """
@@ -49,7 +48,7 @@ html_src = f"""<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
   @page {{ size: A4 portrait; margin: 0; }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -57,78 +56,65 @@ html_src = f"""<!DOCTYPE html>
   body {{
     width: 210mm;
     height: 297mm;
-    background: #fff;
+    background: #0a0a0a;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 0;
+    gap: 1px;
+    background-color: #1a1a1f;
   }}
 
   .flyer {{
-    background: #050507;
-    border: 1px solid #1a1a1f;
+    background: #0a0a0a;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    padding: 18px 16px;
-    text-align: center;
+    overflow: hidden;
   }}
 
-  .flyer__top {{
+  .flyer__poster {{
+    width: 100%;
+    flex: 1;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    min-height: 0;
+  }}
+
+  .flyer__bottom {{
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 7px;
-  }}
-
-  .flyer__logo {{
-    height: 48px;
-    width: auto;
-    filter: drop-shadow(0 0 6px rgba(34,238,201,0.6));
-  }}
-
-  .flyer__bands {{
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 900;
-    font-size: 9.5px;
-    letter-spacing: 0.05em;
-    color: #f0f0f5;
-    line-height: 1.4;
-  }}
-
-  .flyer__event {{
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 8.5px;
-    letter-spacing: 0.25em;
-    color: #22eec9;
-    text-transform: uppercase;
+    gap: 10px;
+    padding: 8px 10px;
+    background: #0a0a0a;
+    border-top: 1px solid #1a1a1f;
+    flex-shrink: 0;
   }}
 
   .flyer__qr-wrap {{
     background: #f0f0f5;
-    border-radius: 8px;
-    padding: 8px;
+    border-radius: 5px;
+    padding: 4px;
     line-height: 0;
+    flex-shrink: 0;
   }}
 
   .flyer__qr {{
-    width: 110px;
-    height: 110px;
+    width: 62px;
+    height: 62px;
   }}
 
   .flyer__cta {{
     font-family: 'Share Tech Mono', monospace;
-    font-size: 8px;
-    letter-spacing: 0.1em;
-    color: rgba(240,240,245,0.65);
-    line-height: 1.7;
+    font-size: 7.5px;
+    letter-spacing: 0.08em;
+    color: rgba(240,240,245,0.6);
+    line-height: 1.8;
   }}
 
   .flyer__cta strong {{
-    color: #22eec9;
+    color: #f0f0f5;
     font-weight: normal;
+    font-size: 8.5px;
   }}
 </style>
 </head>
