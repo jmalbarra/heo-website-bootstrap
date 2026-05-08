@@ -31,13 +31,13 @@ FLYER = f"""
 <div class="flyer">
   <img class="flyer__poster" src="{flyer_src}" alt="Valor Interior · Hacia el Ocaso · Resiliencia">
   <div class="flyer__bottom">
-    <div class="flyer__qr-wrap">
-      <img class="flyer__qr" src="{qr_src}" alt="QR WhatsApp">
-    </div>
     <div class="flyer__cta">
       Conseguí tus entradas en<br>
       <strong>@heo.oficial</strong><br>
       o escaneando este QR
+    </div>
+    <div class="flyer__qr-wrap">
+      <img class="flyer__qr" src="{qr_src}" alt="QR WhatsApp">
     </div>
   </div>
 </div>
@@ -82,13 +82,29 @@ html_src = f"""<!DOCTYPE html>
 
   .flyer__bottom {{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding: 10px 12px;
     background: #0a0a0a;
     border-top: 1px solid #1a1a1f;
     flex-shrink: 0;
+  }}
+
+  .flyer__cta {{
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(240,240,245,0.65);
+    line-height: 1.8;
+    text-align: center;
+    flex: 1;
+  }}
+
+  .flyer__cta strong {{
+    color: #f0f0f5;
+    font-weight: normal;
+    font-size: 10px;
   }}
 
   .flyer__qr-wrap {{
@@ -102,21 +118,6 @@ html_src = f"""<!DOCTYPE html>
   .flyer__qr {{
     width: 72px;
     height: 72px;
-  }}
-
-  .flyer__cta {{
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    color: rgba(240,240,245,0.65);
-    line-height: 1.8;
-    text-align: center;
-  }}
-
-  .flyer__cta strong {{
-    color: #f0f0f5;
-    font-weight: normal;
-    font-size: 10px;
   }}
 </style>
 </head>
