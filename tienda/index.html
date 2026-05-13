@@ -207,8 +207,15 @@
       letter-spacing: 0.06em;
       color: #fff;
       text-transform: uppercase;
-      margin: 0 0 14px;
+      margin: 0 0 6px;
       flex: 1;
+    }
+
+    .product-card__price {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.78rem;
+      color: #22eec9;
+      margin: 0 0 10px;
     }
 
     .product-card__add {
@@ -383,11 +390,24 @@
       border: 1px solid rgba(255,255,255,0.06);
     }
 
-    .cart-item__name {
+    .cart-item__info {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .cart-item__name {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 0.82rem;
       color: #e0e0e0;
+    }
+
+    .cart-item__price {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
+      color: rgba(34,238,201,0.7);
     }
 
     .cart-item__controls {
@@ -444,6 +464,16 @@
       padding: 16px 24px calc(16px + env(safe-area-inset-bottom));
       border-top: 1px solid rgba(255,255,255,0.07);
       flex-shrink: 0;
+    }
+
+    .cart-total {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #22eec9;
+      text-align: right;
+      margin: 0 0 10px;
+      min-height: 1.2em;
     }
 
     .cart-note {
@@ -581,6 +611,7 @@
     </div>
     <div class="cart-panel__body" id="cart-body"></div>
     <div class="cart-panel__footer">
+      <p class="cart-total" id="cart-total"></p>
       <p class="cart-note">Nelo te asesora y confirma disponibilidad</p>
       <button class="btn-whatsapp" id="checkout-btn" disabled>
         <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -600,29 +631,29 @@
     var PHONE = '5491134815776';
 
     var PRODUCTS = [
-      { id: 'buzo-a01',                  name: 'BUZO_A01',                  cat: 'Clásico',     img: '../images/merch/BUZO_A01.png' },
-      { id: 'buzo-a02',                  name: 'BUZO_A02',                  cat: 'Clásico',     img: '../images/merch/BUZO_A02.png' },
-      { id: 'buzo-a03',                  name: 'BUZO_A03',                  cat: 'Clásico',     img: '../images/merch/BUZO_A03.png' },
-      { id: 'buzo-a04',                  name: 'BUZO_A04',                  cat: 'Clásico',     img: '../images/merch/BUZO_A04.png' },
-      { id: 'buzo-a05',                  name: 'BUZO_A05',                  cat: 'Clásico',     img: '../images/merch/BUZO_A05.png' },
-      { id: 'buzo-b01',                  name: 'BUZO_B01',                  cat: 'Clásico',     img: '../images/merch/BUZO_B01.png' },
-      { id: 'buzo-cev-a01',              name: 'BUZO_CeV_A01',              cat: 'Cae el Velo', img: '../images/merch/BUZO_CeV_A01.png' },
-      { id: 'buzo-cev-b01',              name: 'BUZO_CeV_B01',              cat: 'Cae el Velo', img: '../images/merch/BUZO_CeV_B01.png' },
-      { id: 'crop-top-oversize-a01',     name: 'CROP-TOP-OVERSIZE_A01',     cat: 'Clásico',     img: '../images/merch/CROP-TOP-OVERSIZE_A01.png' },
-      { id: 'crop-top-oversize-a00',     name: 'CROP-TOP-OVERSIZE_A00',     cat: 'Clásico',     img: '../images/merch/CROP-TOP-OVERSIZE_A0X.png' },
-      { id: 'crop-top-oversize-cev-a01', name: 'CROP-TOP-OVERSIZE_CeV_A01', cat: 'Cae el Velo', img: '../images/merch/CROP-TOP-OVERSIZE_CeV_A01.png' },
-      { id: 'crop-top-oversize-cev-a03', name: 'CROP-TOP-OVERSIZE_CeV_A03', cat: 'Cae el Velo', img: '../images/merch/CROP-TOP-OVERSIZE_CeV_A03.png' },
-      { id: 'crop-top-a01',              name: 'CROP-TOP_A01',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A01.png' },
-      { id: 'crop-top-a02',              name: 'CROP-TOP_A02',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A02.png' },
-      { id: 'crop-top-a07',              name: 'CROP-TOP_A07',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A07.png' },
-      { id: 'crop-top-cev-a04',          name: 'CROP-TOP_CeV_A04',          cat: 'Cae el Velo', img: '../images/merch/CROP-TOP_CeV_A04.png' },
-      { id: 'remera-baby-tee-a01',       name: 'REMERA-BABY-TEE_A01',       cat: 'Clásico',     img: '../images/merch/REMERA-BABY-TEE_A01.png' },
-      { id: 'remera-baby-tee-a08',       name: 'REMERA-BABY-TEE_A08',       cat: 'Clásico',     img: '../images/merch/REMERA-BABY-TEE_A08.png' },
-      { id: 'remera-baby-tee-cev-a01',   name: 'REMERA-BABY-TEE_CeV_A01',   cat: 'Cae el Velo', img: '../images/merch/REMERA-BABY-TEE_CeV_A01.png' },
-      { id: 'remera-baby-tee-cev-a06',   name: 'REMERA-BABY-TEE_CeV_A06',   cat: 'Cae el Velo', img: '../images/merch/REMERA-BABY-TEE_CeV_A06.png' },
-      { id: 'remera-oversize-a01',       name: 'REMERA-OVERSIZE_A01',       cat: 'Clásico',     img: '../images/merch/REMERA-OVERSIZE_A01.png' },
-      { id: 'remera-oversize-a02',       name: 'REMERA-OVERSIZE_A02',       cat: 'Clásico',     img: '../images/merch/REMERA-OVERSIZE_A02.png' },
-      { id: 'remera-oversize-cev-b01',   name: 'REMERA-OVERSIZE_CeV_B01',   cat: 'Cae el Velo', img: '../images/merch/REMERA-OVERSIZE_CeV_B01.png' },
+      { id: 'buzo-a01',                  name: 'BUZO_A01',                  cat: 'Clásico',     img: '../images/merch/BUZO_A01.png',                  price: 60000 },
+      { id: 'buzo-a02',                  name: 'BUZO_A02',                  cat: 'Clásico',     img: '../images/merch/BUZO_A02.png',                  price: 60000 },
+      { id: 'buzo-a03',                  name: 'BUZO_A03',                  cat: 'Clásico',     img: '../images/merch/BUZO_A03.png',                  price: 60000 },
+      { id: 'buzo-a04',                  name: 'BUZO_A04',                  cat: 'Clásico',     img: '../images/merch/BUZO_A04.png',                  price: 60000 },
+      { id: 'buzo-a05',                  name: 'BUZO_A05',                  cat: 'Clásico',     img: '../images/merch/BUZO_A05.png',                  price: 60000 },
+      { id: 'buzo-b01',                  name: 'BUZO_B01',                  cat: 'Clásico',     img: '../images/merch/BUZO_B01.png',                  price: 60000 },
+      { id: 'buzo-cev-a01',              name: 'BUZO_CeV_A01',              cat: 'Cae el Velo', img: '../images/merch/BUZO_CeV_A01.png',              price: 60000 },
+      { id: 'buzo-cev-b01',              name: 'BUZO_CeV_B01',              cat: 'Cae el Velo', img: '../images/merch/BUZO_CeV_B01.png',              price: 60000 },
+      { id: 'crop-top-oversize-a01',     name: 'CROP-TOP-OVERSIZE_A01',     cat: 'Clásico',     img: '../images/merch/CROP-TOP-OVERSIZE_A01.png',     price: 30000 },
+      { id: 'crop-top-oversize-a00',     name: 'CROP-TOP-OVERSIZE_A00',     cat: 'Clásico',     img: '../images/merch/CROP-TOP-OVERSIZE_A0X.png',     price: 30000 },
+      { id: 'crop-top-oversize-cev-a01', name: 'CROP-TOP-OVERSIZE_CeV_A01', cat: 'Cae el Velo', img: '../images/merch/CROP-TOP-OVERSIZE_CeV_A01.png', price: 30000 },
+      { id: 'crop-top-oversize-cev-a03', name: 'CROP-TOP-OVERSIZE_CeV_A03', cat: 'Cae el Velo', img: '../images/merch/CROP-TOP-OVERSIZE_CeV_A03.png', price: 30000 },
+      { id: 'crop-top-a01',              name: 'CROP-TOP_A01',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A01.png',              price: 25000 },
+      { id: 'crop-top-a02',              name: 'CROP-TOP_A02',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A02.png',              price: 25000 },
+      { id: 'crop-top-a07',              name: 'CROP-TOP_A07',              cat: 'Clásico',     img: '../images/merch/CROP-TOP_A07.png',              price: 25000 },
+      { id: 'crop-top-cev-a04',          name: 'CROP-TOP_CeV_A04',          cat: 'Cae el Velo', img: '../images/merch/CROP-TOP_CeV_A04.png',          price: 25000 },
+      { id: 'remera-baby-tee-a01',       name: 'REMERA-BABY-TEE_A01',       cat: 'Clásico',     img: '../images/merch/REMERA-BABY-TEE_A01.png',       price: 25000 },
+      { id: 'remera-baby-tee-a08',       name: 'REMERA-BABY-TEE_A08',       cat: 'Clásico',     img: '../images/merch/REMERA-BABY-TEE_A08.png',       price: 25000 },
+      { id: 'remera-baby-tee-cev-a01',   name: 'REMERA-BABY-TEE_CeV_A01',   cat: 'Cae el Velo', img: '../images/merch/REMERA-BABY-TEE_CeV_A01.png',   price: 25000 },
+      { id: 'remera-baby-tee-cev-a06',   name: 'REMERA-BABY-TEE_CeV_A06',   cat: 'Cae el Velo', img: '../images/merch/REMERA-BABY-TEE_CeV_A06.png',   price: 25000 },
+      { id: 'remera-oversize-a01',       name: 'REMERA-OVERSIZE_A01',       cat: 'Clásico',     img: '../images/merch/REMERA-OVERSIZE_A01.png',       price: 25000 },
+      { id: 'remera-oversize-a02',       name: 'REMERA-OVERSIZE_A02',       cat: 'Clásico',     img: '../images/merch/REMERA-OVERSIZE_A02.png',       price: 25000 },
+      { id: 'remera-oversize-cev-b01',   name: 'REMERA-OVERSIZE_CeV_B01',   cat: 'Cae el Velo', img: '../images/merch/REMERA-OVERSIZE_CeV_B01.png',   price: 35000 },
     ];
 
     var CAT_COLORS = {
@@ -633,14 +664,22 @@
     var cart = [];
 
     /* ── Cart helpers ── */
+    function fmtPrice(n) {
+      return '$' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
     function cartTotal() {
       return cart.reduce(function (s, i) { return s + i.qty; }, 0);
     }
 
-    function addToCart(id, name, img) {
+    function cartMoneyTotal() {
+      return cart.reduce(function (s, i) { return s + i.qty * i.price; }, 0);
+    }
+
+    function addToCart(id, name, img, price) {
       var existing = cart.find(function (i) { return i.id === id; });
       if (existing) { existing.qty++; }
-      else { cart.push({ id: id, name: name, img: img || '', qty: 1 }); }
+      else { cart.push({ id: id, name: name, img: img || '', qty: 1, price: price || 0 }); }
       refreshUI();
       flashAdded(id);
     }
@@ -664,6 +703,10 @@
       var badge = document.getElementById('cart-badge');
       badge.textContent = total;
       badge.classList.toggle('cart-fab__badge--on', total > 0);
+      var totalEl = document.getElementById('cart-total');
+      if (totalEl) {
+        totalEl.textContent = total > 0 ? 'Total: ' + fmtPrice(cartMoneyTotal()) : '';
+      }
       renderCartBody();
     }
 
@@ -679,7 +722,10 @@
       body.innerHTML = cart.map(function (item) {
         return '<div class="cart-item">' +
           (item.img ? '<img class="cart-item__thumb" src="' + item.img + '" alt="' + item.name + '" loading="lazy">' : '') +
-          '<span class="cart-item__name">' + item.name + '</span>' +
+          '<div class="cart-item__info">' +
+            '<span class="cart-item__name">' + item.name + '</span>' +
+            '<span class="cart-item__price">' + fmtPrice(item.price) + ' c/u</span>' +
+          '</div>' +
           '<div class="cart-item__controls">' +
             '<button class="cart-item__btn" data-action="dec" data-id="' + item.id + '" aria-label="Restar uno">−</button>' +
             '<span class="cart-item__qty">' + item.qty + '</span>' +
@@ -723,8 +769,10 @@
     /* ── Checkout ── */
     function checkout() {
       if (cart.length === 0) return;
-      var lines = cart.map(function (i) { return '• ' + i.qty + 'x ' + i.name; }).join('\n');
-      var msg = 'Hola Nelo! Quiero comprar:\n' + lines + '\n\n¿Me podés asesorar?';
+      var lines = cart.map(function (i) {
+        return '• ' + i.qty + 'x ' + i.name + ' — ' + fmtPrice(i.price) + ' c/u — ' + fmtPrice(i.qty * i.price);
+      }).join('\n');
+      var msg = 'Hola Nelo! Quiero comprar:\n' + lines + '\n\nTotal: ' + fmtPrice(cartMoneyTotal()) + '\n\n¿Me podés asesorar?';
       window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
     }
 
@@ -741,7 +789,8 @@
           '<div class="product-card__body">' +
             (p.cat !== 'Clásico' ? '<p class="product-card__cat" style="color:' + catColor + '">' + p.cat + '</p>' : '') +
             '<h3 class="product-card__name">' + p.name + '</h3>' +
-            '<button class="product-card__add" data-id="' + p.id + '" data-name="' + p.name + '" data-img="' + p.img + '">+ Agregar al carrito</button>' +
+            '<p class="product-card__price">' + fmtPrice(p.price) + '</p>' +
+            '<button class="product-card__add" data-id="' + p.id + '" data-name="' + p.name + '" data-img="' + p.img + '" data-price="' + p.price + '">+ Agregar al carrito</button>' +
           '</div>' +
         '</div>';
       }).join('');
@@ -761,7 +810,7 @@
       document.getElementById('product-grid').addEventListener('click', function (e) {
         var btn = e.target.closest('.product-card__add');
         if (!btn) return;
-        addToCart(btn.dataset.id, btn.dataset.name, btn.dataset.img);
+        addToCart(btn.dataset.id, btn.dataset.name, btn.dataset.img, parseInt(btn.dataset.price, 10) || 0);
       });
 
       /* Cart body: qty controls + remove */
