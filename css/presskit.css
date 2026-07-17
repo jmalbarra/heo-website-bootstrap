@@ -1,0 +1,573 @@
+/* ============================================================
+   HACIA EL OCASO — KIT DE PRENSA
+   Extiende heo-v2.css · componentes pk-* + versión imprimible
+   ============================================================ */
+
+
+/* ============================================================
+   NAV — barra mínima, siempre glass
+   ============================================================ */
+.pk-nav {
+  background: rgba(5, 5, 7, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.pk-nav__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.pk-nav__btn {
+  min-height: 40px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .pk-nav__label { display: none; }
+}
+
+
+/* ============================================================
+   HERO — más compacto que el del home
+   ============================================================ */
+.pk-hero {
+  min-height: 88svh;
+  min-height: 88vh;
+}
+
+
+/* ============================================================
+   LO NUEVO — fichas de lanzamiento
+   ============================================================ */
+.pk-release {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.pk-release + .pk-release { margin-top: 2rem; }
+
+.pk-release--album { grid-template-columns: 0.7fr 1.35fr; }
+
+.pk-release__media {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.pk-release__tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: 99px;
+  padding: 0.35rem 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.pk-release__tag--live { animation: breathe-text 4s ease-in-out infinite; }
+
+.pk-release__title {
+  font-family: var(--font-hero);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+
+.pk-release__desc {
+  color: var(--text-muted);
+  max-width: 56ch;
+  margin-bottom: 1rem;
+}
+
+.pk-release__desc strong { color: var(--text); font-weight: 600; }
+
+.pk-release__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.pk-release__links .btn {
+  min-height: 42px;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.82rem;
+}
+
+/* "Tapa" placeholder del álbum — LP.03 próximamente */
+.pk-album-cover {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background:
+    radial-gradient(ellipse at 50% 38%, rgba(34, 238, 201, 0.08), transparent 62%),
+    linear-gradient(160deg, #0a0a0e 0%, #050507 100%);
+  border-radius: var(--radius);
+}
+
+.pk-album-cover__eye {
+  width: 34%;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 22px rgba(34, 238, 201, 0.25));
+  margin-bottom: 0.75rem;
+}
+
+.pk-album-cover__lp {
+  font-family: var(--font-hero);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.pk-album-cover__year {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@media (max-width: 860px) {
+  .pk-release,
+  .pk-release--album { grid-template-columns: 1fr; }
+  .pk-album-cover { max-width: 340px; margin: 0 auto; }
+}
+
+
+/* ============================================================
+   LA BANDA — foto grande + bio + ficha técnica
+   ============================================================ */
+.pk-photo-hero {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.pk-photo-hero img { width: 100%; }
+
+.pk-bio {
+  display: grid;
+  grid-template-columns: 1.6fr 0.9fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.pk-bio__text p {
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  max-width: 65ch;
+}
+
+.pk-bio__text p:last-child { margin-bottom: 0; }
+.pk-bio__text strong { color: var(--text); font-weight: 600; }
+.pk-bio__text em { color: var(--text); }
+
+.pk-facts {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+}
+
+.pk-facts__row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.pk-facts__row:last-child { border-bottom: none; }
+
+.pk-facts dt {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.pk-facts dd {
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+@media (max-width: 860px) {
+  .pk-bio { grid-template-columns: 1fr; }
+}
+
+
+/* ============================================================
+   CAMINO AL ÁLBUM — singles adelanto
+   ============================================================ */
+.pk-singles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.pk-single {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s var(--ease-out);
+}
+
+.pk-single:hover {
+  border-color: var(--accent-border);
+  box-shadow: 0 0 32px rgba(34, 238, 201, 0.07);
+  transform: translateY(-4px);
+}
+
+.pk-single--new { border-color: var(--accent-border); }
+
+.pk-single__year {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.pk-single__title {
+  font-family: var(--font-hero);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+
+.pk-single__desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.pk-single__desc em { color: var(--text); }
+
+@media (max-width: 860px) {
+  .pk-singles { grid-template-columns: 1fr; }
+}
+
+
+/* ============================================================
+   DISCOGRAFÍA — tabla
+   ============================================================ */
+.pk-disco {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.pk-disco th {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: left;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--accent-border);
+}
+
+.pk-disco td {
+  padding: 0.85rem 1.5rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.pk-disco tbody tr:last-child td { border-bottom: none; }
+
+.pk-disco td:first-child {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  width: 6rem;
+}
+
+.pk-disco td:nth-child(2) { font-weight: 600; }
+
+.pk-disco td:last-child {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.pk-disco__next td { background: var(--accent-bg); }
+.pk-disco__next td:nth-child(2),
+.pk-disco__next td:last-child { color: var(--accent); }
+
+
+/* ============================================================
+   PRENSA — listado de menciones
+   ============================================================ */
+.pk-press { max-width: 860px; }
+
+.pk-press__item {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.pk-press__outlet {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.pk-press__item a {
+  color: var(--text);
+  transition: color 0.3s;
+}
+
+.pk-press__item a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .pk-press__item { grid-template-columns: 1fr; gap: 0.35rem; }
+}
+
+
+/* ============================================================
+   EN VIVO + FOTOS
+   ============================================================ */
+.pk-live-copy {
+  max-width: 62ch;
+  color: var(--text-muted);
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.pk-live-copy strong { color: var(--text); font-weight: 600; }
+
+.pk-live-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.pk-live-shot {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.pk-live-shot img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (max-width: 640px) {
+  .pk-live-grid { grid-template-columns: 1fr; }
+}
+
+/* Galería de prensa — item + botón de descarga */
+.pk-gallery { gap: 1rem 0.625rem; }
+
+.pk-photo { display: flex; flex-direction: column; }
+
+.pk-photo .gallery-item { width: 100%; }
+
+.pk-photo__dl {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0.6rem 0.15rem 0;
+  transition: color 0.3s;
+}
+
+.pk-photo__dl:hover { color: var(--accent); }
+
+
+/* ============================================================
+   CTA final de descarga
+   ============================================================ */
+.pk-download-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+
+/* ============================================================
+   IMPRESIÓN / PDF
+   Genera el kit descargable con la misma estética dark.
+   ============================================================ */
+@media print {
+  @page { size: A4; margin: 0; }
+
+  html, body {
+    background: #050507 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Fuera: fx, nav, embeds y controles interactivos.
+     body::before/after (spotlight + ruido) se rasterizan
+     por página y multiplican el peso del PDF */
+  body::before,
+  body::after,
+  #ambient-canvas,
+  .scanlines,
+  .pk-nav,
+  .hero__scroll,
+  .hero__ctas,
+  .video-card__embed,
+  .pk-release__links,
+  .gallery-item__overlay,
+  .pk-photo__dl,
+  .pk-download-footer,
+  .lightbox { display: none !important; }
+
+  /* Reveal: todo visible sin animación */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .has-glitch::before,
+  .has-glitch::after { display: none !important; }
+
+  * { animation: none !important; }
+
+  /* Los filtros CSS sobre fotos rasterizan a resolución de
+     impresión y disparan el peso del PDF */
+  img { filter: none !important; }
+
+  /* Hero = portada A4 completa */
+  .pk-hero {
+    min-height: 96vh;
+    padding: 4rem var(--pad) 2.5rem;
+    break-after: page;
+  }
+
+  /* Secciones más densas */
+  .section { padding: 2.25rem var(--pad); }
+  .section__header { margin-bottom: 1.5rem; }
+  .section__title { font-size: 2rem; }
+
+  /* El ancho de página A4 dispara los breakpoints móviles:
+     acá se fuerzan las grillas de escritorio */
+  .members-grid { grid-template-columns: repeat(5, 1fr); gap: 0.8rem; margin-bottom: 0; }
+  .member-card__name { font-size: 0.8rem; }
+  .member-card__role { font-size: 0.7rem; }
+  .member-card__ig   { font-size: 0.68rem; }
+  .pk-bio { grid-template-columns: 1.6fr 0.9fr; }
+  .pk-singles { grid-template-columns: repeat(3, 1fr); }
+  .pk-live-grid { grid-template-columns: 1fr 1fr; }
+  .social-grid { grid-template-columns: repeat(3, 1fr); }
+  .pk-press__item { grid-template-columns: 10rem 1fr; gap: 1rem; }
+
+  /* Sin cortes feos dentro de bloques */
+  .pk-release,
+  .pk-single,
+  .pk-facts,
+  .pk-disco,
+  .pk-press__item,
+  .member-card,
+  .contact-hero,
+  .social-card,
+  .pk-photo,
+  .pk-live-shot { break-inside: avoid; }
+
+  #la-banda,
+  #integrantes,
+  #discografia,
+  #en-vivo,
+  #contacto { break-before: page; }
+
+  /* La ficha del single pierde el video: pasa a una columna */
+  .pk-release {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+  .pk-release + .pk-release { margin-top: 1.25rem; }
+  .pk-release__desc { font-size: 0.85rem; margin-bottom: 0.75rem; }
+  .pk-release__title { font-size: 1.6rem; margin-bottom: 0.75rem; }
+
+  /* El contenedor del video queda vacío: fuera */
+  .pk-release__media:has(.video-card__embed) { display: none; }
+
+  /* La ficha del álbum mantiene tapa + texto lado a lado
+     (después de la regla general para ganar el cascade) */
+  .pk-release--album { grid-template-columns: 0.55fr 1.45fr; }
+
+  /* Las fotos de "en vivo" ya están en la grilla de prensa:
+     en PDF no se duplican */
+  .pk-live-grid { display: none; }
+
+  /* Email completo, sin recorte */
+  .contact-hero__email {
+    font-size: 1.2rem;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  /* La banda en una sola página */
+  .pk-photo-hero img { max-height: 36vh; object-fit: cover; }
+  .pk-photo-hero { margin-bottom: 1.5rem; }
+  .pk-bio__text p { font-size: 0.85rem; margin-bottom: 0.9rem; }
+  .pk-facts { padding: 1rem 1.25rem; }
+  .pk-facts__row { padding: 0.5rem 0; }
+  .pk-facts dd { font-size: 0.8rem; }
+
+  /* Adelantos + tabla + prensa más densos */
+  .pk-single { padding: 1.1rem 1.25rem; }
+  .pk-single__desc { font-size: 0.78rem; }
+  .pk-disco th { padding: 0.7rem 1.25rem; }
+  .pk-disco td { padding: 0.55rem 1.25rem; }
+  .pk-press__item { padding: 0.8rem 0; font-size: 0.9rem; }
+  .pk-live-copy { font-size: 0.9rem; margin-bottom: 1.25rem; }
+  .pk-live-shot img { max-height: 34vh; }
+
+  /* URLs visibles para quien lee el PDF */
+  a[data-url]::after {
+    content: " · " attr(data-url);
+    font-family: var(--font-mono);
+    font-size: 0.72em;
+    color: var(--accent);
+  }
+
+  /* Fotos: grilla fija de 3 */
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+
+  /* Sombras y blur fuera (rinden mal en PDF) */
+  .btn--solid { box-shadow: none; }
+  .contact-hero::before { display: none; }
+}
