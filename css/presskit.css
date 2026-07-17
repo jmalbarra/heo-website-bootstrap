@@ -592,7 +592,7 @@
   }
 
   /* La banda + formación en una sola página */
-  .pk-photo-hero img { max-height: 20vh; object-fit: cover; }
+  .pk-photo-hero img { max-height: 20vh; object-fit: cover; object-position: center 85%; }
   .pk-photo-hero { margin-bottom: 1rem; }
   .pk-bio__text p { font-size: 0.8rem; margin-bottom: 0.7rem; }
   .pk-facts { padding: 0.8rem 1rem; }
