@@ -41,6 +41,21 @@
   min-height: 88vh;
 }
 
+/* URL oficial bajo el chip de metadata */
+.pk-hero .hero__meta { margin-bottom: 1rem; }
+
+.pk-hero__web {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  margin-bottom: 2.75rem;
+  transition: text-shadow 0.3s;
+}
+
+.pk-hero__web:hover { text-shadow: 0 0 14px var(--accent-glow); }
+
 
 /* ============================================================
    LO NUEVO — fichas de lanzamiento
@@ -461,6 +476,7 @@
   #ambient-canvas,
   .scanlines,
   .pk-nav,
+  .hero__scan,
   .hero__scroll,
   .hero__ctas,
   .video-card__embed,
@@ -480,7 +496,21 @@
   .has-glitch::before,
   .has-glitch::after { display: none !important; }
 
-  * { animation: none !important; }
+  /* Glows y animaciones fuera: los visores de PDF de iOS
+     dibujan sombras y gradientes clipeados como cajas sólidas */
+  * {
+    animation: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  .hero__title-line--accent {
+    background: none !important;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    -webkit-text-fill-color: var(--accent);
+    color: var(--accent);
+  }
 
   /* Los filtros CSS sobre fotos rasterizan a resolución de
      impresión y disparan el peso del PDF */
