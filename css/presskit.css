@@ -41,6 +41,21 @@
   min-height: 88vh;
 }
 
+/* URL oficial bajo el chip de metadata */
+.pk-hero .hero__meta { margin-bottom: 1rem; }
+
+.pk-hero__web {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  margin-bottom: 2.75rem;
+  transition: text-shadow 0.3s;
+}
+
+.pk-hero__web:hover { text-shadow: 0 0 14px var(--accent-glow); }
+
 
 /* ============================================================
    LO NUEVO — fichas de lanzamiento
@@ -461,6 +476,7 @@
   #ambient-canvas,
   .scanlines,
   .pk-nav,
+  .hero__scan,
   .hero__scroll,
   .hero__ctas,
   .video-card__embed,
@@ -480,7 +496,21 @@
   .has-glitch::before,
   .has-glitch::after { display: none !important; }
 
-  * { animation: none !important; }
+  /* Glows y animaciones fuera: los visores de PDF de iOS
+     dibujan sombras y gradientes clipeados como cajas sólidas */
+  * {
+    animation: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  .hero__title-line--accent {
+    background: none !important;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    -webkit-text-fill-color: var(--accent);
+    color: var(--accent);
+  }
 
   /* Los filtros CSS sobre fotos rasterizan a resolución de
      impresión y disparan el peso del PDF */
@@ -494,16 +524,17 @@
   }
 
   /* Secciones más densas */
-  .section { padding: 2.25rem var(--pad); }
-  .section__header { margin-bottom: 1.5rem; }
-  .section__title { font-size: 2rem; }
+  .section { padding: 1.4rem var(--pad); }
+  .section__header { margin-bottom: 1rem; }
+  .section__title { font-size: 1.6rem; }
 
   /* El ancho de página A4 dispara los breakpoints móviles:
      acá se fuerzan las grillas de escritorio */
-  .members-grid { grid-template-columns: repeat(5, 1fr); gap: 0.8rem; margin-bottom: 0; }
-  .member-card__name { font-size: 0.8rem; }
-  .member-card__role { font-size: 0.7rem; }
-  .member-card__ig   { font-size: 0.68rem; }
+  .members-grid { grid-template-columns: repeat(5, 1fr); gap: 0.7rem; margin-bottom: 0; }
+  .member-card__img-wrap { margin-bottom: 0.5rem; }
+  .member-card__name { font-size: 0.74rem; }
+  .member-card__role { font-size: 0.64rem; }
+  .member-card__ig   { font-size: 0.6rem; }
   .pk-bio { grid-template-columns: 1.6fr 0.9fr; }
   .pk-singles { grid-template-columns: repeat(3, 1fr); }
   .pk-live-grid { grid-template-columns: 1fr 1fr; }
@@ -522,20 +553,25 @@
   .pk-photo,
   .pk-live-shot { break-inside: avoid; }
 
+  /* Estructura ejecutiva en 5 páginas:
+     1 portada · 2 lo nuevo + adelantos · 3 banda + formación
+     4 discografía + prensa · 5 en vivo + fotos + contacto */
   #la-banda,
-  #integrantes,
   #discografia,
-  #en-vivo,
-  #contacto { break-before: page; }
+  #en-vivo { break-before: page; }
+
+  .members-grid,
+  #camino { break-inside: avoid-page; }
 
   /* La ficha del single pierde el video: pasa a una columna */
   .pk-release {
     grid-template-columns: 1fr;
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem;
   }
-  .pk-release + .pk-release { margin-top: 1.25rem; }
-  .pk-release__desc { font-size: 0.85rem; margin-bottom: 0.75rem; }
-  .pk-release__title { font-size: 1.6rem; margin-bottom: 0.75rem; }
+  .pk-release + .pk-release { margin-top: 1rem; }
+  .pk-release__desc { font-size: 0.8rem; margin-bottom: 0.6rem; }
+  .pk-release__title { font-size: 1.45rem; margin-bottom: 0.6rem; }
+  .pk-release__tag { margin-bottom: 0.7rem; }
 
   /* El contenedor del video queda vacío: fuera */
   .pk-release__media:has(.video-card__embed) { display: none; }
@@ -555,22 +591,47 @@
     text-overflow: clip;
   }
 
-  /* La banda en una sola página */
-  .pk-photo-hero img { max-height: 36vh; object-fit: cover; }
-  .pk-photo-hero { margin-bottom: 1.5rem; }
-  .pk-bio__text p { font-size: 0.85rem; margin-bottom: 0.9rem; }
-  .pk-facts { padding: 1rem 1.25rem; }
-  .pk-facts__row { padding: 0.5rem 0; }
-  .pk-facts dd { font-size: 0.8rem; }
+  /* La banda + formación en una sola página */
+  .pk-photo-hero img { max-height: 20vh; object-fit: cover; object-position: center 85%; }
+  .pk-photo-hero { margin-bottom: 1rem; }
+  .pk-bio__text p { font-size: 0.8rem; margin-bottom: 0.7rem; }
+  .pk-facts { padding: 0.8rem 1rem; }
+  .pk-facts__row { padding: 0.4rem 0; }
+  .pk-facts dd { font-size: 0.74rem; }
+  .pk-bio { margin-bottom: 0.5rem; }
+  .member-card__img-wrap { aspect-ratio: 1; }
+
+  /* Adelantos: siguen a las fichas de "Ahora" sin encabezado
+     propio, como remate de la misma página */
+  #camino { padding-top: 0.5rem; }
+  #camino .section__header,
+  #camino::before { display: none; }
 
   /* Adelantos + tabla + prensa más densos */
-  .pk-single { padding: 1.1rem 1.25rem; }
-  .pk-single__desc { font-size: 0.78rem; }
-  .pk-disco th { padding: 0.7rem 1.25rem; }
-  .pk-disco td { padding: 0.55rem 1.25rem; }
-  .pk-press__item { padding: 0.8rem 0; font-size: 0.9rem; }
-  .pk-live-copy { font-size: 0.9rem; margin-bottom: 1.25rem; }
-  .pk-live-shot img { max-height: 34vh; }
+  .pk-single { padding: 0.9rem 1rem; }
+  .pk-single__title { font-size: 1.05rem; margin-bottom: 0.45rem; }
+  .pk-single__desc { font-size: 0.72rem; }
+  .pk-disco th { padding: 0.55rem 1.25rem; }
+  .pk-disco td { padding: 0.4rem 1.25rem; font-size: 0.85rem; }
+  .pk-press__item { padding: 0.55rem 0; font-size: 0.85rem; }
+  .pk-live-copy { font-size: 0.85rem; margin-bottom: 1rem; }
+
+  /* Fotos: sin encabezado duplicado (siguen a "en escena")
+     y en formato apaisado para compartir página con contacto */
+  #fotos { padding-top: 0; }
+  #fotos .section__header,
+  #fotos .pk-live-copy,
+  #fotos::before { display: none; }
+  .gallery-item { aspect-ratio: 4 / 3; }
+
+  /* Contacto compacto: hero chico + redes en una fila */
+  .contact-hero { padding: 1rem 1.5rem; margin-bottom: 0.9rem; }
+  .social-grid { grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-bottom: 0; }
+  .social-card { padding: 0.7rem 0.8rem; }
+  .social-card__icon { width: 18px; height: 18px; }
+  .social-card__name { font-size: 0.72rem; }
+  .social-card__handle { font-size: 0.6rem; }
+  .site-footer { padding: 1.5rem var(--pad) 1rem; }
 
   /* URLs visibles para quien lee el PDF */
   a[data-url]::after {
