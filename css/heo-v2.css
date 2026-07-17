@@ -654,6 +654,12 @@ body::after {
   margin-bottom: 0.15rem;
 }
 
+.show-featured__lineup {
+  color: var(--accent-dim);
+  font-size: 0.82rem;
+  margin-bottom: 0.15rem;
+}
+
 .show-featured__city {
   font-family: var(--font-mono);
   font-size: 0.72rem;
