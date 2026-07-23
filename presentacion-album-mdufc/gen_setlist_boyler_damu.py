@@ -16,7 +16,7 @@ GROUPS = [
     ("2",  ["Erial"]),
     ("3",  ["Cifra", "Parias"]),
     ("4",  ["Lágrimas (corto)"]),
-    ("5",  ["MADMO"]),
+    ("5",  ["Más Allá De Mis Ojos"]),
 ]
 
 logo_b64 = base64.b64encode(LOGO.read_bytes()).decode()

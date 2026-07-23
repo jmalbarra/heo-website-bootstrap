@@ -18,7 +18,7 @@ ITEMS = [
     ("Cifra",                   "song"),
     ("Parias",                  "song"),
     ("Lágrimas (corto)",        "song"),
-    ("MADMO",                   "song"),
+    ("Más Allá De Mis Ojos",    "song"),
 ]
 
 logo_b64 = base64.b64encode(LOGO.read_bytes()).decode()
