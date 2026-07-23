@@ -171,7 +171,7 @@ html_src = f"""<!DOCTYPE html>
   <header class="header">
     <img class="header__logo" src="{logo_src}" alt="HEO">
     <div class="header__band">Hacia el Ocaso</div>
-    <div class="header__album">Boyler</div>
+    <div class="header__album">Tío Bizarro</div>
     <div class="header__sub">Pistas · Damu</div>
   </header>
 
