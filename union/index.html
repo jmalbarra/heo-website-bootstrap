@@ -259,8 +259,7 @@
 		}
 
 		/* --- Estado: ya está adentro --- */
-		#done[hidden] { display: none; }
-		#form-wrap[hidden] { display: none; }
+		[hidden] { display: none !important; }
 
 		.badge-number {
 			font-family: var(--font-hero);
@@ -432,9 +431,9 @@
 
 		<div class="card" id="done" hidden>
 			<h2 id="done-title">Estás adentro</h2>
-			<p class="badge-number"><small>Miembro</small><span id="done-number">—</span></p>
+			<p class="badge-number" id="done-badge"><small>Miembro</small><span id="done-number">—</span></p>
 			<p class="lead" id="done-text"></p>
-			<p><a class="cta" id="done-link" href="#">Ver mi credencial</a></p>
+			<p id="done-link-wrap"><a class="cta" id="done-link" href="#">Ver mi credencial</a></p>
 			<p class="fineprint" id="done-mail"></p>
 		</div>
 	</main>
@@ -493,16 +492,31 @@
 		}
 
 		function showDone(data) {
-			document.getElementById('done-title').textContent = data.already ? 'Ya estabas adentro' : 'Estás adentro';
-			document.getElementById('done-number').textContent = 'Nº ' + pad(data.number);
-			document.getElementById('done-text').textContent = data.already
-				? 'Este mail ya estaba en la lista, así que te devolvemos tu credencial de siempre. Te la reenviamos por mail también.'
-				: 'Gracias, ' + data.name + '. Guardá el link de tu credencial: se comparte, se baja como imagen y se muestra en el próximo show.';
-			var link = document.getElementById('done-link');
-			link.href = 'credencial.html?c=' + encodeURIComponent(data.code);
-			document.getElementById('done-mail').textContent = data.mailed
-				? 'Te mandamos un mail con todo. Si no aparece, mirá en spam.'
-				: 'El mail no salió esta vez, así que guardá este link. Te escribimos igual cuando haya novedades.';
+			var badge = document.getElementById('done-badge');
+			var linkWrap = document.getElementById('done-link-wrap');
+
+			if (data.already) {
+				// El servidor no nos dice nada de quien ya estaba (ni nombre, ni
+				// número, ni código): si lo hiciera, cualquiera podría probar el
+				// mail de otra persona para ver si está en la lista. Su credencial
+				// va por mail, que es donde sabemos que llega la persona correcta.
+				document.getElementById('done-title').textContent = 'Ya estabas adentro';
+				document.getElementById('done-text').textContent = 'Este mail ya estaba en la lista. Te reenviamos tu credencial por mail: si no aparece, mirá en spam.';
+				document.getElementById('done-mail').textContent = 'Si ya te habíamos reenviado el mail hace un rato, buscá ese.';
+				badge.hidden = true;
+				linkWrap.hidden = true;
+			} else {
+				document.getElementById('done-title').textContent = 'Estás adentro';
+				document.getElementById('done-number').textContent = 'Nº ' + pad(data.number);
+				document.getElementById('done-text').textContent = 'Gracias, ' + data.name + '. Guardá el link de tu credencial: se comparte, se baja como imagen y se muestra en el próximo show.';
+				document.getElementById('done-link').href = 'credencial.html?c=' + encodeURIComponent(data.code);
+				document.getElementById('done-mail').textContent = data.mailed
+					? 'Te mandamos un mail con todo. Si no aparece, mirá en spam.'
+					: 'El mail no salió esta vez, así que guardá este link. Te escribimos igual cuando haya novedades.';
+				badge.hidden = false;
+				linkWrap.hidden = false;
+			}
+
 			formWrap.hidden = true;
 			done.hidden = false;
 			done.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -532,7 +546,9 @@
 				if (!r.ok || !r.data.ok) {
 					throw new Error(r.data && r.data.error ? r.data.error : 'No pudimos completar el alta.');
 				}
-				try { localStorage.setItem('heo_union_code', r.data.code); } catch (_) {}
+				try {
+					if (r.data.code) localStorage.setItem('heo_union_code', r.data.code);
+				} catch (_) {}
 				showDone(r.data);
 			}).catch(function (err) {
 				showError(err.message || 'No pudimos conectar. Probá de nuevo en un momento.');
