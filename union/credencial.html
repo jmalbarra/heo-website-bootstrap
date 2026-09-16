@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<title>Credencial · Unión · Hacia el Ocaso</title>
+	<meta name="description" content="Credencial de miembro de la Unión — Hacia el Ocaso.">
+	<meta name="theme-color" content="#050507">
+	<meta name="robots" content="noindex">
+	<meta property="og:title" content="Unión · Hacia el Ocaso">
+	<meta property="og:description" content="Credencial de miembro de la Unión.">
+	<meta property="og:image" content="../images/nosotros.jpeg">
+	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Orbitron:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--accent:        #22eec9;
+			--accent-bg:     rgba(34, 238, 201, 0.07);
+			--accent-border: rgba(34, 238, 201, 0.22);
+
+			--bg:            #050507;
+			--surface:       rgba(14, 14, 18, 0.75);
+			--border:        rgba(255, 255, 255, 0.08);
+
+			--text:          #e8e8e8;
+			--text-muted:    rgba(232, 232, 232, 0.55);
+			--text-dim:      rgba(232, 232, 232, 0.3);
+
+			--font-display: 'Space Grotesk', system-ui, sans-serif;
+			--font-hero:    'Orbitron', 'Space Grotesk', system-ui, sans-serif;
+			--font-mono:    'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+
+			--radius:   8px;
+			--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+		}
+
+		*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+		body {
+			min-height: 100vh;
+			min-height: 100dvh;
+			background: var(--bg);
+			color: var(--text);
+			font-family: var(--font-display);
+			line-height: 1.6;
+			-webkit-font-smoothing: antialiased;
+			overflow-x: hidden;
+		}
+		body::before {
+			content: '';
+			position: fixed;
+			inset: 0;
+			z-index: 0;
+			pointer-events: none;
+			background: radial-gradient(65% 50% at 50% 0%, rgba(34, 238, 201, 0.11), transparent 70%);
+		}
+		body::after {
+			content: '';
+			position: fixed;
+			inset: 0;
+			z-index: 1;
+			pointer-events: none;
+			opacity: 0.3;
+			background: repeating-linear-gradient(
+				to bottom,
+				rgba(255, 255, 255, 0.025) 0px,
+				rgba(255, 255, 255, 0.025) 1px,
+				transparent 1px,
+				transparent 3px
+			);
+		}
+
+		main {
+			position: relative;
+			z-index: 2;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			min-height: calc(100dvh - 5rem);
+			max-width: 460px;
+			margin: 0 auto;
+			padding: clamp(2.5rem, 8vw, 4rem) 16px clamp(2rem, 6vw, 3rem);
+		}
+
+		.status {
+			font-family: var(--font-mono);
+			font-size: 0.8rem;
+			letter-spacing: 0.14em;
+			text-transform: uppercase;
+			color: var(--text-dim);
+			text-align: center;
+			padding: 4rem 0;
+		}
+		.status a { color: var(--accent); }
+
+		/* --- La credencial en pantalla --- */
+		.credential {
+			position: relative;
+			padding: clamp(1.75rem, 6vw, 2.5rem);
+			border: 1px solid var(--accent-border);
+			border-radius: 14px;
+			background:
+				linear-gradient(180deg, rgba(34, 238, 201, 0.06), transparent 45%),
+				var(--surface);
+			overflow: hidden;
+		}
+		.credential::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			pointer-events: none;
+			background: repeating-linear-gradient(
+				to bottom,
+				rgba(255, 255, 255, 0.02) 0px,
+				rgba(255, 255, 255, 0.02) 1px,
+				transparent 1px,
+				transparent 4px
+			);
+		}
+
+		.cred-top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+			margin-bottom: 2rem;
+		}
+		.cred-top img { width: 30px; height: 30px; opacity: 0.85; }
+		.cred-top span {
+			font-family: var(--font-mono);
+			font-size: 0.64rem;
+			letter-spacing: 0.24em;
+			text-transform: uppercase;
+			color: var(--text-dim);
+		}
+
+		.cred-label {
+			font-family: var(--font-mono);
+			font-size: 0.65rem;
+			letter-spacing: 0.24em;
+			text-transform: uppercase;
+			color: var(--accent);
+			margin-bottom: 0.6rem;
+		}
+		.cred-title {
+			font-family: var(--font-hero);
+			font-size: clamp(2.1rem, 11vw, 2.9rem);
+			font-weight: 800;
+			letter-spacing: 0.02em;
+			line-height: 1;
+			margin-bottom: 1.1rem;
+		}
+		.cred-quote {
+			font-family: var(--font-mono);
+			font-size: 0.74rem;
+			line-height: 1.7;
+			letter-spacing: 0.04em;
+			color: var(--text-dim);
+			margin-bottom: 2.1rem;
+		}
+		.cred-name {
+			font-family: var(--font-display);
+			font-size: clamp(1.4rem, 6.5vw, 1.85rem);
+			font-weight: 600;
+			line-height: 1.2;
+			word-break: break-word;
+			margin-bottom: 0.35rem;
+		}
+		.cred-number {
+			font-family: var(--font-hero);
+			font-size: clamp(1.6rem, 8vw, 2.2rem);
+			font-weight: 700;
+			color: var(--accent);
+			margin-bottom: 2rem;
+		}
+
+		.cred-meta {
+			display: flex;
+			justify-content: space-between;
+			gap: 1rem;
+			padding-top: 1.25rem;
+			border-top: 1px solid var(--border);
+			font-family: var(--font-mono);
+			font-size: 0.68rem;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			color: var(--text-dim);
+		}
+		.cred-meta strong { display: block; color: var(--text-muted); font-weight: 400; margin-top: 0.25rem; letter-spacing: 0.14em; }
+
+		/* --- Acciones --- */
+		.actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.7rem;
+			margin-top: 1.5rem;
+		}
+		.actions button {
+			flex: 1 1 160px;
+			padding: 0.9rem 1.1rem;
+			font-family: var(--font-mono);
+			font-size: 0.8rem;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			border-radius: var(--radius);
+			cursor: pointer;
+			border: 1px solid var(--accent-border);
+			background: none;
+			color: var(--accent);
+			transition: opacity 0.2s var(--ease-out);
+		}
+		.actions button.primary {
+			background: var(--accent);
+			border-color: var(--accent);
+			color: #050507;
+		}
+		.actions button:hover { opacity: 0.85; }
+		.actions button[hidden] { display: none; }
+
+		.hint {
+			margin-top: 1.5rem;
+			font-family: var(--font-mono);
+			font-size: 0.74rem;
+			line-height: 1.8;
+			color: var(--text-dim);
+			text-align: center;
+		}
+		.hint a { color: var(--text-muted); }
+
+		footer {
+			position: relative;
+			z-index: 2;
+			padding: 0 16px 2.5rem;
+			text-align: center;
+			font-family: var(--font-mono);
+			font-size: 0.72rem;
+			letter-spacing: 0.1em;
+		}
+		footer a { color: var(--text-dim); text-decoration: none; }
+		footer a:hover { color: var(--accent); }
+
+		#share-canvas { display: none; }
+
+		@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+	</style>
+</head>
+<body>
+
+	<main>
+		<p class="status" id="status">Leyendo credencial…</p>
+
+		<div id="cred-wrap" hidden>
+			<div class="credential" id="credential">
+				<div class="cred-top">
+					<img src="../images/ojo-goth-blanco.png" alt="" width="30" height="30" decoding="async" id="logo-img">
+					<span>Hacia el Ocaso</span>
+				</div>
+				<p class="cred-label">Credencial de miembro</p>
+				<p class="cred-title">UNIÓN</p>
+				<p class="cred-quote">Toda conexión abre una puerta,<br>y las puertas no preguntan quién cruza.</p>
+				<p class="cred-name" id="cred-name">—</p>
+				<p class="cred-number" id="cred-number">Nº 0000</p>
+				<div class="cred-meta">
+					<span>Desde<strong id="cred-date">—</strong></span>
+					<span>Código<strong id="cred-code">—</strong></span>
+				</div>
+			</div>
+
+			<div class="actions">
+				<button type="button" class="primary" id="btn-download">Descargar imagen</button>
+				<button type="button" id="btn-share" hidden>Compartir</button>
+			</div>
+
+			<p class="hint">
+				Mostrá esta pantalla en el próximo show.<br>
+				<a href="./">Volver a haciaelocaso.com/union</a>
+			</p>
+		</div>
+
+		<canvas id="share-canvas" width="1080" height="1350"></canvas>
+	</main>
+
+	<footer>
+		<a href="../">haciaelocaso.com</a>
+	</footer>
+
+	<script>
+	(function () {
+		"use strict";
+
+		var MEMBER_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/member/';
+		var ACCENT = '#22eec9';
+
+		var statusEl = document.getElementById('status');
+		var wrap = document.getElementById('cred-wrap');
+		var canvas = document.getElementById('share-canvas');
+		var logoImg = document.getElementById('logo-img');
+		var member = null;
+
+		function getCode() {
+			var params = new URLSearchParams(window.location.search);
+			var code = params.get('c') || '';
+			if (!code) {
+				// Por si el rewrite no está activo: /union/credencial.html#CODIGO
+				code = (window.location.hash || '').replace('#', '');
+			}
+			return code.trim().toUpperCase();
+		}
+
+		function pad4(n) {
+			return String(n).padStart(4, '0');
+		}
+
+		function fecha(ts) {
+			if (!ts) return '—';
+			var d = new Date(ts * 1000);
+			return d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+		}
+
+		function fallo(msg) {
+			statusEl.innerHTML = msg + '<br><br><a href="./">Unirte a la Unión</a>';
+			statusEl.hidden = false;
+			wrap.hidden = true;
+		}
+
+		var code = getCode();
+		if (!/^[A-Z0-9]{8}$/.test(code)) {
+			fallo('Esa credencial no existe.');
+			return;
+		}
+
+		fetch(MEMBER_URL + encodeURIComponent(code))
+			.then(function (res) {
+				if (!res.ok) throw new Error('no encontrada');
+				return res.json();
+			})
+			.then(function (data) {
+				if (!data.ok || !data.member) throw new Error('no encontrada');
+				member = data.member;
+				document.getElementById('cred-name').textContent = member.name;
+				document.getElementById('cred-number').textContent = 'Nº ' + pad4(member.number);
+				document.getElementById('cred-date').textContent = fecha(member.ts);
+				document.getElementById('cred-code').textContent = member.code;
+				document.title = member.name + ' · Miembro Nº ' + pad4(member.number) + ' · Unión';
+				statusEl.hidden = true;
+				wrap.hidden = false;
+			})
+			.catch(function () {
+				fallo('Esa credencial no existe, o no la pudimos leer.');
+			});
+
+		// --- Imagen para compartir (1080x1350, todo en el cliente) ---
+
+		function drawCredential() {
+			var ctx = canvas.getContext('2d');
+			var W = canvas.width, H = canvas.height;
+
+			ctx.fillStyle = '#050507';
+			ctx.fillRect(0, 0, W, H);
+
+			// Resplandor superior
+			var glow = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, H * 0.75);
+			glow.addColorStop(0, 'rgba(34, 238, 201, 0.16)');
+			glow.addColorStop(1, 'rgba(34, 238, 201, 0)');
+			ctx.fillStyle = glow;
+			ctx.fillRect(0, 0, W, H);
+
+			// Scanlines
+			ctx.fillStyle = 'rgba(255, 255, 255, 0.025)';
+			for (var y = 0; y < H; y += 4) ctx.fillRect(0, y, W, 1);
+
+			// Marco
+			var m = 70;
+			ctx.strokeStyle = 'rgba(34, 238, 201, 0.3)';
+			ctx.lineWidth = 2;
+			ctx.strokeRect(m, m, W - m * 2, H - m * 2);
+
+			// Esquinas marcadas
+			ctx.strokeStyle = ACCENT;
+			ctx.lineWidth = 4;
+			var c = 46;
+			[[m, m, 1, 1], [W - m, m, -1, 1], [m, H - m, 1, -1], [W - m, H - m, -1, -1]].forEach(function (p) {
+				ctx.beginPath();
+				ctx.moveTo(p[0] + c * p[2], p[1]);
+				ctx.lineTo(p[0], p[1]);
+				ctx.lineTo(p[0], p[1] + c * p[3]);
+				ctx.stroke();
+			});
+
+			var x = m + 62;
+
+			// Logo
+			if (logoImg.complete && logoImg.naturalWidth > 0) {
+				var size = 70;
+				ctx.globalAlpha = 0.9;
+				ctx.drawImage(logoImg, x, m + 62, size, size);
+				ctx.globalAlpha = 1;
+			}
+
+			ctx.textBaseline = 'alphabetic';
+			ctx.fillStyle = 'rgba(232, 232, 232, 0.4)';
+			ctx.font = '500 22px "Geist Mono", monospace';
+			ctx.letterSpacing = '6px';
+			ctx.fillText('HACIA EL OCASO', x, m + 185);
+
+			ctx.fillStyle = ACCENT;
+			ctx.font = '500 22px "Geist Mono", monospace';
+			ctx.fillText('CREDENCIAL DE MIEMBRO', x, m + 320);
+
+			ctx.letterSpacing = '2px';
+			ctx.fillStyle = '#ffffff';
+			ctx.font = '800 130px Orbitron, sans-serif';
+			ctx.fillText('UNIÓN', x, m + 490);
+
+			// La línea del tema, donde el ojo descansa antes del nombre
+			ctx.letterSpacing = '1px';
+			ctx.fillStyle = 'rgba(232, 232, 232, 0.32)';
+			ctx.font = '400 27px "Geist Mono", monospace';
+			ctx.fillText('Toda conexión abre una puerta,', x, m + 600);
+			ctx.fillText('y las puertas no preguntan quién cruza.', x, m + 645);
+
+			// Nombre (achica si no entra)
+			ctx.letterSpacing = '0px';
+			var maxW = W - m * 2 - 124;
+			var nameSize = 76;
+			ctx.font = '600 ' + nameSize + 'px "Space Grotesk", sans-serif';
+			while (ctx.measureText(member.name).width > maxW && nameSize > 34) {
+				nameSize -= 4;
+				ctx.font = '600 ' + nameSize + 'px "Space Grotesk", sans-serif';
+			}
+			ctx.fillStyle = '#e8e8e8';
+			ctx.fillText(member.name, x, m + 780);
+
+			ctx.fillStyle = ACCENT;
+			ctx.font = '700 96px Orbitron, sans-serif';
+			ctx.fillText('Nº ' + pad4(member.number), x, m + 900);
+
+			// Línea y metadata
+			ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+			ctx.lineWidth = 1;
+			ctx.beginPath();
+			ctx.moveTo(x, H - m - 235);
+			ctx.lineTo(W - m - 62, H - m - 235);
+			ctx.stroke();
+
+			ctx.letterSpacing = '4px';
+			ctx.font = '400 20px "Geist Mono", monospace';
+			ctx.fillStyle = 'rgba(232, 232, 232, 0.35)';
+			ctx.fillText('DESDE', x, H - m - 185);
+			ctx.fillText('CÓDIGO', x + 320, H - m - 185);
+			ctx.fillStyle = 'rgba(232, 232, 232, 0.7)';
+			ctx.font = '500 26px "Geist Mono", monospace';
+			ctx.fillText(fecha(member.ts), x, H - m - 140);
+			ctx.fillText(member.code, x + 320, H - m - 140);
+
+			ctx.fillStyle = ACCENT;
+			ctx.font = '500 26px "Geist Mono", monospace';
+			ctx.letterSpacing = '5px';
+			ctx.fillText('HACIAELOCASO.COM/UNION', x, H - m - 62);
+			ctx.letterSpacing = '0px';
+		}
+
+		function conFuentes() {
+			// Sin esperar a las fuentes, el canvas dibuja con la de sistema.
+			if (!document.fonts || !document.fonts.load) return Promise.resolve();
+			return Promise.all([
+				document.fonts.load('800 130px Orbitron'),
+				document.fonts.load('700 96px Orbitron'),
+				document.fonts.load('600 76px "Space Grotesk"'),
+				document.fonts.load('500 26px "Geist Mono"')
+			]).catch(function () {});
+		}
+
+		function generar() {
+			return conFuentes().then(function () {
+				drawCredential();
+				return new Promise(function (resolve) {
+					canvas.toBlob(function (blob) { resolve(blob); }, 'image/png');
+				});
+			});
+		}
+
+		function nombreArchivo() {
+			return 'union-heo-' + pad4(member.number) + '.png';
+		}
+
+		document.getElementById('btn-download').addEventListener('click', function () {
+			var btn = this;
+			btn.disabled = true;
+			generar().then(function (blob) {
+				var url = URL.createObjectURL(blob);
+				var a = document.createElement('a');
+				a.href = url;
+				a.download = nombreArchivo();
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+				btn.disabled = false;
+			}).catch(function () {
+				btn.disabled = false;
+			});
+		});
+
+		var btnShare = document.getElementById('btn-share');
+		if (navigator.share && navigator.canShare) {
+			btnShare.hidden = false;
+			btnShare.addEventListener('click', function () {
+				generar().then(function (blob) {
+					var file = new File([blob], nombreArchivo(), { type: 'image/png' });
+					if (!navigator.canShare({ files: [file] })) {
+						return navigator.share({
+							title: 'Unión · Hacia el Ocaso',
+							text: 'Soy el miembro Nº ' + pad4(member.number) + ' de la Unión.',
+							url: window.location.href
+						});
+					}
+					return navigator.share({
+						files: [file],
+						title: 'Unión · Hacia el Ocaso',
+						text: 'Soy el miembro Nº ' + pad4(member.number) + ' de la Unión.'
+					});
+				}).catch(function () {});
+			});
+		}
+	})();
+	</script>
+
+</body>
+</html>

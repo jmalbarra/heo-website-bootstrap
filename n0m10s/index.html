@@ -605,7 +605,11 @@
 		let currentUserName = 'guest';
 		let currentUserEmail = '';
 		// Guardar en servidor (subscribe.php). Ruta relativa: mismo directorio que index.html.
-		const SUBSCRIBE_URL = 'subscribe.php';
+		// Las altas de todo el sitio van a la misma lista (ver /union), con `source`
+		// para saber por dónde llegó cada persona. subscribe.php queda de red de
+		// contención por si la API no responde.
+		const JOIN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/join';
+		const SUBSCRIBE_FALLBACK_URL = 'subscribe.php';
 		function openLoginScreen() {
 			matrixContainer.classList.add('login-mode'); // oculta logo y botón, Matrix sigue visible
 			loginContainer.classList.add('visible');
@@ -680,13 +684,19 @@
 				const stored = JSON.parse(localStorage.getItem('n0m10s_contacts') || '[]');
 				stored.push(contact);
 				localStorage.setItem('n0m10s_contacts', JSON.stringify(stored));
-				if (SUBSCRIBE_URL) {
-					fetch(SUBSCRIBE_URL, {
+				fetch(JOIN_URL, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ name, email, source: 'n0m10s' }),
+				}).then((res) => {
+					if (!res.ok) throw new Error('alta rechazada');
+				}).catch(() => {
+					fetch(SUBSCRIBE_FALLBACK_URL, {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({ name, email, _subject: 'n0m10s inscripción' }),
 					}).catch(() => {});
-				}
+				});
 			} catch (_) {}
 			loginContainer.classList.add('fade-out');
 			setTimeout(() => {

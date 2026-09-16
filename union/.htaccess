@@ -1,0 +1,10 @@
+# haciaelocaso.com/union/<CODIGO> abre la credencial de esa persona.
+# El código es el que devuelve /union/join y el que viaja en el mail.
+Options -MultiViews
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^([A-Za-z0-9]{8})$ credencial.html?c=$1 [L,QSA]
+</IfModule>
