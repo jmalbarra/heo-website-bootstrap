@@ -32,6 +32,7 @@
 | **Sitio principal** | `index.html` home con todas las secciones: música, shows, experiencias, videos, fotos, nosotros, contacto. |
 | **`tienda/`** | Catálogo de merch con carrito y checkout por WhatsApp a Nelo. 22 productos con imagen real. |
 | **`n0m10s/`** | Experiencia “Matrix” + terminal: login, chat con Nomios (API externa). |
+| **`union/`** | El bonus track del disco se llama `haciaelocaso.com/union`: acá aterriza esa gente. Alta a la comunidad + credencial de miembro. |
 | **`presentacion-album-mdufc/`** | Show en vivo: setlist con desbloqueo, letras, operador, y **foto para redes** (share). |
 | **`manager/`** | Redirect oculto (noindex) al panel interno de la banda en Vercel. |
 | **Assets globales** | `css/`, `js/`, `images/` (incluyendo `merch/`), `fonts/`. |
@@ -49,6 +50,8 @@ Rutas relativas al dominio. En GitHub podés abrir el archivo con el segundo enl
 |--------|-----|
 | [`/`](index.html) | Home principal: música, shows, experiencias, videos, fotos, nosotros, contacto. |
 | [`/tienda/`](tienda/index.html) | Tienda de merch oficial con carrito y checkout por WhatsApp. |
+| [`/union/`](union/index.html) | Agradecimiento y alta a la comunidad para quien llega por el último tema del disco. |
+| `/union/<CÓDIGO>` ([archivo](union/credencial.html)) | Credencial del miembro: número, imagen para redes y pantalla para mostrar en el show. |
 | [`/index_20260430.html`](index_20260430.html) | Redirect viejo a Linktree (archivado). |
 | [`/spotify.html`](spotify.html) | Redirección al álbum en Spotify. |
 | [`/single.html`](single.html), [`/pricing.html`](pricing.html) | Páginas de plantilla (Colorlib, legacy). |
@@ -126,6 +129,10 @@ heo-website-bootstrap/
 │   └── tienda-qr.pdf           # Flyer con QR para mesa de merch
 ├── manager/                    # Redirect oculto → heo-band-manager.vercel.app
 ├── n0m10s/                     # Experiencia Nomios
+├── union/                      # Alta a la comunidad (bonus track del disco)
+│   ├── index.html              # Gracias + formulario
+│   ├── credencial.html         # Credencial por código
+│   └── .htaccess               # /union/<CÓDIGO> → credencial.html
 ├── presentacion-album-mdufc/
 │   ├── index.html, operator.html, share.html
 │   ├── api/, data/, includes/  # PHP, estado, setlist
@@ -134,6 +141,34 @@ heo-website-bootstrap/
 ├── index_20260430.html         # Redirect viejo a Linktree (archivado)
 └── README.md                   # Este archivo
 ```
+
+---
+
+## Unión: la comunidad
+
+El último tema de *Mitos De Un Futuro Cercano* no tiene título: se llama
+`haciaelocaso.com/union`. Quien escucha el disco hasta el final y escribe esa
+dirección cae en [`union/`](union/index.html), donde le agradecemos y le
+ofrecemos sumarse.
+
+**Cómo funciona:**
+
+1. El formulario manda nombre y mail a `POST /union/join` de la API de Nomios
+   (repo [`nomios-ai`](https://github.com/jmalbarra/nomios-ai)), con
+   `source: "union"`.
+2. La API guarda el alta, le asigna un número de miembro correlativo y un código
+   público, y le manda el mail de bienvenida por Resend.
+3. El código abre su credencial en `haciaelocaso.com/union/<CÓDIGO>`: se baja
+   como PNG 1080×1350 para redes o se muestra desde el teléfono en el show.
+
+**Una sola lista:** el login de `n0m10s/` también da de alta por el mismo
+endpoint, con `source: "n0m10s"`, así las métricas dicen por dónde llegó cada
+persona. `n0m10s/subscribe.php` quedó como red de contención por si la API no
+responde.
+
+**La URL linda** (`/union/<CÓDIGO>` en vez de `/union/credencial.html?c=…`) la
+hace el `.htaccess` de la carpeta. Si el hosting no tuviera mod_rewrite, el link
+con `?c=` sigue funcionando igual.
 
 ---
 
