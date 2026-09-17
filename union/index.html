@@ -1034,12 +1034,33 @@
 		})();
 
 		/* ---------- De dónde llega quien está mirando ---------- */
-		// La API lo saca de los headers de Vercel; no guarda nada. Si tarda o
-		// falla, el log escribe "no clasificado" y sigue como si nada.
+		// La API lo saca de los headers de Vercel; de la persona no guarda nada.
+		// Si tarda o falla, el log escribe "no clasificado" y sigue como si nada.
+
+		// Lo único que se cuenta es cuánta gente abre esta página, para poder
+		// ponerlo al lado de cuánta se anota. Esta marca dice si este navegador
+		// ya vino hoy, así una misma persona recargando no cuenta diez veces.
+		// Vive acá y no en el servidor justamente para no guardar IPs de nadie.
+		function primeraDelDia() {
+			// El día se corta en Buenos Aires, igual que del lado del servidor. Con
+			// el día UTC, acá a las 21 empezaba un día nuevo y todos volvían a
+			// contar como visitantes nuevos.
+			var hoy = new Date(Date.now() - 3 * 3600 * 1000).toISOString().slice(0, 10);
+			try {
+				if (localStorage.getItem('heo_union_visita') === hoy) return false;
+				localStorage.setItem('heo_union_visita', hoy);
+			} catch (_) {
+				// Modo incógnito o storage bloqueado: que cuente de más antes que
+				// perder la visita. El número es una referencia, no una auditoría.
+			}
+			return true;
+		}
+
 		function pedirOrigen() {
 			var corte;
 			var ctrl = window.AbortController ? new AbortController() : null;
-			var pedido = fetch(ORIGEN_URL, ctrl ? { signal: ctrl.signal } : undefined)
+			var url = ORIGEN_URL + (primeraDelDia() ? '?nuevo=1' : '');
+			var pedido = fetch(url, ctrl ? { signal: ctrl.signal } : undefined)
 				.then(function (res) { return res.json(); })
 				.then(function (d) {
 					if (!d || !d.ok) return null;
