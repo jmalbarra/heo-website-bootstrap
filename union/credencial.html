@@ -127,7 +127,7 @@
 			gap: 1rem;
 			margin-bottom: 2rem;
 		}
-		.cred-top img { width: 30px; height: 30px; opacity: 0.85; }
+		.cred-top img { width: 30px; height: auto; opacity: 0.85; }
 		.cred-top span {
 			font-family: var(--font-mono);
 			font-size: 0.64rem;
@@ -254,7 +254,7 @@
 		<div id="cred-wrap" hidden>
 			<div class="credential" id="credential">
 				<div class="cred-top">
-					<img src="../images/ojo-goth-blanco.png" alt="" width="30" height="30" decoding="async" id="logo-img">
+					<img src="../images/ojo-goth-blanco.png" alt="" width="30" height="22" decoding="async" id="logo-img">
 					<span>Hacia el Ocaso</span>
 				</div>
 				<p class="cred-label">Credencial de miembro</p>
@@ -393,9 +393,11 @@
 
 			// Logo
 			if (logoImg.complete && logoImg.naturalWidth > 0) {
-				var size = 70;
+				// El ojo es apaisado (2779x2041): dibujarlo cuadrado lo aplasta.
+				var lw = 84;
+				var lh = lw * (logoImg.naturalHeight / logoImg.naturalWidth);
 				ctx.globalAlpha = 0.9;
-				ctx.drawImage(logoImg, x, m + 62, size, size);
+				ctx.drawImage(logoImg, x, m + 62, lw, lh);
 				ctx.globalAlpha = 1;
 			}
 

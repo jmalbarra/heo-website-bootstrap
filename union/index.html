@@ -83,6 +83,40 @@
 
 		main { position: relative; z-index: 2; }
 
+		/* Barra de enlace: recuerda que esto es un sistema, no una landing */
+		.hud {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 55;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+			padding: 0.65rem 16px;
+			font-family: var(--font-mono);
+			font-size: 0.58rem;
+			letter-spacing: 0.22em;
+			text-transform: uppercase;
+			color: var(--text-dim);
+			background: linear-gradient(180deg, rgba(5, 5, 7, 0.92), transparent);
+			pointer-events: none;
+		}
+		.hud__estado { display: flex; align-items: center; gap: 0.45rem; color: var(--accent); }
+		.hud__dot {
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background: var(--accent);
+			box-shadow: 0 0 10px var(--accent);
+			animation: latido 2.4s ease-in-out infinite;
+		}
+		@keyframes latido {
+			0%, 100% { opacity: 1; transform: scale(1); }
+			50%      { opacity: 0.35; transform: scale(0.8); }
+		}
+
 		section {
 			max-width: 780px;
 			margin: 0 auto;
@@ -109,12 +143,41 @@
 			position: absolute;
 			inset: -20% -50% auto -50%;
 			height: 90%;
+			z-index: 1;
 			pointer-events: none;
 			background: radial-gradient(50% 50% at 50% 40%, rgba(34, 238, 201, 0.13), transparent 70%);
+		}
+
+		/* Fondo del hero. Si images/union-hero.jpg no existe, no se ve nada raro:
+		   queda el negro de siempre. */
+		.hero__bg {
+			position: absolute;
+			inset: 0;
+			z-index: 0;
+			pointer-events: none;
+			background-image: url('../images/union-hero.jpg');
+			background-size: cover;
+			background-position: center 45%;
+			opacity: 0.62;
+			animation: deriva 26s ease-in-out infinite alternate;
+		}
+		.hero__bg::after {
+			/* Velo: el texto va en Orbitron blanco, y sin esto no se lee. */
+			content: '';
+			position: absolute;
+			inset: 0;
+			background:
+				radial-gradient(72% 58% at 50% 45%, rgba(5, 5, 7, 0.58), rgba(5, 5, 7, 0.86) 72%),
+				linear-gradient(180deg, rgba(5, 5, 7, 0.72) 0%, rgba(5, 5, 7, 0.42) 32%, rgba(5, 5, 7, 0.88) 78%, #050507 100%);
+		}
+		@keyframes deriva {
+			0%   { transform: scale(1.04) translateY(0); }
+			100% { transform: scale(1.12) translateY(-12px); }
 		}
 		.hero__scan {
 			position: absolute;
 			inset: 0 0 auto 0;
+			z-index: 1;
 			height: 110px;
 			pointer-events: none;
 			background: linear-gradient(
@@ -136,6 +199,9 @@
 
 		.hero__logo {
 			width: clamp(52px, 11vw, 84px);
+			/* El ojo es apaisado (2779x2041). Sin height auto el navegador lo
+			   estira a la proporción de los atributos width/height. */
+			height: auto;
 			margin: 0 auto 1.6rem;
 			animation: breathe 3.5s ease-in-out infinite;
 		}
@@ -149,7 +215,8 @@
 			font-size: clamp(0.62rem, 2.4vw, 0.78rem);
 			letter-spacing: 0.3em;
 			text-transform: uppercase;
-			color: var(--text-dim);
+			/* Va sobre la imagen: con text-dim se perdía. */
+			color: var(--text-muted);
 			margin-bottom: 1.5rem;
 		}
 
@@ -205,13 +272,33 @@
 			100% { background-position: 250% center; }
 		}
 
-		.hero__sub {
-			max-width: 44ch;
+		.hero__log {
+			max-width: 34rem;
 			margin: 0 auto;
-			font-size: clamp(0.98rem, 3.6vw, 1.15rem);
-			color: var(--text-muted);
+			padding: 1.1rem 1.25rem;
+			border: 1px solid var(--accent-border);
+			border-left-width: 2px;
+			border-radius: var(--radius);
+			background: linear-gradient(90deg, var(--accent-bg), transparent 75%);
+			text-align: left;
 		}
-		.hero__sub strong { color: var(--text); font-weight: 500; }
+		.hero__log p {
+			font-family: var(--font-mono);
+			font-size: clamp(0.76rem, 3.1vw, 0.92rem);
+			line-height: 1.95;
+			color: var(--text-muted);
+			min-height: 1.95em;
+		}
+		.hero__log p.jefe { color: var(--accent); }
+		.hero__log p.fuerte { color: var(--text); }
+		.hero__log .caret {
+			display: inline-block;
+			width: 0.5em;
+			height: 1em;
+			background: var(--accent);
+			vertical-align: -0.14em;
+			animation: blink 1.1s steps(1) infinite;
+		}
 
 		.hero__cue {
 			position: absolute;
@@ -355,7 +442,7 @@
 			justify-content: space-between;
 			margin-bottom: 1.5rem;
 		}
-		.preview__top img { width: 24px; opacity: 0.85; }
+		.preview__top img { width: 24px; height: auto; opacity: 0.85; }
 		.preview__top span {
 			font-family: var(--font-mono);
 			font-size: 0.56rem;
@@ -563,7 +650,7 @@
 			text-transform: uppercase;
 			color: var(--accent);
 		}
-		.cierre__ojo { width: 42px; margin: 0 auto 2rem; opacity: 0.5; }
+		.cierre__ojo { width: 42px; height: auto; margin: 0 auto 2rem; opacity: 0.5; }
 
 		footer.pie {
 			position: relative;
@@ -639,7 +726,7 @@
 		@media (prefers-reduced-motion: reduce) {
 			html { scroll-behavior: auto; }
 			.reveal { opacity: 1; transform: none; transition: none; }
-			.hero__logo, .hero__scan, .hero__cue, .cursor,
+			.hero__logo, .hero__scan, .hero__cue, .cursor, .hero__bg,
 			.hero__title .grad, h2 .grad, .adentro__num { animation: none; }
 			#ambient { display: none; }
 		}
@@ -650,39 +737,48 @@
 	<canvas id="ambient" aria-hidden="true"></canvas>
 	<div class="scanlines" aria-hidden="true"></div>
 
+	<div class="hud" aria-hidden="true">
+		<span>heo://union</span>
+		<span class="hud__estado"><span class="hud__dot"></span><span id="hud-estado">Enlace estable</span></span>
+	</div>
+
 	<main>
 
 		<!-- ============ HERO ============ -->
 		<section class="hero">
+			<div class="hero__bg" aria-hidden="true"></div>
 			<div class="hero__scan" aria-hidden="true"></div>
 			<div class="hero__inner">
-				<img class="hero__logo" src="../images/ojo-goth-blanco.png" alt="" width="84" height="84" decoding="async">
+				<img class="hero__logo" src="../images/ojo-goth-blanco.png" alt="" width="84" height="62" decoding="async">
 				<p class="hero__track">Pista 12 · Mitos De Un Futuro Cercano</p>
 				<p class="hero__url">haciaelocaso.com/union<span class="cursor" aria-hidden="true"></span></p>
 				<h1 class="hero__title">
 					<span>Estás del</span>
 					<span class="grad">otro lado</span>
 				</h1>
-				<p class="hero__sub">
-					La última pista del disco no tiene nombre. <strong>Tiene una dirección.</strong>
-					La escuchaste hasta el final, la escribiste, y acá estás.
-				</p>
+				<div class="hero__log" id="hero-log">
+					<p class="jefe">// señal detectada</p>
+					<p>origen :: un disco que terminó hace un momento</p>
+					<p class="fuerte">la última pista no tenía nombre. tenía una dirección.</p>
+					<p class="jefe">:: la escribiste. el registro está abierto.</p>
+				</div>
 			</div>
 			<a class="hero__cue" href="#gracias">Seguí bajando ↓</a>
 		</section>
 
-		<!-- ============ GRACIAS ============ -->
+		<!-- ============ REGISTRO ============ -->
 		<section id="gracias">
-			<p class="eyebrow reveal">01 / Gracias</p>
-			<h2 class="reveal">Casi nadie llega<br>al <span class="grad">final</span> de un disco.</h2>
+			<p class="eyebrow reveal">01 / Registro</p>
+			<h2 class="reveal">Pocas señales<br>llegan <span class="grad">hasta acá</span>.</h2>
 			<p class="body reveal">
-				Menos gente todavía escucha una URL en el último tema, la anota y se toma
-				el trabajo de tipearla en el navegador para ver qué hay del otro lado.
+				El sistema cuenta lo que pasa del otro lado de cada transmisión. La
+				mayoría de las señales se apagan antes del final del archivo: alguien
+				se distrae, algo suena mejor, el mundo llama.
 			</p>
 			<p class="body reveal">
-				<strong>Vos sí.</strong> Para una banda que hace esto en los ratos que le
-				deja la vida, eso no es un detalle: es exactamente lo que estábamos
-				buscando cuando decidimos que el último tema no tuviera título.
+				<strong>La tuya no.</strong> Escuchaste hasta que no quedó nada, guardaste
+				una dirección que ningún algoritmo te recomendó y la escribiste con la
+				mano. En doce mil años de ruido, eso sigue siendo una anomalía.
 			</p>
 			<div class="transmision reveal">
 				<p>
@@ -696,36 +792,36 @@
 		<!-- ============ LA UNIÓN ============ -->
 		<section id="union">
 			<p class="eyebrow reveal">02 / La Unión</p>
-			<h2 class="reveal">Ahora abrí<br><span class="grad">vos</span> una puerta.</h2>
+			<h2 class="reveal">Sumá tu frecuencia<br>al <span class="grad">registro</span>.</h2>
 			<p class="body reveal">
-				Dejanos tu nombre y tu mail y sos parte de la Unión. Qué significa eso,
-				sin vueltas:
+				Del otro lado de la puerta hay una lista. No es una base de datos de
+				marketing: es el registro de quienes llegaron al final y decidieron
+				quedarse. Qué recibe cada frecuencia que entra:
 			</p>
 
 			<div class="puntos">
 				<div class="punto reveal">
 					<p class="punto__n">01</p>
-					<h3>Tu número de miembro</h3>
+					<h3>Tu número en el registro</h3>
 					<p>
-						Te damos un número y es tuyo para siempre. Los que crucen primero se
-						quedan con los más bajos, y esos no se repiten nunca más.
+						El sistema numera en orden de llegada. El tuyo queda asignado para
+						siempre y no se reasigna nunca: los primeros son los primeros.
 					</p>
 				</div>
 				<div class="punto reveal">
 					<p class="punto__n">02</p>
-					<h3>Lo que no va a las redes</h3>
+					<h3>Transmisiones directas</h3>
 					<p>
-						Te escribimos cuando hay show, cuando sale algo nuevo y cuando pasa
-						algo que no vamos a contar en ningún otro lado. Nada más. Nunca le
-						damos tu mail a nadie.
+						Shows, lanzamientos y señales que no salen por los canales abiertos.
+						Sin ruido, sin reenvíos a terceros, sin mandarte nada porque sí.
 					</p>
 				</div>
 				<div class="punto reveal">
 					<p class="punto__n">03</p>
 					<h3>Tu credencial</h3>
 					<p>
-						Con tu nombre y tu número. La bajás como imagen para compartir, o la
-						mostrás desde el teléfono en el próximo show.
+						Tu nombre y tu número en un solo archivo. La compartís, o la mostrás
+						desde el teléfono en la puerta del próximo show.
 					</p>
 				</div>
 			</div>
@@ -733,7 +829,7 @@
 			<div class="preview reveal">
 				<div class="preview__card" aria-hidden="true">
 					<div class="preview__top">
-						<img src="../images/ojo-goth-blanco.png" alt="" width="24" height="24" decoding="async">
+						<img src="../images/ojo-goth-blanco.png" alt="" width="24" height="18" decoding="async">
 						<span>Hacia el Ocaso</span>
 					</div>
 					<p class="preview__label">Credencial de miembro</p>
@@ -748,7 +844,11 @@
 		<!-- ============ CRUZAR ============ -->
 		<section id="cruzar">
 			<p class="eyebrow reveal">03 / Cruzar</p>
-			<h2 class="reveal">Del otro lado<br>te esperamos <span class="grad">nosotros</span>.</h2>
+			<h2 class="reveal">Juntos vamos<br>hacia el <span class="grad">mismo lugar</span>.</h2>
+			<p class="body reveal">
+				Lo venimos diciendo desde el primer día. Ahora hay una puerta para
+				probarlo.
+			</p>
 
 			<div id="form-wrap">
 				<form class="form-card reveal" id="union-form" novalidate>
@@ -772,8 +872,9 @@
 					<div class="error" id="error" hidden role="alert"></div>
 
 					<p class="fineprint">
-						Te podés dar de baja cuando quieras respondiendo cualquiera de
-						nuestros mails. No le damos tu mail a nadie.
+						// el registro no se cierra: te podés dar de baja cuando quieras
+						respondiendo cualquiera de nuestros mails. Tu frecuencia no viaja a
+						terceros.
 					</p>
 				</form>
 			</div>
@@ -790,7 +891,7 @@
 
 		<!-- ============ CIERRE ============ -->
 		<section class="cierre">
-			<img class="cierre__ojo reveal" src="../images/ojo-goth-blanco.png" alt="" width="42" height="42" decoding="async">
+			<img class="cierre__ojo reveal" src="../images/ojo-goth-blanco.png" alt="" width="42" height="31" decoding="async">
 			<p class="cierre__linea reveal">
 				Sigan creyendo en las cifras doradas.<br>
 				Yo sigo ahí, adentro.<br>
@@ -887,6 +988,39 @@
 			dibujar();
 		})();
 
+		/* ---------- El log del hero entra escribiéndose ---------- */
+		(function transmision() {
+			var log = document.getElementById('hero-log');
+			if (!log) return;
+			var lineas = [].slice.call(log.querySelectorAll('p'));
+			// El texto vive en el HTML: si el JS no corre, se lee igual.
+			var textos = lineas.map(function (el) { return el.textContent; });
+			if (reduce) return;
+
+			lineas.forEach(function (el) { el.textContent = ''; });
+
+			var caret = document.createElement('span');
+			caret.className = 'caret';
+
+			function escribir(i) {
+				if (i >= lineas.length) { caret.remove(); return; }
+				var el = lineas[i];
+				var texto = textos[i];
+				var j = 0;
+				el.appendChild(caret);
+				var t = setInterval(function () {
+					j++;
+					el.textContent = texto.slice(0, j);
+					el.appendChild(caret);
+					if (j >= texto.length) {
+						clearInterval(t);
+						setTimeout(function () { escribir(i + 1); }, 160);
+					}
+				}, 16);
+			}
+			escribir(0);
+		})();
+
 		/* ---------- Revelado al scrollear ---------- */
 		(function revelar() {
 			var items = document.querySelectorAll('.reveal');
@@ -948,16 +1082,16 @@
 				// El servidor no devuelve nada de quien ya estaba (ni nombre, ni número,
 				// ni código): si lo hiciera, cualquiera podría probar el mail de otra
 				// persona para ver si está en la lista. Su credencial va por mail.
-				document.getElementById('done-title').textContent = 'Ya estabas adentro';
-				document.getElementById('done-text').textContent = 'Este mail ya estaba en la lista. Te reenviamos tu credencial por mail: si no aparece, mirá en spam.';
-				document.getElementById('done-mail').textContent = 'Si ya te lo habíamos reenviado hace un rato, buscá ese.';
+				document.getElementById('done-title').textContent = '// frecuencia ya registrada';
+				document.getElementById('done-text').textContent = 'Esta dirección ya figura en el registro. Te reenviamos tu credencial por mail: si no aparece, mirá en spam.';
+				document.getElementById('done-mail').textContent = 'Si ya te la habíamos reenviado hace un rato, buscá ese mail.';
 				num.hidden = true;
 				document.querySelector('.adentro__label').hidden = true;
 				linkWrap.hidden = true;
 			} else {
-				document.getElementById('done-title').textContent = 'Cruzaste';
+				document.getElementById('done-title').textContent = '// registro completado';
 				num.textContent = 'Nº ' + pad(data.number);
-				document.getElementById('done-text').textContent = 'Gracias, ' + data.name + '. Ese número ya es tuyo. Guardá el link de tu credencial: se comparte, se baja como imagen y se muestra en el próximo show.';
+				document.getElementById('done-text').textContent = 'Quedaste adentro, ' + data.name + '. Ese número es tuyo y no se reasigna. Guardá el link de tu credencial: se comparte, se baja como imagen y se muestra en el próximo show.';
 				document.getElementById('done-link').href = 'credencial.html?c=' + encodeURIComponent(data.code);
 				document.getElementById('done-mail').textContent = data.mailed
 					? 'Te mandamos un mail con todo. Si no aparece, mirá en spam.'
@@ -981,7 +1115,9 @@
 			if (!termsEl.checked) { showError('Necesitamos que aceptes los términos.'); return; }
 
 			btn.disabled = true;
-			btn.textContent = 'Cruzando…';
+			btn.textContent = 'Transmitiendo…';
+			var hud = document.getElementById('hud-estado');
+			if (hud) hud.textContent = 'Transmitiendo';
 
 			fetch(JOIN_URL, {
 				method: 'POST',
@@ -996,9 +1132,11 @@
 				try {
 					if (r.data.code) localStorage.setItem('heo_union_code', r.data.code);
 				} catch (_) {}
+				if (hud) hud.textContent = 'Frecuencia registrada';
 				showDone(r.data);
 			}).catch(function (err) {
-				showError(err.message || 'No pudimos conectar. Probá de nuevo en un momento.');
+				showError(err.message || 'La señal no llegó. Probá de nuevo en un momento.');
+				if (hud) hud.textContent = 'Enlace inestable';
 				btn.disabled = false;
 				btn.textContent = 'Cruzar';
 			});
@@ -1011,7 +1149,7 @@
 				var atajo = document.createElement('p');
 				atajo.className = 'fineprint';
 				atajo.style.textAlign = 'center';
-				atajo.innerHTML = 'Ya cruzaste desde este dispositivo. <a href="credencial.html?c=' + encodeURIComponent(saved) + '" style="color:var(--accent);">Ver tu credencial</a>.';
+				atajo.innerHTML = '// esta terminal ya cruzó. <a href="credencial.html?c=' + encodeURIComponent(saved) + '" style="color:var(--accent);">Ver tu credencial</a>.';
 				formWrap.appendChild(atajo);
 			}
 		} catch (_) {}
