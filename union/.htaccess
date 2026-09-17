@@ -6,5 +6,8 @@ Options -MultiViews
 	RewriteEngine On
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
+	# El panel interno de la banda
+	RewriteRule ^panel/?$ panel.html [L,QSA]
+
 	RewriteRule ^([A-Za-z0-9]{8})$ credencial.html?c=$1 [L,QSA]
 </IfModule>
