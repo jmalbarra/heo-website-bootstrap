@@ -14,6 +14,18 @@
 	<meta name="twitter:card" content="summary_large_image">
 	<meta property="og:type" content="website">
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+	<!-- Meta Pixel (mismo ID que el home) -->
+	<script>
+	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+	n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+	n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+	t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+	document,'script','https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init','799209169403412');fbq('track','PageView');
+	</script>
+	<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=799209169403412&ev=PageView&noscript=1" alt=""></noscript>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -820,14 +832,14 @@
 				lado: <strong>nosotros tampoco.</strong> Por eso hacemos esto.
 			</p>
 			<p class="body reveal">
-				El disco habla de un futuro que asusta. Nosotros queremos otro: uno que no
-				deje a nadie afuera. Suena grande viniendo de una banda, ya sabemos. Pero
-				eso no lo cambia nadie solo. <strong>Por eso creemos en unirnos, y por
-				eso existe esta página.</strong>
+				Todo el disco habla del futuro. De lo que nos asusta y de lo que todavía
+				se puede. Y lo que queremos es simple: un futuro que no deje a nadie
+				afuera. <strong>Eso no lo hace nadie solo. Por eso creemos en unirnos, y
+				por eso existe esta página.</strong>
 			</p>
 			<p class="body reveal">
-				Dejarnos tu nombre y tu mail es decirnos "quiero estar". De nuestro lado,
-				son tres cosas concretas:
+				Completá los campos de abajo y estás adentro. De nuestro lado, son tres
+				cosas concretas:
 			</p>
 
 			<div class="puntos">
@@ -853,9 +865,8 @@
 					<p class="punto__n">03</p>
 					<h3>Tu credencial</h3>
 					<p>
-						Con tu nombre y tu número. La compartís si querés, o la mostrás en la
-						puerta del próximo show. Es la forma más corta de decir: yo estoy en
-						esto.
+						Con tu nombre y tu número de miembro. La compartís si querés, o te la
+						guardás. Es la forma más corta de decir: yo estoy en esto.
 					</p>
 				</div>
 			</div>
@@ -1184,7 +1195,7 @@
 			} else {
 				document.getElementById('done-title').textContent = 'Listo. Estás adentro';
 				num.textContent = 'Nº ' + pad(data.number);
-				document.getElementById('done-text').textContent = 'Gracias por elegirnos, ' + data.name + '. Ese número es tuyo y no va a ser de nadie más. Guardá el link de tu credencial: se comparte, se baja como imagen y se muestra en la puerta del próximo show. Nos vemos ahí.';
+				document.getElementById('done-text').textContent = 'Gracias por elegirnos, ' + data.name + '. Ese número es tuyo y no va a ser de nadie más. Guardá el link de tu credencial: la podés compartir o bajar como imagen.';
 				document.getElementById('done-link').href = 'credencial.html?c=' + encodeURIComponent(data.code);
 				document.getElementById('done-mail').textContent = data.mailed
 					? 'Te mandamos un mail con todo. Si no aparece, mirá en spam.'
@@ -1224,6 +1235,11 @@
 				}
 				try {
 					if (r.data.code) localStorage.setItem('heo_union_code', r.data.code);
+				} catch (_) {}
+				// La conversión de esta página: alguien que se sumó. Sin esto el pixel
+				// solo cuenta visitas y no sirve para medir nada.
+				try {
+					if (window.fbq && !r.data.already) fbq('track', 'Lead', { content_name: 'union' });
 				} catch (_) {}
 				if (hud) hud.textContent = 'Frecuencia registrada';
 				showDone(r.data);
