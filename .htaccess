@@ -1,0 +1,32 @@
+# Cuánto puede guardarse el navegador cada cosa.
+#
+# Sin esto, ninguna respuesta dice cuánto vale una copia, así que el navegador
+# lo decide solo: la heurística habitual es guardarse la página una fracción
+# del tiempo que pasó desde la última modificación. Una página que no se tocaba
+# hace un mes se queda pegada días, y el que ya entró una vez sigue viendo la
+# versión vieja mientras el resto ve la nueva.
+#
+# Todo va envuelto en <IfModule>: si el hosting no tiene el módulo, esto no
+# hace nada en vez de tirar el sitio entero con un 500.
+
+<IfModule mod_headers.c>
+	# El HTML se revalida siempre. No es "no cachear": el navegador se guarda la
+	# copia y pregunta si cambió. Si no cambió, el servidor contesta 304 y no
+	# baja nada, así que cuesta un viaje chico y nadie ve la página de ayer.
+	<FilesMatch "\.html$">
+		Header set Cache-Control "no-cache, must-revalidate"
+	</FilesMatch>
+
+	# CSS y JS: una semana. No van con el nombre versionado, así que si algún día
+	# se cambia uno y nos olvidamos de subirle el ?v= de la etiqueta, se arregla
+	# solo en siete días en vez de quedar pegado un año.
+	<FilesMatch "\.(css|js)$">
+		Header set Cache-Control "public, max-age=604800"
+	</FilesMatch>
+
+	# Imágenes, fuentes y audio: un mes. Estas casi nunca se pisan con otra
+	# distinta arriba; cuando cambian, cambia el nombre del archivo.
+	<FilesMatch "\.(jpe?g|png|gif|webp|svg|ico|woff2?|ttf|eot|mp3|mp4|pdf)$">
+		Header set Cache-Control "public, max-age=2592000"
+	</FilesMatch>
+</IfModule>
