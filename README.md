@@ -38,7 +38,7 @@
 | **Assets globales** | `css/`, `js/`, `images/` (incluyendo `merch/`), `fonts/`. |
 | **CI/CD** | GitHub Actions: mirror SFTP a staging (`develop`) y producción (`main`). |
 
-La **`index.html`** de la raíz es el home principal del sitio con navegación completa. La versión anterior (redirect a Linktree) quedó archivada en [`index_20260430.html`](index_20260430.html).
+La **`index.html`** de la raíz es el home principal del sitio con navegación completa.
 
 ---
 
@@ -52,9 +52,8 @@ Rutas relativas al dominio. En GitHub podés abrir el archivo con el segundo enl
 | [`/tienda/`](tienda/index.html) | Tienda de merch oficial con carrito y checkout por WhatsApp. |
 | [`/union/`](union/index.html) | Agradecimiento y alta a la comunidad para quien llega por el último tema del disco. |
 | `/union/<CÓDIGO>` ([archivo](union/credencial.html)) | Credencial del miembro: número, imagen para redes y pantalla para mostrar en el show. |
-| [`/index_20260430.html`](index_20260430.html) | Redirect viejo a Linktree (archivado). |
+| [`/union/panel`](union/panel.html) | **Interno.** Cuántos son, por dónde llegaron y las últimas altas. Pide el `UNION_ADMIN_TOKEN`. |
 | [`/spotify.html`](spotify.html) | Redirección al álbum en Spotify. |
-| [`/single.html`](single.html), [`/pricing.html`](pricing.html) | Páginas de plantilla (Colorlib, legacy). |
 
 ---
 
@@ -132,13 +131,13 @@ heo-website-bootstrap/
 ├── union/                      # Alta a la comunidad (bonus track del disco)
 │   ├── index.html              # Gracias + formulario
 │   ├── credencial.html         # Credencial por código
-│   └── .htaccess               # /union/<CÓDIGO> → credencial.html
+│   ├── panel.html              # Panel interno de métricas (noindex)
+│   └── .htaccess               # /union/<CÓDIGO> y /union/panel
 ├── presentacion-album-mdufc/
 │   ├── index.html, operator.html, share.html
 │   ├── api/, data/, includes/  # PHP, estado, setlist
 │   └── README.md
 ├── index.html                  # Home principal
-├── index_20260430.html         # Redirect viejo a Linktree (archivado)
 └── README.md                   # Este archivo
 ```
 
@@ -169,6 +168,12 @@ responde.
 **La URL linda** (`/union/<CÓDIGO>` en vez de `/union/credencial.html?c=…`) la
 hace el `.htaccess` de la carpeta. Si el hosting no tuviera mod_rewrite, el link
 con `?c=` sigue funcionando igual.
+
+**Las métricas** se miran en [`/union/panel`](union/panel.html): total, altas de
+hoy y de la semana, reparto por `source` y últimas altas, más un botón para bajar
+el CSV completo. Pide el `UNION_ADMIN_TOKEN` una vez y lo guarda en ese
+navegador. La página va con `noindex` y sin mails a la vista: la lista de
+contactos sale sólo del CSV, que es un acto deliberado.
 
 ---
 

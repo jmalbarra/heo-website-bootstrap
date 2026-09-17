@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<title>Panel · Unión · Hacia el Ocaso</title>
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="theme-color" content="#050507">
+	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Orbitron:wght@600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--accent:        #22eec9;
+			--accent-bg:     rgba(34, 238, 201, 0.07);
+			--accent-border: rgba(34, 238, 201, 0.2);
+
+			--bg:            #050507;
+			--surface:       rgba(14, 14, 18, 0.8);
+			--border:        rgba(255, 255, 255, 0.07);
+
+			--text:          #e8e8e8;
+			--text-muted:    rgba(232, 232, 232, 0.5);
+			--text-dim:      rgba(232, 232, 232, 0.28);
+
+			--font-display: 'Space Grotesk', system-ui, sans-serif;
+			--font-hero:    'Orbitron', 'Space Grotesk', system-ui, sans-serif;
+			--font-mono:    'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+
+			--radius: 8px;
+		}
+
+		*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+		[hidden] { display: none !important; }
+
+		body {
+			min-height: 100dvh;
+			background: var(--bg);
+			color: var(--text);
+			font-family: var(--font-display);
+			line-height: 1.6;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		main {
+			max-width: 720px;
+			margin: 0 auto;
+			padding: clamp(2rem, 7vw, 3.5rem) 16px 4rem;
+		}
+
+		header { margin-bottom: clamp(2rem, 6vw, 3rem); }
+		.eyebrow {
+			font-family: var(--font-mono);
+			font-size: 0.66rem;
+			letter-spacing: 0.26em;
+			text-transform: uppercase;
+			color: var(--accent);
+			margin-bottom: 0.6rem;
+		}
+		h1 {
+			font-family: var(--font-hero);
+			font-size: clamp(1.6rem, 6vw, 2.2rem);
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: -0.01em;
+		}
+
+		/* --- Puerta --- */
+		.puerta {
+			padding: clamp(1.5rem, 5vw, 2rem);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			background: var(--surface);
+		}
+		label {
+			display: block;
+			font-family: var(--font-mono);
+			font-size: 0.68rem;
+			letter-spacing: 0.16em;
+			text-transform: uppercase;
+			color: var(--text-dim);
+			margin-bottom: 0.5rem;
+		}
+		input[type="password"] {
+			width: 100%;
+			padding: 0.85rem 1rem;
+			font-family: var(--font-mono);
+			font-size: 1rem;
+			color: var(--text);
+			background: rgba(0, 0, 0, 0.4);
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+		}
+		input:focus { outline: none; border-color: var(--accent-border); }
+
+		button {
+			font: inherit;
+			cursor: pointer;
+			border-radius: var(--radius);
+			min-height: 46px;
+			padding: 0.75rem 1.4rem;
+			font-family: var(--font-mono);
+			font-size: 0.82rem;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			border: 1px solid var(--accent-border);
+			background: var(--accent-bg);
+			color: var(--accent);
+			transition: opacity 0.2s;
+		}
+		button:hover { opacity: 0.8; }
+		button.solid { background: var(--accent); border-color: var(--accent); color: #050507; }
+		.acciones { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.2rem; }
+
+		.aviso {
+			margin-top: 1rem;
+			font-family: var(--font-mono);
+			font-size: 0.8rem;
+			color: #ff9b9b;
+		}
+		.nota {
+			margin-top: 1rem;
+			font-family: var(--font-mono);
+			font-size: 0.72rem;
+			line-height: 1.7;
+			color: var(--text-dim);
+		}
+
+		/* --- Números --- */
+		.grilla {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: 0.8rem;
+			margin-bottom: 1.5rem;
+		}
+		.tarjeta {
+			padding: 1.25rem;
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			background: var(--surface);
+		}
+		.tarjeta__label {
+			font-family: var(--font-mono);
+			font-size: 0.62rem;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: var(--text-dim);
+			margin-bottom: 0.5rem;
+		}
+		.tarjeta__num {
+			font-family: var(--font-hero);
+			font-size: clamp(1.8rem, 8vw, 2.4rem);
+			font-weight: 700;
+			line-height: 1;
+			color: var(--accent);
+		}
+		.tarjeta__num.apagado { color: var(--text); }
+
+		h2 {
+			font-family: var(--font-mono);
+			font-size: 0.7rem;
+			letter-spacing: 0.22em;
+			text-transform: uppercase;
+			color: var(--accent);
+			margin: 2rem 0 0.9rem;
+		}
+
+		table { width: 100%; border-collapse: collapse; }
+		th, td {
+			text-align: left;
+			padding: 0.7rem 0.5rem;
+			border-bottom: 1px solid var(--border);
+			font-size: 0.9rem;
+		}
+		th {
+			font-family: var(--font-mono);
+			font-size: 0.62rem;
+			letter-spacing: 0.16em;
+			text-transform: uppercase;
+			color: var(--text-dim);
+			font-weight: 400;
+		}
+		td.num { font-family: var(--font-mono); color: var(--accent); white-space: nowrap; }
+		td.fecha, td.fuente { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+		.barra {
+			height: 4px;
+			border-radius: 2px;
+			background: var(--accent);
+			opacity: 0.55;
+			margin-top: 0.4rem;
+		}
+		.vacio {
+			padding: 2rem 0;
+			font-family: var(--font-mono);
+			font-size: 0.85rem;
+			color: var(--text-dim);
+			text-align: center;
+		}
+
+		footer {
+			margin-top: 2.5rem;
+			font-family: var(--font-mono);
+			font-size: 0.72rem;
+			color: var(--text-dim);
+		}
+		footer a { color: var(--text-muted); }
+	</style>
+</head>
+<body>
+
+	<main>
+		<header>
+			<p class="eyebrow">Hacia el Ocaso · interno</p>
+			<h1>Panel de la Unión</h1>
+		</header>
+
+		<!-- Puerta -->
+		<section class="puerta" id="puerta">
+			<label for="token">Token del panel</label>
+			<input type="password" id="token" autocomplete="current-password" placeholder="UNION_ADMIN_TOKEN">
+			<div class="acciones">
+				<button type="button" class="solid" id="entrar">Entrar</button>
+			</div>
+			<p class="aviso" id="aviso" hidden></p>
+			<p class="nota">
+				Es el <code>UNION_ADMIN_TOKEN</code> que está en Vercel (si no lo
+				definiste, sirve el <code>CRON_SECRET</code>). Queda guardado en este
+				navegador nada más.
+			</p>
+		</section>
+
+		<!-- Números -->
+		<section id="datos" hidden>
+			<div class="grilla">
+				<div class="tarjeta">
+					<p class="tarjeta__label">Miembros</p>
+					<p class="tarjeta__num" id="total">—</p>
+				</div>
+				<div class="tarjeta">
+					<p class="tarjeta__label">Últimas 24 h</p>
+					<p class="tarjeta__num apagado" id="dia">—</p>
+				</div>
+				<div class="tarjeta">
+					<p class="tarjeta__label">Últimos 7 días</p>
+					<p class="tarjeta__num apagado" id="semana">—</p>
+				</div>
+			</div>
+
+			<h2>Por dónde llegaron</h2>
+			<table id="tabla-fuentes">
+				<thead>
+					<tr><th>Fuente</th><th>Altas</th><th>%</th></tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+
+			<h2>Últimas altas</h2>
+			<table id="tabla-ultimas">
+				<thead>
+					<tr><th>Nº</th><th>Nombre</th><th>Fuente</th><th>Cuándo</th></tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<p class="nota">
+				Sin mails a propósito: para la lista completa está el CSV, que es un acto
+				deliberado.
+			</p>
+
+			<div class="acciones">
+				<button type="button" class="solid" id="csv">Bajar CSV completo</button>
+				<button type="button" id="refrescar">Refrescar</button>
+				<button type="button" id="salir">Olvidar token</button>
+			</div>
+		</section>
+
+		<footer>
+			<a href="./">← Volver a /union</a>
+		</footer>
+	</main>
+
+	<script>
+	(function () {
+		"use strict";
+
+		var API = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/';
+		var CLAVE = 'heo_union_admin_token';
+
+		var puerta = document.getElementById('puerta');
+		var datos = document.getElementById('datos');
+		var tokenEl = document.getElementById('token');
+		var aviso = document.getElementById('aviso');
+
+		function guardado() {
+			try { return localStorage.getItem(CLAVE) || ''; } catch (_) { return ''; }
+		}
+
+		function mostrarAviso(msg) {
+			aviso.textContent = msg;
+			aviso.hidden = false;
+		}
+
+		function fecha(ts) {
+			if (!ts) return '—';
+			var d = new Date(ts * 1000);
+			var hoy = new Date();
+			var mismoDia = d.toDateString() === hoy.toDateString();
+			return mismoDia
+				? d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
+				: d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
+		}
+
+		function pintar(m) {
+			document.getElementById('total').textContent = m.total;
+			document.getElementById('dia').textContent = m.ultimas_24h;
+			document.getElementById('semana').textContent = m.ultimos_7d;
+
+			var fuentes = document.querySelector('#tabla-fuentes tbody');
+			fuentes.innerHTML = '';
+			var entradas = Object.keys(m.por_source || {});
+			if (!entradas.length) {
+				fuentes.innerHTML = '<tr><td colspan="3" class="vacio">Todavía no se anotó nadie.</td></tr>';
+			}
+			entradas.forEach(function (fuente) {
+				var n = m.por_source[fuente];
+				var pct = m.total ? Math.round((n / m.total) * 100) : 0;
+				var tr = document.createElement('tr');
+
+				var tdF = document.createElement('td');
+				tdF.className = 'fuente';
+				tdF.textContent = fuente;
+				var barra = document.createElement('div');
+				barra.className = 'barra';
+				barra.style.width = Math.max(pct, 2) + '%';
+				tdF.appendChild(barra);
+
+				var tdN = document.createElement('td');
+				tdN.className = 'num';
+				tdN.textContent = n;
+
+				var tdP = document.createElement('td');
+				tdP.className = 'fecha';
+				tdP.textContent = pct + '%';
+
+				tr.appendChild(tdF); tr.appendChild(tdN); tr.appendChild(tdP);
+				fuentes.appendChild(tr);
+			});
+
+			var ultimas = document.querySelector('#tabla-ultimas tbody');
+			ultimas.innerHTML = '';
+			if (!(m.ultimas || []).length) {
+				ultimas.innerHTML = '<tr><td colspan="4" class="vacio">Nadie todavía. El Nº 0001 sigue libre.</td></tr>';
+			}
+			(m.ultimas || []).forEach(function (u) {
+				var tr = document.createElement('tr');
+				// textContent y no innerHTML: el nombre lo escribe cualquiera.
+				var celdas = [
+					['num', 'Nº ' + String(u.number).padStart(4, '0')],
+					['', u.name],
+					['fuente', u.source],
+					['fecha', fecha(u.ts)]
+				];
+				celdas.forEach(function (c) {
+					var td = document.createElement('td');
+					if (c[0]) td.className = c[0];
+					td.textContent = c[1];
+					tr.appendChild(td);
+				});
+				ultimas.appendChild(tr);
+			});
+		}
+
+		function cargar(token) {
+			return fetch(API + 'metricas', { headers: { Authorization: 'Bearer ' + token } })
+				.then(function (res) {
+					if (res.status === 401) throw new Error('Ese token no es.');
+					if (!res.ok) throw new Error('La API respondió ' + res.status + '.');
+					return res.json();
+				})
+				.then(function (m) {
+					try { localStorage.setItem(CLAVE, token); } catch (_) {}
+					pintar(m);
+					puerta.hidden = true;
+					datos.hidden = false;
+				});
+		}
+
+		document.getElementById('entrar').addEventListener('click', function () {
+			aviso.hidden = true;
+			var token = tokenEl.value.trim();
+			if (!token) { mostrarAviso('Pegá el token.'); return; }
+			cargar(token).catch(function (e) { mostrarAviso(e.message); });
+		});
+		tokenEl.addEventListener('keydown', function (e) {
+			if (e.key === 'Enter') document.getElementById('entrar').click();
+		});
+
+		document.getElementById('refrescar').addEventListener('click', function () {
+			cargar(guardado()).catch(function (e) { mostrarAviso(e.message); });
+		});
+
+		document.getElementById('salir').addEventListener('click', function () {
+			try { localStorage.removeItem(CLAVE); } catch (_) {}
+			datos.hidden = true;
+			puerta.hidden = false;
+			tokenEl.value = '';
+		});
+
+		document.getElementById('csv').addEventListener('click', function () {
+			var btn = this;
+			btn.disabled = true;
+			// Con fetch y no con un link: el token va en el header, nunca en la URL
+			// (las URLs quedan en el historial y en los logs del server).
+			fetch(API + 'export', { headers: { Authorization: 'Bearer ' + guardado() } })
+				.then(function (res) { return res.blob(); })
+				.then(function (blob) {
+					var url = URL.createObjectURL(blob);
+					var a = document.createElement('a');
+					a.href = url;
+					a.download = 'union-' + new Date().toISOString().slice(0, 10) + '.csv';
+					document.body.appendChild(a);
+					a.click();
+					document.body.removeChild(a);
+					setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+					btn.disabled = false;
+				})
+				.catch(function () {
+					mostrarAviso('No se pudo bajar el CSV.');
+					btn.disabled = false;
+				});
+		});
+
+		// Si ya entró antes en este navegador, no le pedimos el token de nuevo.
+		if (guardado()) {
+			cargar(guardado()).catch(function () { /* token viejo: que lo pegue otra vez */ });
+		}
+	})();
+	</script>
+
+</body>
+</html>

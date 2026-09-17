@@ -1039,7 +1039,13 @@
 
 			return Promise.race([pedido, limite]).then(function (valor) {
 				clearTimeout(corte);
-				return valor || 'no clasificado';
+				// La hora sale del reloj de la persona, no del server: siempre es la
+				// suya, aunque la geolocalización del IP no acierte.
+				var hora = '';
+				try {
+					hora = ' · ' + new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+				} catch (_) {}
+				return (valor || 'no clasificado') + hora;
 			});
 		}
 
