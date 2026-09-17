@@ -8,7 +8,10 @@
 	<meta name="theme-color" content="#050507">
 	<meta property="og:title" content="Estás del otro lado · Hacia el Ocaso">
 	<meta property="og:description" content="La última pista del disco no tiene nombre. Tiene una dirección. Si la escribiste, unite a la Unión.">
-	<meta property="og:image" content="../images/nosotros.jpeg">
+	<meta property="og:image" content="https://haciaelocaso.com/images/mdufc-banner.jpg">
+	<meta property="og:image:width" content="1456">
+	<meta property="og:image:height" content="816">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta property="og:type" content="website">
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -148,17 +151,17 @@
 			background: radial-gradient(50% 50% at 50% 40%, rgba(34, 238, 201, 0.13), transparent 70%);
 		}
 
-		/* Fondo del hero. Si images/union-hero.jpg no existe, no se ve nada raro:
-		   queda el negro de siempre. */
+		/* Fondo del hero. Si images/mdufc-banner.jpg no existe, no se ve nada raro:
+		   queda el negro de siempre. La imagen es la tapa del disco extendida. */
 		.hero__bg {
 			position: absolute;
 			inset: 0;
 			z-index: 0;
 			pointer-events: none;
-			background-image: url('../images/union-hero.jpg');
+			background-image: url('../images/mdufc-banner.jpg');
 			background-size: cover;
-			background-position: center 45%;
-			opacity: 0.62;
+			background-position: center 42%;
+			opacity: 0.85;
 			animation: deriva 26s ease-in-out infinite alternate;
 		}
 		.hero__bg::after {
@@ -167,12 +170,13 @@
 			position: absolute;
 			inset: 0;
 			background:
-				radial-gradient(72% 58% at 50% 45%, rgba(5, 5, 7, 0.58), rgba(5, 5, 7, 0.86) 72%),
-				linear-gradient(180deg, rgba(5, 5, 7, 0.72) 0%, rgba(5, 5, 7, 0.42) 32%, rgba(5, 5, 7, 0.88) 78%, #050507 100%);
+				radial-gradient(75% 60% at 50% 42%, rgba(5, 5, 7, 0.32), rgba(5, 5, 7, 0.74) 75%),
+				linear-gradient(180deg, rgba(5, 5, 7, 0.6) 0%, rgba(5, 5, 7, 0.2) 30%, rgba(5, 5, 7, 0.82) 76%, #050507 100%);
 		}
 		@keyframes deriva {
-			0%   { transform: scale(1.04) translateY(0); }
-			100% { transform: scale(1.12) translateY(-12px); }
+			/* Poco zoom: en teléfono el cover ya recorta bastante de una imagen 16:9. */
+			0%   { transform: scale(1.02) translateY(0); }
+			100% { transform: scale(1.07) translateY(-10px); }
 		}
 		.hero__scan {
 			position: absolute;
