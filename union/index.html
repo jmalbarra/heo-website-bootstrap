@@ -958,7 +958,9 @@
 				<li>Enviar newsletters, novedades y comunicaciones sobre la banda.</li>
 				<li>Informar sobre lanzamientos, shows y contenidos exclusivos.</li>
 				<li>Gestionar la relación con nuestra comunidad.</li>
+				<li>Medir el alcance de nuestras campañas de difusión.</li>
 			</ul>
+			<p>Para lo último usamos Meta (Facebook e Instagram): al unirte le enviamos tu nombre y tu correo cifrados, nunca en texto legible, para poder medir cuánta gente llega hasta acá. Si preferís que no ocurra, un bloqueador de publicidad lo impide y tu alta funciona igual.</p>
 			<p>Los datos serán tratados conforme a la normativa vigente. Podés solicitar la baja en cualquier momento respondiendo cualquiera de nuestros mails.</p>
 			<button type="button" id="terms-close">Cerrar</button>
 		</div>
@@ -969,6 +971,7 @@
 		"use strict";
 
 		var JOIN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/join';
+		var PIXEL_ID = '799209169403412';
 		var ORIGEN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/origen';
 		var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1171,6 +1174,58 @@
 		})();
 
 		/* ---------- Términos ---------- */
+		/* ---------- Advanced Matching del pixel ---------- */
+		// Para que Meta pueda atribuir esta alta a una persona real hace falta
+		// mandarle algo que la identifique. Le mandamos el mail y el nombre
+		// hasheados con SHA-256 acá, en el navegador: el texto legible no sale
+		// nunca de esta página. Está declarado en los términos que se aceptan
+		// arriba del botón, y un bloqueador de publicidad lo corta entero.
+		function sha256Hex(texto) {
+			if (!texto || !window.crypto || !crypto.subtle || !window.TextEncoder) {
+				return Promise.resolve(null);
+			}
+			try {
+				return crypto.subtle.digest('SHA-256', new TextEncoder().encode(texto))
+					.then(function (buf) {
+						return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+							return ('0' + b.toString(16)).slice(-2);
+						}).join('');
+					})
+					.catch(function () { return null; });
+			} catch (_) {
+				return Promise.resolve(null);
+			}
+		}
+
+		// Meta pide el nombre en minúsculas, sin espacios ni puntuación, y solo
+		// el de pila: "Juanma Albarracín" y "juanma" tienen que dar el mismo hash
+		// o no matchea con nada.
+		function normalizarNombre(nombre) {
+			return String(nombre || '')
+				.trim()
+				.toLowerCase()
+				.split(/\s+/)[0]
+				.replace(/[^a-záéíóúüñç]/g, '');
+		}
+
+		function marcarLead(nombre, mail) {
+			if (!window.fbq) return Promise.resolve();
+			return Promise.all([sha256Hex(mail), sha256Hex(normalizarNombre(nombre))])
+				.then(function (hashes) {
+					// Si el navegador no puede hashear, el Lead se manda igual pero
+					// pelado. En claro no va nunca: antes perdemos el matcheo.
+					if (hashes[0]) {
+						var datos = { em: hashes[0] };
+						if (hashes[1]) datos.fn = hashes[1];
+						fbq('init', PIXEL_ID, datos);
+					}
+					fbq('track', 'Lead', { content_name: 'union' });
+				})
+				.catch(function () {
+					try { fbq('track', 'Lead', { content_name: 'union' }); } catch (_) {}
+				});
+		}
+
 		var termsModal = document.getElementById('terms-modal');
 		document.getElementById('terms-link').addEventListener('click', function () {
 			termsModal.classList.add('open');
@@ -1257,13 +1312,15 @@
 				try {
 					if (r.data.code) localStorage.setItem('heo_union_code', r.data.code);
 				} catch (_) {}
+				if (hud) hud.textContent = 'Frecuencia registrada';
+				// El gracias va primero: hashear son unos milisegundos, pero la
+				// medición no puede hacer esperar a nadie frente a la pantalla.
+				showDone(r.data);
 				// La conversión de esta página: alguien que se sumó. Sin esto el pixel
 				// solo cuenta visitas y no sirve para medir nada.
-				try {
-					if (window.fbq && !r.data.already) fbq('track', 'Lead', { content_name: 'union' });
-				} catch (_) {}
-				if (hud) hud.textContent = 'Frecuencia registrada';
-				showDone(r.data);
+				if (!r.data.already) {
+					try { marcarLead(name, email); } catch (_) {}
+				}
 			}).catch(function (err) {
 				showError(err.message || 'La señal no llegó. Probá de nuevo en un momento.');
 				if (hud) hud.textContent = 'Enlace inestable';
