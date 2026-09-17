@@ -247,6 +247,15 @@
 				</div>
 			</div>
 
+			<h2>Cuántos llegaron y cuántos se anotaron</h2>
+			<table id="tabla-visitas">
+				<thead>
+					<tr><th>Ventana</th><th>Visitantes</th><th>Altas</th><th>Conversión</th></tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<p class="nota" id="nota-visitas"></p>
+
 			<h2>Por dónde llegaron</h2>
 			<table id="tabla-fuentes">
 				<thead>
@@ -310,10 +319,56 @@
 				: d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
 		}
 
+		var ETIQUETAS = { hoy: 'Hoy', '7d': 'Últimos 7 días', '30d': 'Últimos 30 días' };
+
+		function pintarVisitas(v) {
+			var cuerpo = document.querySelector('#tabla-visitas tbody');
+			var nota = document.getElementById('nota-visitas');
+			cuerpo.innerHTML = '';
+
+			// "No sé" y "cero" no son lo mismo. Si Redis no contestó hay que decirlo,
+			// porque una conversión de 0% que en realidad es un apagón se lee como
+			// que la página no convierte, y se toca lo que no estaba roto.
+			if (!v || !v.disponible) {
+				cuerpo.innerHTML = '<tr><td colspan="4" class="vacio">Sin datos de visitas ahora mismo.</td></tr>';
+				nota.textContent = '';
+				return;
+			}
+
+			Object.keys(ETIQUETAS).forEach(function (clave) {
+				var w = (v.ventanas || {})[clave];
+				if (!w) return;
+				var tr = document.createElement('tr');
+				var celdas = [
+					['fuente', ETIQUETAS[clave]],
+					['num', String(w.visitantes)],
+					['num', String(w.altas)],
+					['fecha', w.conversion === null || w.conversion === undefined
+						? '—'
+						: w.conversion + '%']
+				];
+				celdas.forEach(function (c) {
+					var td = document.createElement('td');
+					td.className = c[0];
+					td.textContent = c[1];
+					tr.appendChild(td);
+				});
+				cuerpo.appendChild(tr);
+			});
+
+			var hoy = (v.ventanas || {}).hoy || {};
+			nota.textContent =
+				'Un visitante es un navegador distinto por día; las aperturas de hoy fueron ' +
+				(hoy.visitas || 0) + '. Se cuentan desde el ' + (v.desde || '—') +
+				', así que las altas anteriores a esa fecha no tienen visita que las explique.';
+		}
+
 		function pintar(m) {
 			document.getElementById('total').textContent = m.total;
 			document.getElementById('dia').textContent = m.ultimas_24h;
 			document.getElementById('semana').textContent = m.ultimos_7d;
+
+			pintarVisitas(m.visitas);
 
 			var fuentes = document.querySelector('#tabla-fuentes tbody');
 			fuentes.innerHTML = '';
