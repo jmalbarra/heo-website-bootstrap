@@ -761,10 +761,11 @@
 					<span class="grad">casualidad</span>
 				</h1>
 				<div class="hero__log" id="hero-log">
-					<p class="jefe">// señal detectada</p>
-					<p>alguien terminó el disco y no se fue</p>
-					<p class="fuerte">la última pista no tenía nombre: tenía esta dirección</p>
-					<p class="jefe">:: la escribiste vos. pasá.</p>
+					<p class="jefe">// usuario detectado</p>
+					<p id="log-origen">origen :: no clasificado</p>
+					<p>transmisión :: Mitos De Un Futuro Cercano · pista 12</p>
+					<p class="fuerte">estado :: escuchó hasta el final</p>
+					<p class="jefe">:: acceso autorizado</p>
 				</div>
 			</div>
 			<a class="hero__cue" href="#gracias">Seguí bajando ↓</a>
@@ -772,17 +773,25 @@
 
 		<!-- ============ REGISTRO ============ -->
 		<section id="gracias">
-			<p class="eyebrow reveal">01 / Llegaste</p>
-			<h2 class="reveal">Llegar al final<br>fue una <span class="grad">decisión</span> tuya.</h2>
+			<p class="eyebrow reveal">01 / Gracias</p>
+			<h2 class="reveal">Este disco<br>ahora también <span class="grad">es tuyo</span>.</h2>
 			<p class="body reveal">
-				Hoy nadie escucha un disco entero por accidente. Se te cruzan mil cosas:
-				una notificación, otra canción, el mundo que llama. Vos te quedaste hasta
-				que no quedó nada.
+				Le pusimos años, noches enteras y bastante corazón. Vos lo escuchaste
+				completo, hasta la última pista. Gracias, y no lo decimos de compromiso:
+				hoy nadie llega al final de un disco por accidente.
+			</p>
+			<p class="body reveal">
+				Ojalá algo de lo que dijimos te haya tocado una fibra. Si te pasó, ese
+				disco ya dejó de ser solamente nuestro. <strong>Lo que sentiste
+				escuchándolo es tuyo, y nadie te lo puede sacar.</strong>
 			</p>
 			<p class="body reveal">
 				Y cuando terminó hiciste algo todavía más raro: anotaste una dirección que
 				ningún algoritmo te recomendó y la tipeaste vos.
 				<strong>Eso ya no es escuchar una banda. Es elegirla.</strong>
+			</p>
+			<p class="body reveal">
+				Esto, además, recién empieza. Queremos que estés cuando pase lo que viene.
 			</p>
 			<div class="transmision reveal">
 				<p>
@@ -796,10 +805,22 @@
 		<!-- ============ LA UNIÓN ============ -->
 		<section id="union">
 			<p class="eyebrow reveal">02 / La Unión</p>
-			<h2 class="reveal">No es una lista.<br>Es una <span class="grad">decisión</span>.</h2>
+			<h2 class="reveal">Acá hay<br><span class="grad">lugar para vos</span>.</h2>
 			<p class="body reveal">
-				Dejarnos tu nombre y tu mail es decirnos "quiero estar". De nuestro lado,
-				eso significa tres cosas concretas:
+				Hacia el Ocaso no son cinco tipos arriba de un escenario. Son esos cinco y
+				la gente que aparece: la que canta las letras, la que llega temprano, la
+				que se escucha el disco entero un martes a la noche. <strong>Esa unión es
+				literalmente de dónde sale el nombre de esta página.</strong>
+			</p>
+			<p class="body reveal">
+				Acá no hay escalafón. Somos todos iguales, cada uno peleando por ser una
+				versión un poco mejor de sí mismo con lo que le tocó. Si alguna vez
+				sentiste que no encajabas del todo en ningún lado, tranquilo:
+				<strong>nosotros tampoco.</strong> Por eso hacemos esto.
+			</p>
+			<p class="body reveal">
+				Dejarnos tu nombre y tu mail es decirnos "quiero estar en esto". De nuestro
+				lado, significa tres cosas concretas:
 			</p>
 
 			<div class="puntos">
@@ -852,7 +873,8 @@
 			<p class="eyebrow reveal">03 / Cruzar</p>
 			<h2 class="reveal">Juntos vamos<br>hacia el <span class="grad">mismo lugar</span>.</h2>
 			<p class="body reveal">
-				Lo decimos desde el primer día. Ahora te toca a vos decidir si venís.
+				No es una frase para una remera: es lo que pensamos. Ahora te toca a vos
+				decidir si venís.
 			</p>
 
 			<div id="form-wrap">
@@ -929,6 +951,7 @@
 		"use strict";
 
 		var JOIN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/join';
+		var ORIGEN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/origen';
 		var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 		/* ---------- Canvas ambiental: grilla + polvo ---------- */
@@ -992,6 +1015,34 @@
 			dibujar();
 		})();
 
+		/* ---------- De dónde llega quien está mirando ---------- */
+		// La API lo saca de los headers de Vercel; no guarda nada. Si tarda o
+		// falla, el log escribe "no clasificado" y sigue como si nada.
+		function pedirOrigen() {
+			var corte;
+			var ctrl = window.AbortController ? new AbortController() : null;
+			var pedido = fetch(ORIGEN_URL, ctrl ? { signal: ctrl.signal } : undefined)
+				.then(function (res) { return res.json(); })
+				.then(function (d) {
+					if (!d || !d.ok) return null;
+					if (d.ciudad) return d.ciudad + (d.pais ? ', ' + d.pais : '');
+					return d.pais || null;
+				})
+				.catch(function () { return null; });
+
+			var limite = new Promise(function (resolve) {
+				corte = setTimeout(function () {
+					if (ctrl) { try { ctrl.abort(); } catch (_) {} }
+					resolve(null);
+				}, 1500);
+			});
+
+			return Promise.race([pedido, limite]).then(function (valor) {
+				clearTimeout(corte);
+				return valor || 'no clasificado';
+			});
+		}
+
 		/* ---------- El log del hero entra escribiéndose ---------- */
 		(function transmision() {
 			var log = document.getElementById('hero-log');
@@ -999,15 +1050,40 @@
 			var lineas = [].slice.call(log.querySelectorAll('p'));
 			// El texto vive en el HTML: si el JS no corre, se lee igual.
 			var textos = lineas.map(function (el) { return el.textContent; });
-			if (reduce) return;
+			var origenEl = document.getElementById('log-origen');
+			var iOrigen = lineas.indexOf(origenEl);
+
+			if (reduce) {
+				// Sin animación, igual le decimos de dónde llega.
+				if (iOrigen >= 0) {
+					pedirOrigen().then(function (origen) {
+						origenEl.textContent = 'origen :: ' + origen;
+					});
+				}
+				return;
+			}
 
 			lineas.forEach(function (el) { el.textContent = ''; });
 
 			var caret = document.createElement('span');
 			caret.className = 'caret';
 
+			// Se pide ya, mientras se escribe la primera línea: para cuando toca
+			// mostrarlo, casi siempre está.
+			var pendienteOrigen = iOrigen >= 0 ? pedirOrigen() : null;
+
 			function escribir(i) {
 				if (i >= lineas.length) { caret.remove(); return; }
+				if (i === iOrigen && pendienteOrigen) {
+					// La línea del origen espera el dato; el resto no se entera.
+					var espera = pendienteOrigen;
+					pendienteOrigen = null;
+					espera.then(function (origen) {
+						textos[iOrigen] = 'origen :: ' + origen;
+						escribir(i);
+					});
+					return;
+				}
 				var el = lineas[i];
 				var texto = textos[i];
 				var j = 0;
