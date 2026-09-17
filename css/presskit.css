@@ -128,6 +128,15 @@
 }
 
 /* "Tapa" placeholder del álbum — LP.03 próximamente */
+/* La tapa real del disco, donde antes había un placeholder tipográfico */
+.pk-album-cover__art {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
 .pk-album-cover {
   position: relative;
   aspect-ratio: 1;
@@ -167,7 +176,8 @@
 @media (max-width: 860px) {
   .pk-release,
   .pk-release--album { grid-template-columns: 1fr; }
-  .pk-album-cover { max-width: 340px; margin: 0 auto; }
+  .pk-album-cover,
+  .pk-album-cover__art { max-width: 340px; margin: 0 auto; }
 }
 
 
