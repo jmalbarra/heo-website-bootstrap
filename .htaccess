@@ -1,3 +1,41 @@
+# Las páginas viejas que quedaron colgadas en el servidor.
+#
+# Son sobras de la plantilla original. Se borraron del repo hace meses, pero
+# nunca se cayeron del sitio: el deploy sube con "mirror -R" y sin --delete,
+# así que copia lo que hay y no toca nada de lo que sacamos. Borrar un archivo
+# del repo no lo borra del servidor — se queda arriba para siempre.
+#
+# Siguen respondiendo con la bio de 2020, la formación vieja, menúes que
+# apuntan a páginas que ya no existen, y el mismo <title> que la home,
+# compitiendo contra el sitio real en el buscador.
+#
+# Van 301 y no 404: el que tenga un link viejo llega al lugar correcto, y la
+# URL vieja se cae sola del índice en vez de quedar como error. Esto no borra
+# los archivos del servidor (desde el repo no se puede), pero los tapa: el
+# redirect corta el pedido antes de que Apache llegue a abrirlos.
+#
+# NE es obligatorio donde hay ancla: sin eso Apache escapa el # como %23.
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	# Las que hoy son una sección de la home.
+	RewriteRule ^musica\.html$          /#musica    [R=301,L,NE]
+	RewriteRule ^shows\.html$           /#shows     [R=301,L,NE]
+	RewriteRule ^videos\.html$          /#videos    [R=301,L,NE]
+	RewriteRule ^nosotros\.html$        /#nosotros  [R=301,L,NE]
+	RewriteRule ^contact\.html$         /#contacto  [R=301,L,NE]
+	RewriteRule ^(fotos|gallery)\.html$ /#galeria   [R=301,L,NE]
+
+	# Prensa hoy tiene página propia.
+	RewriteRule ^prensa\.html$ /presskit.html [R=301,L]
+
+	# Sobras sin equivalente (pricing y single nunca fueron de la banda;
+	# las otras dos son copias viejas de la home). Todas a la home.
+	RewriteRule ^(pricing|single|index_hidden)\.html$ / [R=301,L]
+	RewriteRule ^index(%20|\x20)copy\.html$           / [R=301,L]
+</IfModule>
+
 # Cuánto puede guardarse el navegador cada cosa.
 #
 # Sin esto, ninguna respuesta dice cuánto vale una copia, así que el navegador
