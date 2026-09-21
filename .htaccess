@@ -1,3 +1,21 @@
+# La página vieja que quedó colgada en el servidor.
+#
+# nosotros.html se borró del repo hace meses, pero el deploy sube con
+# "mirror -R" y sin --delete: copia lo que hay y nunca toca lo que sacamos.
+# Así que el archivo sigue arriba, con la bio vieja de la banda y el mismo
+# <title> que la home, compitiendo contra el sitio real en el buscador.
+#
+# El contenido no se perdió: vive en la home, en la sección #nosotros. Por eso
+# va 301 y no 404 — el que tenga el link viejo, o Google, llega igual al lugar
+# correcto, y la URL vieja se cae sola del índice en vez de quedar como error.
+#
+# NE es obligatorio: sin eso Apache escapa el # como %23 y el ancla se rompe.
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule ^nosotros\.html$ /#nosotros [R=301,L,NE]
+</IfModule>
+
 # Cuánto puede guardarse el navegador cada cosa.
 #
 # Sin esto, ninguna respuesta dice cuánto vale una copia, así que el navegador
