@@ -351,6 +351,19 @@
 .pk-disco__next td:nth-child(2),
 .pk-disco__next td:last-child { color: var(--accent); }
 
+/* Próximas fechas: misma tabla que la discografía, con una segunda
+   línea por fila para las bandas que comparten la noche. */
+.pk-shows td:first-child { width: 7.5rem; }
+
+.pk-shows__with {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
 
 /* ============================================================
    PRENSA — listado de menciones
@@ -468,6 +481,23 @@
 /* ============================================================
    IMPRESIÓN / PDF
    Genera el kit descargable con la misma estética dark.
+   ============================================================ */
+/* ============================================================
+   IMPRESIÓN — de acá sale HEO-Presskit-2026.pdf
+   ============================================================
+   El PDF no se diseña aparte: es esta misma página impresa.
+   Se regenera en dos pasos:
+
+     1. Chromium headless --print-to-pdf sobre presskit.html.
+        Las fuentes de Google hay que embeberlas antes (bajar los
+        woff2 y meterlos como data: en un <style>): si el navegador
+        no llega a fonts.googleapis.com cae en DejaVu/Liberation y
+        se pierde toda la tipografía del kit.
+     2. gs -dPDFSETTINGS=/printer, que baja las capas raster de
+        página completa de ~26 MB a ~1,5 MB sin que se note.
+
+   El objetivo son 5 páginas. Si se agrega contenido y aparece una
+   sexta, hay que compactar acá abajo hasta que vuelva a entrar.
    ============================================================ */
 @media print {
   @page { size: A4; margin: 0; }
@@ -626,22 +656,33 @@
   .pk-press__item { padding: 0.55rem 0; font-size: 0.85rem; }
   .pk-live-copy { font-size: 0.85rem; margin-bottom: 1rem; }
 
+  /* Próximas fechas: la tabla es contenido nuevo en la última página.
+     Se aprieta para que "en vivo" + fotos + contacto sigan entrando
+     en las 5 páginas ejecutivas. */
+  .pk-shows td { padding: 0.3rem 1.25rem; }
+  .pk-shows th { padding: 0.45rem 1.25rem; }
+  .pk-shows__with { font-size: 0.6rem; margin-top: 0.05rem; }
+
   /* Fotos: sin encabezado duplicado (siguen a "en escena")
      y en formato apaisado para compartir página con contacto */
   #fotos { padding-top: 0; }
   #fotos .section__header,
   #fotos .pk-live-copy,
   #fotos::before { display: none; }
-  .gallery-item { aspect-ratio: 4 / 3; }
+  .gallery-item { aspect-ratio: 3 / 2; }
 
-  /* Contacto compacto: hero chico + redes en una fila */
-  .contact-hero { padding: 1rem 1.5rem; margin-bottom: 0.9rem; }
+  /* Contacto compacto: hero chico + redes en una fila.
+     Sigue a "fotos" en la misma página, así que tampoco necesita
+     aire propio arriba. */
+  #contacto { padding-top: 0; }
+
+  .contact-hero { padding: 0.8rem 1.5rem; margin-bottom: 0.6rem; }
   .social-grid { grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-bottom: 0; }
-  .social-card { padding: 0.7rem 0.8rem; }
+  .social-card { padding: 0.55rem 0.8rem; }
   .social-card__icon { width: 18px; height: 18px; }
   .social-card__name { font-size: 0.72rem; }
   .social-card__handle { font-size: 0.6rem; }
-  .site-footer { padding: 1.5rem var(--pad) 1rem; }
+  .site-footer { padding: 0.9rem var(--pad) 0.7rem; }
 
   /* URLs visibles para quien lee el PDF */
   a[data-url]::after {
