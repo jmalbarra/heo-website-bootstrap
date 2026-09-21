@@ -1263,8 +1263,15 @@
 				// ni código): si lo hiciera, cualquiera podría probar el mail de otra
 				// persona para ver si está en la lista. Su credencial va por mail.
 				document.getElementById('done-title').textContent = 'Ya estabas adentro';
-				document.getElementById('done-text').textContent = 'Este mail ya estaba en la lista, así que te reenviamos tu credencial: si no aparece, mirá en spam.';
-				document.getElementById('done-mail').textContent = 'Si ya te la habíamos reenviado hace un rato, buscá ese mail.';
+				// `mailed` ahora dice la verdad: antes esta rama prometía siempre un
+				// reenvío, y si el cooldown o Resend lo habían frenado la persona se
+				// quedaba esperando un mail que no iba a llegar.
+				document.getElementById('done-text').textContent = data.mailed
+					? 'Este mail ya estaba en la lista, así que te reenviamos tu credencial: si no aparece, mirá en spam.'
+					: 'Este mail ya estaba en la lista. No te lo volvimos a mandar ahora: buscá el que te mandamos antes, y mirá en spam.';
+				document.getElementById('done-mail').textContent = data.mailed
+					? 'Si ya te la habíamos reenviado hace un rato, buscá ese mail.'
+					: 'Si no lo encontrás, respondé cualquier mail nuestro y te lo mandamos de nuevo.';
 				num.hidden = true;
 				document.querySelector('.adentro__label').hidden = true;
 				linkWrap.hidden = true;
