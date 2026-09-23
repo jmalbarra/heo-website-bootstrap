@@ -351,6 +351,13 @@
 			var params = new URLSearchParams(window.location.search);
 			var code = params.get('c') || '';
 			if (!code) {
+				// El link del mail es /union/CODIGO. El rewrite le pasa ?c= a
+				// Apache, pero el navegador sigue viendo la URL original: el
+				// código hay que sacarlo del path.
+				var m = window.location.pathname.match(/\/union\/([A-Za-z0-9]{8})\/?$/);
+				if (m) code = m[1];
+			}
+			if (!code) {
 				// Por si el rewrite no está activo: /union/credencial.html#CODIGO
 				code = (window.location.hash || '').replace('#', '');
 			}
