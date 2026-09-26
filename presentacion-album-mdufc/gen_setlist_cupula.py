@@ -208,9 +208,26 @@ html_src = f"""<!DOCTYPE html>
     color: rgba(10,10,12,0.55);
     text-transform: uppercase;
   }}
+
+  /* ── MARCA DE AGUA ── */
+  .watermark {{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 210mm;
+    height: 297mm;
+    background: url({logo_src}) center / 170mm auto no-repeat;
+    opacity: 0.10;
+  }}
+  .header, .list, .footer {{
+    position: relative;
+    z-index: 1;
+  }}
 </style>
 </head>
 <body>
+
+  <div class="watermark"></div>
 
   <header class="header">
     <img class="header__logo" src="{logo_src}" alt="HEO">
