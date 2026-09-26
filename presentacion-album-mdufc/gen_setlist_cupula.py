@@ -154,7 +154,7 @@ html_src = f"""<!DOCTYPE html>
   }}
   .num {{
     font-family: 'Orbitron', sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 400;
     color: rgba(10,10,12,0.55);
     min-width: 26px;
@@ -169,7 +169,7 @@ html_src = f"""<!DOCTYPE html>
   .song-title {{
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
-    font-size: 29px;
+    font-size: 34px;
     letter-spacing: 0.02em;
     color: #0a0a0c;
     line-height: 1.05;
@@ -184,7 +184,7 @@ html_src = f"""<!DOCTYPE html>
   }}
   .interlude-title {{
     font-family: 'Orbitron', sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 400;
     letter-spacing: 0.3em;
     color: rgba(10,10,12,0.65);

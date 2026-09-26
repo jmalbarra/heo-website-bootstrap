@@ -141,7 +141,7 @@ html_src = f"""<!DOCTYPE html>
   .trigger {{
     font-family: 'Orbitron', sans-serif;
     font-weight: 900;
-    font-size: 52px;
+    font-size: 58px;
     color: #0a0a0c;
     min-width: 62px;
     text-align: right;
@@ -152,7 +152,7 @@ html_src = f"""<!DOCTYPE html>
   .trigger--none {{
     font-family: 'Share Tech Mono', monospace;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 18px;
     color: rgba(10,10,12,0.5);
     letter-spacing: 0.05em;
   }}
@@ -168,7 +168,7 @@ html_src = f"""<!DOCTYPE html>
   .dsong {{
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
-    font-size: 29px;
+    font-size: 34px;
     letter-spacing: 0.02em;
     color: #0a0a0c;
     line-height: 1.15;
