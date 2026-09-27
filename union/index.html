@@ -973,6 +973,18 @@
 		var JOIN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/join';
 		var PIXEL_ID = '799209169403412';
 		var ORIGEN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/origen';
+
+		// De qué canal llegó quien se anota, para poder medirlo en el panel.
+		// El backend solo acepta esta lista cerrada (clean_source); cualquier
+		// otra cosa cae en "desconocido", así que la validamos también acá y si
+		// no reconocemos el ?src= volvemos a "union", que es el default histórico.
+		var FUENTES_VALIDAS = { union: 1, setlist: 1, merch: 1, popup: 1, vivo: 1 };
+		var SRC = (function () {
+			try {
+				var v = (new URLSearchParams(window.location.search).get('src') || '').trim().toLowerCase();
+				return FUENTES_VALIDAS[v] ? v : 'union';
+			} catch (_) { return 'union'; }
+		})();
 		var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 		/* ---------- Canvas ambiental: grilla + polvo ---------- */
@@ -1309,7 +1321,7 @@
 			fetch(JOIN_URL, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ name: name, email: email, source: 'union' })
+				body: JSON.stringify({ name: name, email: email, source: SRC })
 			}).then(function (res) {
 				return res.json().then(function (data) { return { ok: res.ok, data: data }; });
 			}).then(function (r) {
