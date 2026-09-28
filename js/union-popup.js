@@ -81,6 +81,10 @@
 		'#heo-up button.go:disabled{opacity:.6;cursor:default;}' +
 		'#heo-up .fine{font-size:11px;line-height:1.6;color:#6e6e6e;margin:13px 0 0;}' +
 		'#heo-up .fine a{color:#22eec9;}' +
+		'#heo-up label.chk{display:flex;gap:9px;align-items:flex-start;text-transform:none;letter-spacing:0;' +
+		'font-size:12px;line-height:1.5;color:#b4b4b4;margin:0 0 15px;cursor:pointer;}' +
+		'#heo-up label.chk input{margin:1px 0 0;flex:0 0 auto;width:16px;height:16px;accent-color:#22eec9;cursor:pointer;}' +
+		'#heo-up label.chk a{color:#22eec9;}' +
 		'#heo-up .err{font-size:12.5px;color:#ff6b6b;margin:0 0 12px;min-height:1px;}' +
 		'#heo-up .done h2{color:#22eec9;}' +
 		'#heo-up .num{font-size:30px;font-weight:700;color:#22eec9;margin:6px 0 0;}';
@@ -106,8 +110,9 @@
 				'<input type="text" id="heo-up-name" autocomplete="name" maxlength="64">' +
 				'<label for="heo-up-mail">Email</label>' +
 				'<input type="email" id="heo-up-mail" autocomplete="email" inputmode="email" maxlength="128">' +
+				'<label class="chk"><input type="checkbox" id="heo-up-terms"> Acepto recibir novedades por mail y los <a href="/union/" target="_blank" rel="noopener">términos</a>.</label>' +
 				'<button type="button" class="go" id="heo-up-go">Cuenten conmigo</button>' +
-				'<p class="fine">Al unirte aceptás recibir nuestras novedades. Te podés dar de baja cuando quieras respondiendo cualquier mail. <a href="/union/" target="_blank" rel="noopener">Más info</a>.</p>' +
+				'<p class="fine">Te podés dar de baja cuando quieras respondiendo cualquier mail.</p>' +
 			'</div>' +
 		'</div>';
 
@@ -144,6 +149,7 @@
 		var email = el.mail.value.trim().toLowerCase();
 		if (!name) { showError('Nos falta tu nombre.'); el.name.focus(); return; }
 		if (!EMAIL_RE.test(email)) { showError('Ese email no parece válido.'); el.mail.focus(); return; }
+		if (!el.terms.checked) { showError('Necesitamos que aceptes los términos.'); el.terms.focus(); return; }
 
 		el.go.disabled = true;
 		el.go.textContent = 'Un segundo…';
@@ -175,6 +181,7 @@
 		el.err = document.getElementById('heo-up-err');
 		el.name = document.getElementById('heo-up-name');
 		el.mail = document.getElementById('heo-up-mail');
+		el.terms = document.getElementById('heo-up-terms');
 		el.go = document.getElementById('heo-up-go');
 		document.getElementById('heo-up-x').addEventListener('click', function () { cerrar(true); });
 		back.addEventListener('click', function (e) { if (e.target === back) cerrar(true); });
