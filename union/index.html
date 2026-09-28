@@ -985,6 +985,54 @@
 				return FUENTES_VALIDAS[v] ? v : 'union';
 			} catch (_) { return 'union'; }
 		})();
+
+		// El copy de esta página está escrito para quien viene del disco (la última
+		// pista dice la URL). Quien llega por un QR del vivo, del merch o por el
+		// popup no tuvo esa experiencia, así que le cambiamos SOLO el encabezado y
+		// la entrada para no hablarle de un disco que capaz no escuchó. El resto —la
+		// Unión, el futuro, la credencial— sirve igual para todos. src=union no toca
+		// nada: queda el texto original.
+		var COPY_POR_FUENTE = {
+			setlist: {
+				track: 'Hacia el Ocaso · en vivo',
+				transmision: 'transmisión :: show en vivo',
+				titulo: 'Nos viste<br>en <span class="grad">vivo</span>.',
+				entrada: 'Te paraste frente al escenario y te quedaste. Eso ya es más de lo que hace casi cualquiera. <strong>Esto no termina cuando se apagan las luces:</strong> sumate a la Unión y seguí adentro.'
+			},
+			merch: {
+				track: 'Hacia el Ocaso · mesa de merch',
+				transmision: 'transmisión :: mesa de merch',
+				titulo: 'Gracias por<br><span class="grad">bancar la banda</span>.',
+				entrada: 'Llevarte algo nuestro es sostener todo esto de verdad, y no lo damos por sentado. <strong>Ya estás adentro: sumate a la Unión y hacelo oficial.</strong>'
+			},
+			popup: {
+				track: 'haciaelocaso.com',
+				transmision: 'transmisión :: haciaelocaso.com',
+				titulo: 'Sos parte de<br><span class="grad">Hacia el Ocaso</span>.',
+				entrada: 'Llegaste hasta acá y te quedaste dando vueltas: eso ya dice algo. <strong>Sumate a la Unión</strong> y enterate antes que nadie de shows, lanzamientos y cosas que no salen en redes.'
+			}
+		};
+		(function aplicarCopyPorFuente() {
+			var c = COPY_POR_FUENTE[SRC];
+			if (!c) return; // union (viene del disco): queda como está
+			try {
+				var track = document.querySelector('.hero__track');
+				if (track) track.textContent = c.track;
+				var logs = document.querySelectorAll('#hero-log p');
+				for (var i = 0; i < logs.length; i++) {
+					if (/transmisi/i.test(logs[i].textContent)) logs[i].textContent = c.transmision;
+				}
+				var h2 = document.querySelector('#gracias h2');
+				if (h2) h2.innerHTML = c.titulo;
+				var bodies = document.querySelectorAll('#gracias .body');
+				if (bodies[0]) bodies[0].innerHTML = c.entrada;
+				// Estos solo tienen sentido si escuchaste el disco entero: se ocultan.
+				if (bodies[1]) bodies[1].style.display = 'none';
+				if (bodies[2]) bodies[2].style.display = 'none';
+				var cita = document.querySelector('#gracias .transmision');
+				if (cita) cita.style.display = 'none';
+			} catch (_) {}
+		})();
 		var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 		/* ---------- Canvas ambiental: grilla + polvo ---------- */
