@@ -24,7 +24,7 @@
 	var JOIN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/join';
 
 	// Cuándo aparece y cada cuánto insistir.
-	var DELAY_MS = 18000;        // fallback por tiempo
+	var DELAY_MS = 15000;        // fallback por tiempo
 	var SCROLL_TRIGGER = 0.40;   // o cuando scrollea el 40% de la página
 	var SUPPRESS_DAYS = 21;      // si lo cierra, no vuelve por este tiempo
 
@@ -81,10 +81,6 @@
 		'#heo-up button.go:disabled{opacity:.6;cursor:default;}' +
 		'#heo-up .fine{font-size:11px;line-height:1.6;color:#6e6e6e;margin:13px 0 0;}' +
 		'#heo-up .fine a{color:#22eec9;}' +
-		'#heo-up label.chk{display:flex;gap:9px;align-items:flex-start;text-transform:none;letter-spacing:0;' +
-		'font-size:12px;line-height:1.5;color:#b4b4b4;margin:0 0 15px;cursor:pointer;}' +
-		'#heo-up label.chk input{margin:1px 0 0;flex:0 0 auto;width:16px;height:16px;accent-color:#22eec9;cursor:pointer;}' +
-		'#heo-up label.chk a{color:#22eec9;}' +
 		'#heo-up .err{font-size:12.5px;color:#ff6b6b;margin:0 0 12px;min-height:1px;}' +
 		'#heo-up .done h2{color:#22eec9;}' +
 		'#heo-up .num{font-size:30px;font-weight:700;color:#22eec9;margin:6px 0 0;}';
@@ -103,16 +99,15 @@
 			'<button id="heo-up-x" type="button" aria-label="Cerrar">&times;</button>' +
 			'<div id="heo-up-form">' +
 				'<p class="kick">Hacia el Ocaso</p>' +
-				'<h2>Sos parte de la banda. Hacelo oficial.</h2>' +
+				'<h2>Sos parte de Hacia el Ocaso. Hacelo oficial.</h2>' +
 				'<p class="sub">Sumate a la Unión y recibí tu número de miembro. Te escribimos cuando haya shows, lanzamientos y cosas que no salen en redes.</p>' +
 				'<p class="err" id="heo-up-err" hidden></p>' +
 				'<label for="heo-up-name">Nombre</label>' +
 				'<input type="text" id="heo-up-name" autocomplete="name" maxlength="64">' +
 				'<label for="heo-up-mail">Email</label>' +
 				'<input type="email" id="heo-up-mail" autocomplete="email" inputmode="email" maxlength="128">' +
-				'<label class="chk"><input type="checkbox" id="heo-up-terms"> Acepto recibir novedades por mail y los <a href="/union/" target="_blank" rel="noopener">términos</a>.</label>' +
 				'<button type="button" class="go" id="heo-up-go">Cuenten conmigo</button>' +
-				'<p class="fine">Te podés dar de baja cuando quieras respondiendo cualquier mail.</p>' +
+				'<p class="fine">Al unirte aceptás recibir novedades por mail. Te podés dar de baja cuando quieras. <a href="/union/" target="_blank" rel="noopener">Más info</a>.</p>' +
 			'</div>' +
 		'</div>';
 
@@ -149,7 +144,6 @@
 		var email = el.mail.value.trim().toLowerCase();
 		if (!name) { showError('Nos falta tu nombre.'); el.name.focus(); return; }
 		if (!EMAIL_RE.test(email)) { showError('Ese email no parece válido.'); el.mail.focus(); return; }
-		if (!el.terms.checked) { showError('Necesitamos que aceptes los términos.'); el.terms.focus(); return; }
 
 		el.go.disabled = true;
 		el.go.textContent = 'Un segundo…';
@@ -181,7 +175,6 @@
 		el.err = document.getElementById('heo-up-err');
 		el.name = document.getElementById('heo-up-name');
 		el.mail = document.getElementById('heo-up-mail');
-		el.terms = document.getElementById('heo-up-terms');
 		el.go = document.getElementById('heo-up-go');
 		document.getElementById('heo-up-x').addEventListener('click', function () { cerrar(true); });
 		back.addEventListener('click', function (e) { if (e.target === back) cerrar(true); });
