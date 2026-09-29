@@ -19,6 +19,7 @@
 - [Qué hay en este repo](#qué-hay-en-este-repo)
 - [Páginas del sitio (estáticas)](#páginas-del-sitio-estáticas)
 - [Experiencias especiales](#experiencias-especiales)
+- [Medición y pauta](#medición-y-pauta)
 - [Estructura de carpetas](#estructura-de-carpetas)
 - [Deploy y ramas](#deploy-y-ramas)
 - [Enlaces rápidos](#enlaces-rápidos)
@@ -35,6 +36,7 @@
 | **`union/`** | El bonus track del disco se llama `haciaelocaso.com/union`: acá aterriza esa gente. Alta a la comunidad + credencial de miembro. |
 | **`presentacion-album-mdufc/`** | Show en vivo: setlist con desbloqueo, letras, operador, y **foto para redes** (share). |
 | **`manager/`** | Redirect oculto (noindex) al panel interno de la banda en Vercel. |
+| **`escucha.html`** | Smart link del disco: la URL que reciben los anuncios. Spotify arriba, reproductor propio y YouTube abajo. |
 | **Assets globales** | `css/`, `js/`, `images/` (incluyendo `merch/`), `fonts/`. |
 | **CI/CD** | GitHub Actions: mirror SFTP a staging (`develop`) y producción (`main`). |
 
@@ -53,7 +55,9 @@ Rutas relativas al dominio. En GitHub podés abrir el archivo con el segundo enl
 | [`/union/`](union/index.html) | Agradecimiento y alta a la comunidad para quien llega por el último tema del disco. |
 | `/union/<CÓDIGO>` ([archivo](union/credencial.html)) | Credencial del miembro: número, imagen para redes y pantalla para mostrar en el show. |
 | [`/union/panel`](union/panel.html) | **Interno.** Cuántos son, por dónde llegaron y las últimas altas. Pide el `UNION_ADMIN_TOKEN`. |
-| [`/spotify.html`](spotify.html) | Redirección al álbum en Spotify. |
+| [`/escucha`](escucha.html) | **Smart link del álbum.** Es la landing de la pauta: un solo pixel, un evento por plataforma. Reemplaza al Linktree para todo lo que se pague. |
+| [`/spotify.html`](spotify.html) | Redirección medida al álbum en Spotify. |
+| [`/youtube.html`](youtube.html) | Redirección medida al video. |
 
 ---
 
@@ -174,6 +178,79 @@ hoy y de la semana, reparto por `source` y últimas altas, más un botón para b
 el CSV completo. Pide el `UNION_ADMIN_TOKEN` una vez y lo guarda en ese
 navegador. La página va con `noindex` y sin mails a la vista: la lista de
 contactos sale sólo del CSV, que es un acto deliberado.
+
+---
+
+## Medición y pauta
+
+### Un solo pixel
+
+El ID del pixel de Meta vive en **[`js/heo-track.js`](js/heo-track.js)** y en ningún
+otro lado. Ninguna página lo repite y no quedan `<noscript>` con el ID adentro:
+cambiarlo es cambiar una línea.
+
+Antes había cuatro pixels sueltos, cada uno viendo un pedazo del recorrido:
+
+| Pixel | Dónde estaba | Hoy |
+|-------|--------------|-----|
+| `799209169403412` | home, `/union`, credencial | **Principal.** Ve el sitio entero y recibe todos los eventos. |
+| `2233684557132392` | `spotify.html` | Heredado. Sólo PageView. |
+| `847508594324813` | `spotify.html` (pegado al anterior, los dos con PageView) | Heredado. Sólo PageView. |
+| `1360622835771508` | `youtube.html` | Heredado. Sólo PageView. |
+
+Los tres heredados siguen cargando para no cortarles las audiencias de golpe.
+Los eventos que sirven para optimizar (`ViewContent`, `ClickOut`, `Lead`) van
+sólo al principal, con `trackSingle`. Cuando se confirme en Events Manager que
+no tienen nada vivo adentro, se vacía `PIXELS_HEREDADOS` en `heo-track.js`.
+
+> Sacar un pixel de ese archivo no borra nada del lado de Meta. Lo ya registrado
+> queda; lo único que cambia es que dejan de entrar eventos nuevos.
+
+### Eventos
+
+| Evento | Dónde | A quién |
+|--------|-------|---------|
+| `PageView` | toda página con el script | a los cuatro |
+| `ViewContent` | sólo `/escucha` (`data-heo-view`) | al principal |
+| `ClickOut` | cada salida a otra plataforma, con `destino` | al principal |
+| `Lead` | alta de la Unión, con el mail hasheado | al principal |
+
+`ClickOut` es un evento propio. Para optimizar una campaña con él hay que
+convertirlo en Custom Conversion: *Events Manager › Custom Conversions › evento
+`ClickOut`, `destino` = `spotify`*.
+
+### El redirect que perdía eventos
+
+`spotify.html` y `youtube.html` redirigían con `<meta http-equiv="refresh"
+content="0;url=…">`. Eso le corre una carrera al pixel y la gana casi siempre:
+el navegador se va de la página con el beacon a medio salir. Una parte de los
+clicks de las campañas que apuntaron ahí nunca se registró, y por eso los
+números de esas dos páginas nunca cerraron.
+
+Ahora esas páginas cargan el tracker en modo redirect
+(`data-heo-modo="redirect"`), que no baja `fbevents.js` —no llega a tiempo— sino
+que pega directo contra el endpoint de Meta y **navega recién cuando los eventos
+terminaron de salir**. Son unos 300 ms. El `<noscript>` mantiene el refresh
+viejo para quien no tenga JS.
+
+### Para usarlo en una página nueva
+
+```html
+<script src="js/heo-track.js"></script>          <!-- en el <head> -->
+<a href="…" data-heo-out="spotify">…</a>          <!-- se instrumenta solo -->
+```
+
+```js
+HEO.ev('Lead', { content_name: 'union' });        // evento a mano
+HEO.utms();                                        // UTMs del primer contacto
+```
+
+### GA4
+
+Sin configurar. Cuando exista la propiedad, va el `G-XXXXXXX` en `GA4_ID` dentro
+de `heo-track.js` y se carga solo. Hace falta para leer las UTM: el pixel dice
+de qué anuncio vino la gente, pero las campañas por nombre y el recorrido dentro
+del sitio los lee GA4.
 
 ---
 

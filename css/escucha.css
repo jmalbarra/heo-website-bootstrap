@@ -1,0 +1,263 @@
+/* ═══════════════════════════════════════════════════
+   /escucha — smart link del álbum
+   Misma paleta y tipografías que css/player.css: quien
+   llega por la pauta y sigue al reproductor no siente
+   que cambió de sitio.
+═══════════════════════════════════════════════════ */
+
+:root {
+	--fondo: #050507;
+	--tinta: #22eec9;
+	--tinta-apagada: rgba(34, 238, 201, 0.55);
+	--linea: rgba(34, 238, 201, 0.18);
+	--panel: rgba(34, 238, 201, 0.04);
+	--spotify: #1db954;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { height: 100%; -webkit-text-size-adjust: 100%; }
+
+body {
+	background: var(--fondo);
+	color: var(--tinta);
+	font-family: "Geist Mono", "Courier New", monospace;
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: flex;
+	justify-content: center;
+	overflow-x: hidden;
+	position: relative;
+	isolation: isolate;
+}
+
+/* Glow de fondo y scanlines: los mismos dos pseudo-elementos del player. */
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background:
+		radial-gradient(ellipse 70% 50% at 50% 30%, rgba(34, 238, 201, 0.06) 0%, transparent 65%),
+		radial-gradient(ellipse 100% 60% at 50% 100%, rgba(34, 238, 201, 0.03) 0%, transparent 70%);
+}
+
+body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 200;
+	pointer-events: none;
+	background: repeating-linear-gradient(
+		0deg, transparent, transparent 2px,
+		rgba(0, 0, 0, 0.07) 2px, rgba(0, 0, 0, 0.07) 4px
+	);
+}
+
+.link {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	max-width: 440px;
+	padding: 40px 20px 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 26px;
+}
+
+/* ── Cabecera ─────────────────────────────────────── */
+
+.link__head { text-align: center; }
+
+.link__cover {
+	width: 100%;
+	max-width: 300px;
+	height: auto;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border: 1px solid var(--linea);
+	box-shadow: 0 0 60px rgba(34, 238, 201, 0.10);
+	margin-bottom: 20px;
+}
+
+.link__band {
+	font-size: 0.68rem;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--tinta-apagada);
+	margin-bottom: 8px;
+}
+
+.link__album {
+	font-family: "Orbitron", "Geist Mono", monospace;
+	font-weight: 900;
+	font-size: clamp(1.3rem, 6.4vw, 1.72rem);
+	line-height: 1.12;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	text-wrap: balance;
+}
+
+.link__kicker {
+	margin-top: 10px;
+	font-size: 0.74rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--tinta-apagada);
+}
+
+/* ── Botón de Spotify ─────────────────────────────── */
+
+.btn {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 17px 18px;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 0.95rem;
+	border: 1px solid transparent;
+	transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+}
+
+.btn--spotify {
+	background: var(--spotify);
+	color: #04130a;
+	box-shadow: 0 0 0 rgba(29, 185, 84, 0);
+}
+
+.btn--spotify:hover,
+.btn--spotify:focus-visible {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 30px rgba(29, 185, 84, 0.34);
+	filter: brightness(1.06);
+}
+
+.btn__ico { width: 22px; height: 22px; flex: none; }
+.btn__txt { flex: 1; letter-spacing: 0.04em; }
+.btn__arrow { font-size: 1.1rem; opacity: 0.7; }
+
+/* ── Separador ────────────────────────────────────── */
+
+.link__or {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	color: var(--tinta-apagada);
+	font-size: 0.7rem;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+	margin: -6px 0;
+}
+
+.link__or::before,
+.link__or::after {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background: var(--linea);
+}
+
+/* ── Opciones secundarias ─────────────────────────── */
+
+.opts { display: flex; flex-direction: column; gap: 10px; }
+
+.opt {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 14px 16px;
+	text-decoration: none;
+	color: var(--tinta);
+	background: var(--panel);
+	border: 1px solid var(--linea);
+	transition: background 0.14s ease, border-color 0.14s ease, transform 0.14s ease;
+}
+
+.opt:hover,
+.opt:focus-visible {
+	background: rgba(34, 238, 201, 0.09);
+	border-color: rgba(34, 238, 201, 0.45);
+	transform: translateX(3px);
+}
+
+.opt__ico {
+	font-size: 0.85rem;
+	width: 20px;
+	text-align: center;
+	flex: none;
+	color: var(--tinta-apagada);
+}
+
+.opt__body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+
+.opt__name {
+	font-size: 0.9rem;
+	font-weight: 500;
+	letter-spacing: 0.04em;
+}
+
+.opt__sub {
+	font-size: 0.68rem;
+	line-height: 1.35;
+	color: var(--tinta-apagada);
+}
+
+/* ── Pie ──────────────────────────────────────────── */
+
+.link__foot {
+	margin-top: 4px;
+	padding-top: 22px;
+	border-top: 1px solid var(--linea);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	align-items: center;
+	text-align: center;
+}
+
+.foot__link {
+	color: var(--tinta);
+	text-decoration: none;
+	font-size: 0.76rem;
+	line-height: 1.5;
+	letter-spacing: 0.04em;
+	border-bottom: 1px solid var(--linea);
+	padding-bottom: 3px;
+}
+
+.foot__link:hover,
+.foot__link:focus-visible { border-bottom-color: var(--tinta); }
+
+.foot__row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	font-size: 0.72rem;
+	color: var(--tinta-apagada);
+}
+
+.foot__row a {
+	color: var(--tinta-apagada);
+	text-decoration: none;
+	letter-spacing: 0.06em;
+}
+
+.foot__row a:hover,
+.foot__row a:focus-visible { color: var(--tinta); }
+
+.foot__copy {
+	font-size: 0.64rem;
+	letter-spacing: 0.22em;
+	color: rgba(34, 238, 201, 0.32);
+}
+
+/* ── Foco visible y motion ────────────────────────── */
+
+:focus-visible { outline: 2px solid var(--tinta); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after { transition: none !important; }
+}
