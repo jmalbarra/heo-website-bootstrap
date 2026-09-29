@@ -183,6 +183,9 @@ contactos sale sólo del CSV, que es un acto deliberado.
 
 ## Medición y pauta
 
+El plan de la campaña del disco —presupuesto, segmentación, timeline y el porqué
+de cada decisión— está en **[`docs/plan-pauta-mdufc.md`](docs/plan-pauta-mdufc.md)**.
+
 ### Un solo pixel
 
 El ID del pixel de Meta vive en **[`js/heo-track.js`](js/heo-track.js)** y en ningún
