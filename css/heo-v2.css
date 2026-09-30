@@ -359,7 +359,7 @@ body::after {
   color: var(--text-muted);
   background: rgba(34, 238, 201, 0.04);
   border: 1px solid var(--accent-border);
-  border-radius: 999px;
+  border-radius: 4px;
   animation: breathe-border 4.5s ease-in-out infinite;
 }
 
@@ -380,8 +380,6 @@ body::after {
   height: 6px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-  animation: pulse-dot 2.2s ease-in-out infinite;
 }
 
 .hero__ctas {
@@ -489,6 +487,8 @@ body::after {
   flex-shrink: 0;
   animation: pulse-dot 2s ease-in-out infinite;
 }
+/* En el botón del show del hero va quieto: sin el brillo que titila */
+.hero__ctas .pulse-dot { animation: none; }
 
 
 /* ============================================================
@@ -675,11 +675,6 @@ body::after {
   font-size: 0.72rem;
   color: var(--text-dim);
   letter-spacing: 0.1em;
-}
-
-.songkick-wrap {
-  min-height: 80px;
-  padding-top: 0.5rem;
 }
 
 
@@ -922,7 +917,7 @@ body::after {
   color: var(--text-dim);
   padding: 0.4rem 0.8rem;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 .contact-hero__arrow {
@@ -1486,7 +1481,7 @@ body::after { opacity: 0.065; }
   background: var(--accent);
   border-radius: 50%;
   pointer-events: none;
-  z-index: 10000;
+  z-index: 100001; /* por encima del popup de la Unión (99999) */
   will-change: transform;
   box-shadow: 0 0 8px var(--accent), 0 0 18px rgba(34,238,201,0.5);
   transition: width .15s var(--ease-out), height .15s var(--ease-out), background .15s;
@@ -1498,7 +1493,7 @@ body::after { opacity: 0.065; }
   border: 1px solid rgba(34,238,201,0.55);
   border-radius: 50%;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 100000;
   will-change: transform;
   transition: width .3s var(--ease-out), height .3s var(--ease-out), border-color .3s, box-shadow .3s;
 }
