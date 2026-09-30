@@ -1,0 +1,230 @@
+/* ═══════════════════════════════════════════════════
+   /escucha — smart link del álbum
+   Misma paleta y tipografías que css/player.css: quien
+   llega por la pauta y sigue al reproductor no siente
+   que cambió de sitio.
+═══════════════════════════════════════════════════ */
+
+:root {
+	--fondo: #050507;
+	--tinta: #22eec9;
+	--tinta-apagada: rgba(34, 238, 201, 0.55);
+	--linea: rgba(34, 238, 201, 0.18);
+	--panel: rgba(34, 238, 201, 0.04);
+	--spotify: #1db954;
+	--youtube: #e60000;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { height: 100%; -webkit-text-size-adjust: 100%; }
+
+body {
+	background: var(--fondo);
+	color: var(--tinta);
+	font-family: "Geist Mono", "Courier New", monospace;
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: flex;
+	justify-content: center;
+	overflow-x: hidden;
+	position: relative;
+	isolation: isolate;
+}
+
+/* Glow de fondo y scanlines: los mismos dos pseudo-elementos del player. */
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background:
+		radial-gradient(ellipse 70% 50% at 50% 30%, rgba(34, 238, 201, 0.06) 0%, transparent 65%),
+		radial-gradient(ellipse 100% 60% at 50% 100%, rgba(34, 238, 201, 0.03) 0%, transparent 70%);
+}
+
+body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 200;
+	pointer-events: none;
+	background: repeating-linear-gradient(
+		0deg, transparent, transparent 2px,
+		rgba(0, 0, 0, 0.07) 2px, rgba(0, 0, 0, 0.07) 4px
+	);
+}
+
+.link {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	max-width: 440px;
+	padding: 40px 20px 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 26px;
+}
+
+/* ── Cabecera ─────────────────────────────────────── */
+
+.link__head { text-align: center; }
+
+.link__cover {
+	width: 100%;
+	max-width: 300px;
+	height: auto;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border: 1px solid var(--linea);
+	box-shadow: 0 0 60px rgba(34, 238, 201, 0.10);
+	margin-bottom: 20px;
+}
+
+.link__band {
+	font-size: 0.68rem;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--tinta-apagada);
+	margin-bottom: 8px;
+}
+
+.link__album {
+	font-family: "Orbitron", "Geist Mono", monospace;
+	font-weight: 900;
+	font-size: clamp(1.3rem, 6.4vw, 1.72rem);
+	line-height: 1.12;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	text-wrap: balance;
+}
+
+.link__kicker {
+	margin-top: 10px;
+	font-size: 0.74rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--tinta-apagada);
+}
+
+/* ── Los dos botones ──────────────────────────────── */
+
+/* Más juntos entre sí que del resto: se leen como un par de opciones
+   y no como dos cosas sueltas. */
+.cta {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+/* Grandes a propósito. Quien llega acá viene de un anuncio, no estaba
+   buscando nada y se va en dos segundos si duda: el objetivo es que el
+   dedo caiga bien sin apuntar. 64px de alto está muy por encima del
+   mínimo táctil de 44px. */
+.btn {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	min-height: 64px;
+	padding: 20px 22px;
+	border-radius: 10px;
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 1.2rem;
+	letter-spacing: 0.01em;
+	border: 1px solid transparent;
+	transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+}
+
+.btn--spotify {
+	background: var(--spotify);
+	color: #04130a;
+}
+
+.btn--spotify:hover,
+.btn--spotify:focus-visible {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 30px rgba(29, 185, 84, 0.34);
+	filter: brightness(1.06);
+}
+
+/* Rojo de YouTube, apenas bajado de #FF0000: con el blanco encima, el rojo
+   puro queda en 4,0:1 de contraste y no llega al mínimo accesible. Este da
+   4,8:1 y a simple vista sigue siendo el rojo de YouTube. */
+.btn--youtube {
+	background: var(--youtube);
+	color: #fff;
+}
+
+.btn--youtube:hover,
+.btn--youtube:focus-visible {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 30px rgba(230, 0, 0, 0.34);
+	filter: brightness(1.08);
+}
+
+.btn__ico { width: 26px; height: 26px; flex: none; }
+.btn__txt { flex: 1; }
+.btn__arrow { font-size: 1.25rem; opacity: 0.75; }
+
+/* En pantallas angostas el texto entra igual bajando un punto, antes que
+   partirse en dos líneas. */
+@media (max-width: 380px) {
+	.btn { font-size: 1.06rem; padding: 18px 18px; gap: 12px; }
+	.btn__ico { width: 23px; height: 23px; }
+}
+
+/* iPhone SE y similares: acá "Escuchar en Spotify" se partía en dos líneas.
+   Un renglón partido en el botón principal es exactamente lo que no queremos
+   en una página que tiene que resolverse sin leer. */
+@media (max-width: 340px) {
+	.btn { font-size: 0.94rem; padding: 16px 14px; gap: 10px; }
+	.btn__ico { width: 20px; height: 20px; }
+	.btn__arrow { font-size: 1.05rem; }
+}
+
+/* ── Pie ──────────────────────────────────────────── */
+
+.link__foot {
+	margin-top: 4px;
+	padding-top: 22px;
+	border-top: 1px solid var(--linea);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	align-items: center;
+	text-align: center;
+}
+
+.foot__row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	font-size: 0.72rem;
+	color: var(--tinta-apagada);
+}
+
+.foot__row a {
+	color: var(--tinta-apagada);
+	text-decoration: none;
+	letter-spacing: 0.06em;
+}
+
+.foot__row a:hover,
+.foot__row a:focus-visible { color: var(--tinta); }
+
+.foot__copy {
+	font-size: 0.64rem;
+	letter-spacing: 0.22em;
+	color: rgba(34, 238, 201, 0.32);
+}
+
+/* ── Foco visible y motion ────────────────────────── */
+
+:focus-visible { outline: 2px solid var(--tinta); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after { transition: none !important; }
+}

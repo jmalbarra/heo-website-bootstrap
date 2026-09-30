@@ -15,17 +15,8 @@
 	<meta property="og:type" content="website">
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 
-	<!-- Meta Pixel (mismo ID que el home) -->
-	<script>
-	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-	n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-	n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-	t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-	document,'script','https://connect.facebook.net/en_US/fbevents.js');
-	fbq('init','799209169403412');fbq('track','PageView');
-	</script>
-	<noscript><img height="1" width="1" style="display:none"
-		src="https://www.facebook.com/tr?id=799209169403412&ev=PageView&noscript=1" alt=""></noscript>
+	<!-- Medición: mismo pixel que el home, definido en ese archivo. -->
+	<script src="../js/heo-track.js"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -971,7 +962,8 @@
 		"use strict";
 
 		var JOIN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/join';
-		var PIXEL_ID = '799209169403412';
+		// El ID sale de js/heo-track.js: acá no se repite.
+		var PIXEL_ID = (window.HEO && window.HEO.pixelId) || '799209169403412';
 		var ORIGEN_URL = 'https://nomios-ai-jmalbarras-projects.vercel.app/union/origen';
 
 		// De qué canal llegó quien se anota, para poder medirlo en el panel.
@@ -1269,7 +1261,7 @@
 		}
 
 		function marcarLead(nombre, mail) {
-			if (!window.fbq) return Promise.resolve();
+			if (!window.fbq || !window.HEO) return Promise.resolve();
 			return Promise.all([sha256Hex(mail), sha256Hex(normalizarNombre(nombre))])
 				.then(function (hashes) {
 					// Si el navegador no puede hashear, el Lead se manda igual pero
@@ -1279,10 +1271,13 @@
 						if (hashes[1]) datos.fn = hashes[1];
 						fbq('init', PIXEL_ID, datos);
 					}
-					fbq('track', 'Lead', { content_name: 'union' });
+					// HEO.ev y no fbq('track'): el sitio inicializa también los
+					// pixels de las campañas viejas, y un track pelado le mandaría
+					// el alta a los cuatro. El Lead va sólo al principal.
+					HEO.ev('Lead', { content_name: 'union' });
 				})
 				.catch(function () {
-					try { fbq('track', 'Lead', { content_name: 'union' }); } catch (_) {}
+					try { HEO.ev('Lead', { content_name: 'union' }); } catch (_) {}
 				});
 		}
 

@@ -1,48 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- The following meta tag will redirect the page after 0 seconds -->
-    <meta http-equiv="refresh" content="0;url=https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy">
-    <title>Redirecting...</title>
-    <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '2233684557132392');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=2233684557132392&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
-    <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '847508594324813');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=847508594324813&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Abriendo Spotify… · Hacia el Ocaso</title>
+	<meta name="robots" content="noindex, follow">
+	<meta name="theme-color" content="#050507">
+
+	<!--
+		Antes acá había un <meta http-equiv="refresh" content="0;url=…">, y eso
+		era el problema: el redirect a cero segundos le corre una carrera al
+		pixel y la gana casi siempre. El navegador se iba de la página con el
+		beacon a medio salir, así que una parte de los clicks de las campañas
+		que apuntaron acá nunca se registró.
+		Ahora redirige HEO.redirigir(): manda los eventos y recién cuando
+		terminaron cambia de página. Son unos 300 ms, no se notan.
+		El <noscript> de abajo mantiene el refresh para quien no tenga JS.
+	-->
+	<noscript><meta http-equiv="refresh" content="0;url=https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy"></noscript>
+
+	<script src="js/heo-track.js" data-heo-modo="redirect"></script>
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		HEO.redirigir('spotify', 'https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy');
+	});
+	</script>
+
+	<style>
+		html, body { height: 100%; margin: 0; }
+		body {
+			background: #050507;
+			color: #22eec9;
+			font-family: "Geist Mono", ui-monospace, "Courier New", monospace;
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			padding: 24px;
+		}
+		p { margin: 0; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; }
+		.tenue { color: rgba(34, 238, 201, 0.5); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: none; }
+		a { color: #22eec9; }
+		.punto {
+			width: 7px; height: 7px; border-radius: 50%;
+			background: #22eec9; animation: latir 0.9s ease-in-out infinite;
+		}
+		@keyframes latir { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+		@media (prefers-reduced-motion: reduce) { .punto { animation: none; } }
+	</style>
 </head>
 <body>
-    <p>If you are not redirected, <a href="https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy">click here</a>.</p>
-	<script src="js/union-popup.js?v=1" defer></script>
+	<span class="punto" aria-hidden="true"></span>
+	<p>Abriendo Spotify</p>
+	<p class="tenue">
+		Si no pasa nada, <a href="https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy">entrá acá</a>.
+		<br>O mirá <a href="escucha.html">todas las formas de escucharlo</a>.
+	</p>
 </body>
 </html>
