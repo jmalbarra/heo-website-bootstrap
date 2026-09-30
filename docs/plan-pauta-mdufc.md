@@ -357,3 +357,190 @@ Una tarjeta de Deel se emite afuera y paga USD contra saldo en USD: **no hay ent
 ---
 
 *Plan armado el 29/09/2026. Números de CPC y CPM son estimaciones de mercado: los reales se leen recién en la semana 1 y este plan se ajusta con ellos.*
+
+---
+
+## 13. Día por día, del 30/09 al 13/11
+
+> **Los días que dicen "no tocar" son una instrucción, no relleno.**
+> Cada edición de un conjunto activo —presupuesto, público, creativos— **reinicia
+> la fase de aprendizaje de Meta** y tira los datos acumulados. Mirar los números
+> está bien y es gratis. Tocarlos cuesta. La campaña se rompe por ansiedad mucho
+> más seguido que por mala segmentación.
+>
+> *(Cambiar de etapa sí reinicia el aprendizaje, y está bien: es el costo de
+> testear y ya está contemplado en los días de cada etapa.)*
+
+### Semana 1 — Test de video
+
+| Día | Qué hacer |
+|---|---|
+| **mié 30/09** | **Configurar y lanzar 1a.** Paso a paso completo en el anexo. La revisión de Meta puede tardar hasta 24 h |
+| **jue 01/10** | Verificar que los 4 anuncios estén **activos y gastando**. Si alguno quedó en revisión o rechazado, resolverlo. Nada más |
+| **vie 02/10** | No tocar |
+| **sáb 03/10** | No tocar. Mirar sin cambiar |
+| **dom 04/10** | **Cierra 1a.** Elegir el video ganador por costo por vista de landing. Si dos empatan, desempata el tiempo de visualización |
+
+### Semana 2 — Test de canción y show
+
+| Día | Qué hacer |
+|---|---|
+| **lun 05/10** | Fabricar los **8 reels de canción** con el video ganador, **con letra en pantalla**. Lanzar 1b y pausar 1a |
+| **mar 06/10** | Verificar aprobación y entrega. No tocar más |
+| **mié 07/10** | No tocar |
+| **jue 08/10** | No tocar |
+| **vie 09/10** | **Matar los 4 temas con peor costo por vista.** Quedan 4 corriendo |
+| **sáb 10/10** | 🎤 **Show en Bula, 19 hs. FILMAR VERTICAL**: breakdowns, público saltando, coros cantados. Aunque sea con un celular |
+| **dom 11/10** | Bajar y ordenar el material del show |
+
+### Semana 3 — Escala en Argentina
+
+| Día | Qué hacer |
+|---|---|
+| **lun 12/10** | **Cierra etapa 1.** Elegir los 2–3 temas ganadores. Fabricar la combinación ganadora si todavía no existe |
+| **mar 13/10** | **Lanzar 2A** (Argentina, ganadores, 5,50 USD/día). Pausar 1b |
+| **mié 14/10** | Verificar entrega. No tocar |
+| **jue 15/10** | No tocar. *Editar el video del show para la variante en vivo* |
+| **vie 16/10** | No tocar |
+| **sáb 17/10** | No tocar |
+| **dom 18/10** | No tocar |
+
+### Semana 4 — Se abren retargeting y el test de afuera
+
+| Día | Qué hacer |
+|---|---|
+| **lun 19/10** | Revisar 2A. Preparar los conjuntos 2B y 2C |
+| **mar 20/10** | **Lanzar 2B** (retargeting + lookalike, 3,50/día) **y 2C** (México + Chile, 4,00/día) |
+| **mié 21/10** | Verificar entrega de los dos nuevos. No tocar |
+| **jue 22/10** | No tocar. *Sumar la variante en vivo a 2A cuando esté lista* |
+| **vie 23/10** | No tocar |
+| **sáb 24/10** | No tocar |
+| **dom 25/10** | No tocar |
+
+### Semana 5 — Cierra el test de afuera
+
+| Día | Qué hacer |
+|---|---|
+| **lun 26/10** | Revisar los tres conjuntos |
+| **mar 27/10** | No tocar |
+| **mié 28/10** | No tocar |
+| **jue 29/10** | **Cierra 2C.** Leer el test de México/Chile: ¿el CPC compensa lo suficiente como para volver con más plata? |
+| **vie 30/10** | No tocar |
+| **sáb 31/10** | No tocar |
+| **dom 01/11** | No tocar |
+
+### Semana 6 — Cierra Meta, arranca Spotify
+
+| Día | Qué hacer |
+|---|---|
+| **lun 02/11** | **Cierra Meta.** Apagar 2A y 2B. Chequear **Campaign Kit** en Spotify for Artists: ¿calificamos para Marquee? |
+| **mar 03/11** | **Lanzar Marquee** (100 USD, Argentina). *Si no calificamos: esos 100 van a 2A y se extiende hasta el 13/11* |
+| **mié 04/11** | Marquee corriendo. No tocar |
+| **jue 05/11 – dom 08/11** | Marquee corriendo. No tocar |
+
+### Semana 7 — Cierre
+
+| Día | Qué hacer |
+|---|---|
+| **lun 09/11 – jue 12/11** | Marquee corriendo |
+| **vie 13/11** | **Cierre.** Informe para los seis: qué video ganó, qué canción ganó, cuánto costó cada oyente y qué queda para la próxima |
+
+---
+
+## 14. Anexo · Paso a paso para configurar Meta hoy
+
+**Tiempo: ~1 h 30 + espera de aprobación.**
+
+> Los nombres exactos de los controles en Meta cambian seguido. Donde el nombre
+> no coincida, buscá el control que hace lo que dice la explicación.
+
+### Dos cosas bloquean el lanzamiento
+
+1. **`/escucha` tiene que estar en producción.** Si no, los anuncios apuntan a un 404 y pagamos por mandar gente a una página que no existe.
+2. **La moneda de la cuenta tiene que ser USD antes del primer gasto.**
+
+### Paso 1 · Deployar la landing — 15 min
+
+Mergear la rama a `develop`, verificar en staging, y después a `main`.
+**Abrir `https://haciaelocaso.com/escucha` en el celular** y clickear los dos botones.
+
+### Paso 2 · La cuenta publicitaria — 10 min
+
+- Business Manager → Configuración → Cuentas publicitarias
+- **Moneda: USD.** Zona horaria: Buenos Aires
+- ⚠️ Cambiar la moneda después resetea la facturación de la cuenta. Es de lo poco que en Meta no tiene arreglo cómodo
+- **Una sola cuenta publicitaria.** Los otros cinco le transfieren a quien la administra
+
+### Paso 3 · La tarjeta y el test de 20 USD — 15 min + espera
+
+- Habilitar **compras internacionales/online** en la tarjeta Deel
+- Agregarla como medio de pago en Meta
+- Cargar **20 USD**
+- **Mirar dos comprobantes**: el resumen de Deel y el recibo de facturación de Meta. Confirmar que no aparezca ningún cargo extra antes de meter los 408
+- Cargar un **medio de pago de respaldo**: si un cobro rebota, Meta suspende la cuenta y se reinicia el aprendizaje
+
+*Las cuentas nuevas arrancan con un límite de gasto bajo y suben solas a medida que se paga. A 8 USD/día no molesta, pero conviene saberlo.*
+
+### Paso 4 · Verificar el pixel — 10 min
+
+- Events Manager → pixel **`799209169403412`** → **Eventos de prueba**
+- Abrir `haciaelocaso.com/escucha` → tienen que aparecer **PageView** y **ViewContent**
+- Clickear Spotify → tiene que aparecer **ClickOut** con `destino = spotify`
+
+Si no aparecen, no seguir: la campaña quedaría sin medición.
+
+### Paso 5 · Custom Conversion — 5 min
+
+- Events Manager → Conversiones personalizadas → Crear
+- Origen: el pixel · Evento: **`ClickOut`** · Regla: `destino` **es igual a** `spotify`
+- Nombre: **Click a Spotify**
+
+No la vamos a usar para optimizar ahora (hace falta más volumen), pero desde el día 1 empieza a acumular.
+
+### Paso 6 · La campaña — 20 min
+
+Estructura: **1 campaña → 1 conjunto → 4 anuncios.**
+
+**Campaña**
+- Objetivo: **Tráfico**
+- Nombre: `MDUFC · Etapa 1a · Test de video`
+- **Desactivar el presupuesto a nivel campaña** (Advantage/CBO): lo queremos en el conjunto
+
+**Conjunto** — `1a · AR · Intereses`
+- Presupuesto **diario: 8 USD** (diario, no total)
+- Inicio: hoy · Fin: **04/10**
+- Destino de la conversión: **Sitio web** + el pixel
+- Optimización: **Vistas de la página de destino** — *no* "Clics en el enlace", que cuenta toques accidentales
+- Ubicación: **Argentina**
+- Edad **18–44** · Todos los géneros
+- ⚠️ **Público Advantage+**: si viene activado, cambiar a las opciones de público originales. Con Advantage+ los intereses son apenas una sugerencia y Meta se va a lo ancho — exactamente lo que este plan quiere evitar
+- **Intereses**, los tres stacks juntos en el mismo campo: Bring Me The Horizon, Architects, Sleep Token, Bad Omens, Spiritbox, Parkway Drive, Polaris, While She Sleeps, Landmvrks, Korn, Slipknot, Linkin Park, System of a Down, Deftones, Rammstein, Knotfest, Hell & Heaven, Resurrection Fest, Revolver Magazine, Kerrang!
+- Ubicaciones: **automáticas**
+
+**Anuncios** — 4, uno por video
+- Nombres: `video-1`, `video-2`, `video-3`, `video-4`
+- Formato: video único, **9:16**
+- **La misma canción en los cuatro** (Cae El Velo o Sicofante)
+- Texto principal y titular: **idénticos en los cuatro**
+- URL de destino, cambiando sólo el número:
+  ```
+  https://haciaelocaso.com/escucha?utm_source=meta&utm_medium=cpc&utm_campaign=mdufc&utm_content=video-1
+  ```
+- Llamada a la acción: **Escuchar ahora**
+- Verificar que el pixel esté seleccionado en cada anuncio
+
+### Paso 7 · La revisión de 5 minutos antes de publicar
+
+- [ ] Los 4 anuncios tienen **la misma canción** — si no, el test no mide nada
+- [ ] Los 4 tienen **distinto `utm_content`**
+- [ ] Las 4 URLs abren `/escucha` — probar cada una **en el celular**
+- [ ] El conjunto optimiza a **Vistas de la página de destino**
+- [ ] **Advantage+ público desactivado**
+- [ ] Presupuesto **8 USD diario**, no total
+- [ ] Fecha de fin: **04/10**
+
+### Paso 8 · Publicar
+
+La revisión de Meta puede tardar **hasta 24 h**: publicar hoy significa que empieza esta noche o mañana.
+
+**Mañana (01/10) la única tarea es verificar que los 4 estén activos y gastando.** Si alguno quedó en revisión o rechazado, resolver eso antes que cualquier otra cosa. Y después no tocar hasta el 04/10.
