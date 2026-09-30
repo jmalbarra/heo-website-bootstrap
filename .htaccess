@@ -30,6 +30,11 @@
 	# Prensa hoy tiene página propia.
 	RewriteRule ^prensa\.html$ /presskit.html [R=301,L]
 
+	# La URL de la pauta. /escucha entra en un anuncio, en un story y en la bio
+	# sin ocupar lugar ni parecer un archivo. QSA es lo importante acá: sin eso
+	# el rewrite se come las ?utm_… y la campaña queda sin nombre en GA4.
+	RewriteRule ^escucha/?$ escucha.html [L,QSA]
+
 	# Sobras sin equivalente (pricing y single nunca fueron de la banda;
 	# las otras dos son copias viejas de la home). Todas a la home.
 	RewriteRule ^(pricing|single|index_hidden)\.html$ / [R=301,L]

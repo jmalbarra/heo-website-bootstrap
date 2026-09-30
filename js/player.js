@@ -3,8 +3,28 @@
 
   /* ═══════════════════════════════════════════════════════════════
      TRACK LIST
-     Reemplazá los src por las rutas reales a tus MP3.
-     Ejemplo: src: "audio/01-intro.mp3"
+
+     ⚠️ ESTO TODAVÍA ES RELLENO. Los cinco "Demo" de abajo son los MP3 de
+     ejemplo que vinieron con el widget, no el disco. Por eso esta página no
+     está linkeada desde ningún lado: /escucha manda a Spotify y a YouTube.
+
+     Para ponerlo en marcha alcanza con subir los MP3 y cambiar TRACKS por la
+     lista de abajo, que ya es el tracklist real del álbum:
+
+       var TRACKS = [
+         { title: "Intronicte",                  src: "audio/01-intronicte.mp3" },
+         { title: "Erial",                       src: "audio/02-erial.mp3" },
+         { title: "Parias",                      src: "audio/03-parias.mp3" },
+         { title: "Mitos De Un Futuro Cercano",  src: "audio/04-mitos.mp3" },
+         { title: "Cifra",                       src: "audio/05-cifra.mp3" },
+         { title: "Gaia",                        src: "audio/06-gaia.mp3" },
+         { title: "Sicofante",                   src: "audio/07-sicofante.mp3" },
+         { title: "Anamnesis",                   src: "audio/08-anamnesis.mp3" },
+         { title: "Lo Que Siento",               src: "audio/09-lo-que-siento.mp3" },
+         { title: "Cae El Velo",                 src: "audio/10-cae-el-velo.mp3" },
+         { title: "Conexión",                    src: "audio/11-conexion.mp3" },
+         { title: "Haciaelocaso.com/union",      src: "audio/12-union.mp3" },
+       ];
   ═══════════════════════════════════════════════════════════════ */
   var TRACKS = [
     { title: "Demo I",   src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
@@ -16,7 +36,7 @@
 
   var ALBUM_TITLE  = "Mitos De Un Futuro Cercano";
   var ALBUM_ARTIST = "Hacia el Ocaso";
-  var ALBUM_ART    = "images/album-cover.jpg"; /* tapa del disco */
+  var ALBUM_ART    = "images/mdufc-tapa.jpg"; /* tapa del disco */
 
   /* ═══════════════════════════════════════════════════════════════
      STATE

@@ -642,6 +642,16 @@ body::after {
   margin-top: 0.4rem;
 }
 
+.show-featured__time {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 0.35rem;
+}
+
 .show-featured__title {
   font-size: clamp(1.2rem, 3vw, 1.6rem);
   font-weight: 600;
