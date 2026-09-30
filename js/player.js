@@ -5,13 +5,26 @@
      TRACK LIST
 
      ⚠️ ESTO TODAVÍA ES RELLENO. Los cinco "Demo" de abajo son los MP3 de
-     ejemplo que vinieron con el widget, no el disco. Mientras sigan acá,
-     /escucha tiene comentada la opción que trae gente a esta página, para
-     no mandarle música de stock a alguien que llegó por un anuncio pago.
+     ejemplo que vinieron con el widget, no el disco. Por eso esta página no
+     está linkeada desde ningún lado: /escucha manda a Spotify y a YouTube.
 
-     Para ponerlo en marcha: subir los MP3 del disco, reemplazar TRACKS por
-     los títulos y rutas reales, y descomentar el bloque en escucha.html.
-     Ejemplo: { title: "Cae el Velo", src: "audio/02-cae-el-velo.mp3" }
+     Para ponerlo en marcha alcanza con subir los MP3 y cambiar TRACKS por la
+     lista de abajo, que ya es el tracklist real del álbum:
+
+       var TRACKS = [
+         { title: "Intronicte",                  src: "audio/01-intronicte.mp3" },
+         { title: "Erial",                       src: "audio/02-erial.mp3" },
+         { title: "Parias",                      src: "audio/03-parias.mp3" },
+         { title: "Mitos De Un Futuro Cercano",  src: "audio/04-mitos.mp3" },
+         { title: "Cifra",                       src: "audio/05-cifra.mp3" },
+         { title: "Gaia",                        src: "audio/06-gaia.mp3" },
+         { title: "Sicofante",                   src: "audio/07-sicofante.mp3" },
+         { title: "Anamnesis",                   src: "audio/08-anamnesis.mp3" },
+         { title: "Lo Que Siento",               src: "audio/09-lo-que-siento.mp3" },
+         { title: "Cae El Velo",                 src: "audio/10-cae-el-velo.mp3" },
+         { title: "Conexión",                    src: "audio/11-conexion.mp3" },
+         { title: "Haciaelocaso.com/union",      src: "audio/12-union.mp3" },
+       ];
   ═══════════════════════════════════════════════════════════════ */
   var TRACKS = [
     { title: "Demo I",   src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },

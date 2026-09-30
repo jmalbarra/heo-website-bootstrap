@@ -55,7 +55,7 @@ Rutas relativas al dominio. En GitHub podés abrir el archivo con el segundo enl
 | [`/union/`](union/index.html) | Agradecimiento y alta a la comunidad para quien llega por el último tema del disco. |
 | `/union/<CÓDIGO>` ([archivo](union/credencial.html)) | Credencial del miembro: número, imagen para redes y pantalla para mostrar en el show. |
 | [`/union/panel`](union/panel.html) | **Interno.** Cuántos son, por dónde llegaron y las últimas altas. Pide el `UNION_ADMIN_TOKEN`. |
-| [`/escucha`](escucha.html) | **Smart link del álbum.** Es la landing de la pauta: un solo pixel, un evento por plataforma. Reemplaza al Linktree para todo lo que se pague. |
+| [`/escucha`](escucha.html) | **Smart link del álbum.** Es la landing de la pauta: dos salidas (Spotify y la playlist de YouTube), un solo pixel y un evento por plataforma. Reemplaza al Linktree para todo lo que se pague. |
 | [`/spotify.html`](spotify.html) | Redirección medida al álbum en Spotify. |
 | [`/youtube.html`](youtube.html) | Redirección medida al video. |
 

@@ -175,38 +175,82 @@ Todo con **objetivo Tráfico**, optimizado a **Vistas de la página de destino**
 haciaelocaso.com/escucha?utm_source=meta&utm_medium=cpc&utm_campaign=mdufc&utm_content=<nombre-del-reel>
 ```
 
-**Un `utm_content` distinto por reel.** Es lo que después nos dice cuál funcionó. La landing `/escucha` es nuestra: tiene un solo pixel, mide el click a cada plataforma y los datos quedan en casa. Por eso no mandamos la pauta al Linktree.
+**Un `utm_content` distinto por tema.** Es lo que después nos dice cuál funcionó. La landing `/escucha` es nuestra: tiene un solo pixel, mide el click a cada plataforma y los datos quedan en casa. Por eso no mandamos la pauta al Linktree.
+
+La landing ofrece **dos salidas y nada más**: el álbum en Spotify y el álbum en YouTube (la playlist completa, no el video suelto — una playlist sigue sola de tema en tema, un video termina y devuelve a las recomendaciones de YouTube). El reproductor del sitio no está: cada opción de más le saca clicks a la principal, y el objetivo son streams.
 
 ---
 
-## 7. Los 8 reels del test
+## 7. Los creativos
 
-Tenemos 54. Van 8, y tienen que ser **8 ángulos distintos**, no 8 variaciones del mismo.
+### El tracklist (para tenerlo a mano)
 
-> ⚠️ **Verificar cada tema contra el tracklist real del álbum antes de producir el reel.**
-> Los títulos de abajo salen de `setlist.json`, que es el **setlist del show**: mezcla
-> temas del disco con singles viejos (Erial 2023, Cifra 2024, Lágrimas 2018),
-> interludios de Nomios y covers. Si un tema no está en el álbum, no se pauta.
+| # | Tema | | # | Tema |
+|---|---|---|---|---|
+| 1 | Intronicte · 1:32 *(interludio)* | | 7 | **Sicofante** · 2:58 |
+| 2 | **Erial** · 3:41 | | 8 | Anamnesis · 1:13 *(interludio)* |
+| 3 | **Parias** · 2:55 | | 9 | **Lo Que Siento** · 3:17 |
+| 4 | **Mitos De Un Futuro Cercano** · 4:28 | | 10 | **Cae El Velo** · 3:41 |
+| 5 | **Cifra** · 3:06 | | 11 | **Conexión** · 3:20 |
+| 6 | **Gaia** · 2:25 | | 12 | Haciaelocaso.com/union · 1:36 *(bonus)* |
 
-| # | Qué | Por qué |
+Nueve temas pautables. Los dos interludios y el bonus quedan afuera.
+
+### Qué son los 50+ reels que ya tenemos
+
+Todos el mismo formato: **la tapa + "NUEVO ÁLBUM YA DISPONIBLE" + el título**, cambiando el tema de fondo. Eso tiene una consecuencia muy buena y una muy mala, y las dos importan.
+
+#### Lo bueno: es un test de canción químicamente puro
+
+El visual es constante y lo único que cambia es el audio. Eso **aísla una sola variable** y contesta una pregunta que vale mucho más que esta campaña: *¿qué tema engancha a alguien que no nos conoce?*
+
+Es raro tener un test tan limpio. La respuesta sirve para elegir el próximo single, para saber con qué abrir los shows y para todo lo que publiquemos los próximos dos años. **Los 54 reels son perfectos para la etapa 1.**
+
+#### Lo malo: en mudo no queda nada
+
+La mayoría del feed arranca **sin sonido**. Un reel que es tapa fija + texto + música, visto en mudo, es una imagen quieta. **Lo único que el anuncio tiene para ofrecer —la canción— es justo lo que no se oye.** Y "NUEVO ÁLBUM YA DISPONIBLE" es un anuncio, no un gancho: le pide al que pasa que le importe antes de darle un motivo para que le importe.
+
+Además Meta entrega mucho peor lo que no se mueve: menos tiempo de visualización → CPM más caro → menos alcance por el mismo dinero.
+
+### Los tres arreglos, del más barato al más caro
+
+**1 · Letra en pantalla.** Cuatro a seis palabras del verso más fuerte, sincronizadas. Es **lo único que hace que el reel funcione en mudo**, y es el arreglo con mejor relación esfuerzo/resultado de toda la campaña. Cantamos en castellano: la letra es nuestro diferencial y hay que poder leerla.
+
+**2 · Que se mueva.** Aunque sea un zoom lento sobre la tapa. Mejor todavía: el visualizador que ya existe en el reproductor del sitio.
+
+**3 · Los primeros 2 segundos.** Que arranque en el golpe, no en la intro ni en el build-up. Si el recorte actual empieza en una parte tranquila, recortarlo de nuevo.
+
+> Con el arreglo 1 solo ya alcanza para lanzar. Los otros dos pueden esperar a la etapa 2.
+
+### Los 8 temas del test
+
+Un reel por tema. **La pregunta del test no es "qué reel", es "qué canción".**
+
+| # | Tema | Por qué está |
 |---|---|---|
-| 1 | **El breakdown más pesado de "Cae el Velo"** | Es el single que abre esta era y está en el disco. Para público frío, el riff pesa más que cualquier concepto |
-| 2 | **Vivo con público** (del 10/10) | El formato que mejor funciona en metal: prueba de que esto existe y hay gente |
-| 3 | **Nomios**, la IA entrenada con las letras | La rareza corta el scroll igual que lo haría un cover, y esto sí es nuestro |
-| 4 | **"Sicofante"** con la letra en pantalla | El que escupe odio detrás de una pantalla: la queja más universal que hay en redes. El de mayor techo orgánico |
-| 5 | **El concepto**: la humanidad le confiesa a la Tierra su final | Un gancho narrativo que ninguna otra banda tiene |
-| 6 | **La prensa**: Chaoszine (Finlandia) y "Los 20 duros" de Mariskal Rock | Prueba social real, y ya está publicada. Que una revista finlandesa hable de nosotros pesa acá |
-| 7 | **La estética audiovisual** del disco | Identidad de marca |
-| 8 | **Un tema emocional** del álbum | Para el corte emo / post-hardcore del público |
+| 1 | **Cae El Velo** | El single que abre esta era y el único con video propio |
+| 2 | **Sicofante** | El que escupe odio detrás de una pantalla: la queja más universal que hay en redes. El de mayor techo orgánico |
+| 3 | **Erial** | El que ya viajó solo: Chaoszine (Finlandia) y "Los 20 duros" de Mariskal Rock |
+| 4 | **Gaia** | 2:25, el más corto y directo del núcleo conceptual |
+| 5 | **Mitos De Un Futuro Cercano** | El título. Si engancha, ancla toda la marca del disco |
+| 6 | **Parias** | "Somos humanos, no máquinas". El grito más frontal |
+| 7 | **Cifra** | Single previo: ya tiene algo de reconocimiento acumulado |
+| 8 | **Lo Que Siento** | El corte emocional, para el ala emo / post-hardcore |
+
+*Suplente: **Conexión**, si algún reel se rechaza o queremos un noveno.*
+
+### Etapa 1 testea la canción. Etapa 2 la escala en mejor envase.
+
+Los 54 que ya existen entran tal cual a la etapa 1 (con la letra agregada). Para la etapa 2, **los 2–3 temas ganadores se rehacen** con el material del 10/10: el mismo tema que ya demostró que engancha, ahora en un formato que Meta entrega bien y que en mudo sigue diciendo algo.
+
+Es la única producción nueva que pide este plan, y se hace sabiendo exactamente qué canción merece el trabajo.
 
 ### Reglas para los 8
 
-- **Vertical 9:16.**
-- **El momento más pesado en los primeros 2 segundos.** No la intro, no el build-up: el golpe.
-- **Subtítulos quemados.** Se mira sin sonido, y la letra en castellano es nuestro diferencial: hay que poder leerla.
-- Nombre del anuncio = nombre del `utm_content`, para poder cruzarlo después.
-
----
+- **Vertical 9:16**
+- **Letra en pantalla** (ver arreglo 1)
+- **El golpe en los primeros 2 segundos**
+- Nombre del anuncio = nombre del tema = `utm_content`, para poder cruzarlo después
 
 ## 8. Qué mirar y cuándo
 
@@ -242,8 +286,7 @@ Se va a ver en Spotify for Artists. **No va a hacer un hit.** Lo que queda cuand
 
 - [ ] **Cuenta publicitaria en USD y zona horaria Buenos Aires.** Cambiarlo después resetea la facturación. Es de lo poco que en Meta no tiene arreglo cómodo
 - [ ] **Deployar `/escucha`**: mergear la rama a `develop` (staging), verificar, y después a `main` (producción)
-- [ ] ⚠️ **El reproductor del sitio (`/album.html`) todavía tiene temas de relleno** — cinco "Demo" apuntando a MP3s de ejemplo. La opción "Acá mismo, sin salir" quedó **comentada** en `/escucha` para no mandarle música de stock a alguien que llegó por un anuncio pago. Para recuperarla: subir los MP3 del disco, completar `TRACKS` en `js/player.js` y descomentar el bloque. Es la única opción del listado que no se va del dominio, así que conviene antes de la etapa 2
-- [ ] **Confirmar el tracklist real del álbum** y chequear contra él los 8 reels
+- [ ] **Agregar la letra en pantalla a los 8 reels del test** (ver sección 7 — es lo que los hace funcionar en mudo)
 - [ ] **Custom Conversion en Meta**: Events Manager → Custom Conversions → evento `ClickOut`, `destino` = `spotify`
 - [ ] **Verificar el pixel** con la herramienta de Eventos de prueba, entrando a `/escucha` y clickeando Spotify
 - [ ] **Cargar 20 USD con la tarjeta Deel** y mirar dos comprobantes: el resumen de Deel y el recibo de Meta. Confirmar que no aparezca ningún cargo extra antes de meter los 408

@@ -60,55 +60,20 @@
 
 		<p class="link__or"><span>o</span></p>
 
-		<nav class="opts" aria-label="Otras formas de escucharlo">
-
-			<!--
-				DESACTIVADO HASTA QUE EL REPRODUCTOR TENGA EL DISCO DE VERDAD.
-
-				album.html todavía carga los cinco temas de relleno que vinieron con
-				el widget ("Demo I" a "Demo V", apuntando a MP3s de ejemplo de
-				soundhelix.com). Mientras siga así, esta opción manda a alguien que
-				llegó por un anuncio pago a escuchar música de stock.
-
-				Hoy no lo ve nadie porque album.html no está linkeado desde ninguna
-				otra parte del sitio. Esta página era la única puerta.
-
-				Para reactivarlo: cargar los MP3 reales en el array TRACKS de
-				js/player.js y descomentar este bloque. Es la única opción del
-				listado que no se va del dominio, así que vale la pena recuperarla.
-
-			<a class="opt" href="album.html" data-heo-out="player-propio">
-				<span class="opt__ico" aria-hidden="true">▶</span>
-				<span class="opt__body">
-					<span class="opt__name">Acá mismo, sin salir</span>
-					<span class="opt__sub">Reproductor del sitio · sigue sonando con la pantalla apagada</span>
-				</span>
-			</a>
-			-->
-
-			<a class="opt" href="https://www.youtube.com/watch?v=zXoY7GYSDX0"
-			   data-heo-out="youtube" rel="noopener">
-				<span class="opt__ico" aria-hidden="true">▶</span>
-				<span class="opt__body">
-					<span class="opt__name">YouTube</span>
-					<span class="opt__sub">El video</span>
-				</span>
-			</a>
-
-			<!--
-				Cuando la distribuidora confirme los links del resto de las
-				plataformas, se descomenta y se le pone el data-heo-out con el
-				nombre: apple, deezer, amazon, tidal. El evento sale solo.
-
-			<a class="opt" href="PEGAR_LINK_APPLE_MUSIC" data-heo-out="apple" rel="noopener">
-				<span class="opt__ico" aria-hidden="true">♫</span>
-				<span class="opt__body">
-					<span class="opt__name">Apple Music</span>
-				</span>
-			</a>
-			-->
-
-		</nav>
+		<!--
+			YouTube va a la playlist del álbum, no al video suelto: el objetivo de la
+			pauta es que escuchen el disco, y una playlist sigue sola de tema en tema
+			mientras que un video termina y devuelve a las recomendaciones de YouTube.
+		-->
+		<a class="btn btn--youtube"
+		   href="https://www.youtube.com/playlist?list=PLNJp1A05FLtg"
+		   data-heo-out="youtube" rel="noopener">
+			<svg class="btn__ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+				<path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/>
+			</svg>
+			<span class="btn__txt">Escuchar en YouTube</span>
+			<span class="btn__arrow" aria-hidden="true">→</span>
+		</a>
 
 		<footer class="link__foot">
 			<a class="foot__link" href="union/" data-heo-out="union">
