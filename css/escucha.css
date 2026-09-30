@@ -12,6 +12,7 @@
 	--linea: rgba(34, 238, 201, 0.18);
 	--panel: rgba(34, 238, 201, 0.04);
 	--spotify: #1db954;
+	--youtube: #e60000;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -107,16 +108,31 @@ body::after {
 	color: var(--tinta-apagada);
 }
 
-/* ── Botón de Spotify ─────────────────────────────── */
+/* ── Los dos botones ──────────────────────────────── */
 
+/* Más juntos entre sí que del resto: se leen como un par de opciones
+   y no como dos cosas sueltas. */
+.cta {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+/* Grandes a propósito. Quien llega acá viene de un anuncio, no estaba
+   buscando nada y se va en dos segundos si duda: el objetivo es que el
+   dedo caiga bien sin apuntar. 64px de alto está muy por encima del
+   mínimo táctil de 44px. */
 .btn {
 	display: flex;
 	align-items: center;
-	gap: 12px;
-	padding: 17px 18px;
+	gap: 14px;
+	min-height: 64px;
+	padding: 20px 22px;
+	border-radius: 10px;
 	text-decoration: none;
-	font-weight: 600;
-	font-size: 0.95rem;
+	font-weight: 700;
+	font-size: 1.2rem;
+	letter-spacing: 0.01em;
 	border: 1px solid transparent;
 	transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
 }
@@ -124,7 +140,6 @@ body::after {
 .btn--spotify {
 	background: var(--spotify);
 	color: #04130a;
-	box-shadow: 0 0 0 rgba(29, 185, 84, 0);
 }
 
 .btn--spotify:hover,
@@ -134,45 +149,39 @@ body::after {
 	filter: brightness(1.06);
 }
 
-.btn__ico { width: 22px; height: 22px; flex: none; }
-.btn__txt { flex: 1; letter-spacing: 0.04em; }
-.btn__arrow { font-size: 1.1rem; opacity: 0.7; }
-
-/* YouTube va delineado y no relleno de rojo: los dos destinos son válidos,
-   pero el objetivo de la campaña son los streams de Spotify, y la jerarquía
-   visual tiene que decir eso sin necesidad de explicarlo. */
+/* Rojo de YouTube, apenas bajado de #FF0000: con el blanco encima, el rojo
+   puro queda en 4,0:1 de contraste y no llega al mínimo accesible. Este da
+   4,8:1 y a simple vista sigue siendo el rojo de YouTube. */
 .btn--youtube {
-	background: transparent;
-	color: var(--tinta);
-	border-color: rgba(34, 238, 201, 0.45);
+	background: var(--youtube);
+	color: #fff;
 }
 
 .btn--youtube:hover,
 .btn--youtube:focus-visible {
 	transform: translateY(-2px);
-	border-color: var(--tinta);
-	background: rgba(34, 238, 201, 0.07);
+	box-shadow: 0 8px 30px rgba(230, 0, 0, 0.34);
+	filter: brightness(1.08);
 }
 
-/* ── Separador ────────────────────────────────────── */
+.btn__ico { width: 26px; height: 26px; flex: none; }
+.btn__txt { flex: 1; }
+.btn__arrow { font-size: 1.25rem; opacity: 0.75; }
 
-.link__or {
-	display: flex;
-	align-items: center;
-	gap: 14px;
-	color: var(--tinta-apagada);
-	font-size: 0.7rem;
-	letter-spacing: 0.3em;
-	text-transform: uppercase;
-	margin: -6px 0;
+/* En pantallas angostas el texto entra igual bajando un punto, antes que
+   partirse en dos líneas. */
+@media (max-width: 380px) {
+	.btn { font-size: 1.06rem; padding: 18px 18px; gap: 12px; }
+	.btn__ico { width: 23px; height: 23px; }
 }
 
-.link__or::before,
-.link__or::after {
-	content: "";
-	flex: 1;
-	height: 1px;
-	background: var(--linea);
+/* iPhone SE y similares: acá "Escuchar en Spotify" se partía en dos líneas.
+   Un renglón partido en el botón principal es exactamente lo que no queremos
+   en una página que tiene que resolverse sin leer. */
+@media (max-width: 340px) {
+	.btn { font-size: 0.94rem; padding: 16px 14px; gap: 10px; }
+	.btn__ico { width: 20px; height: 20px; }
+	.btn__arrow { font-size: 1.05rem; }
 }
 
 /* ── Pie ──────────────────────────────────────────── */
