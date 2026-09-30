@@ -63,10 +63,20 @@
 		<nav class="opts" aria-label="Otras formas de escucharlo">
 
 			<!--
-				El reproductor propio. Es la única opción que no se va del dominio:
-				la persona escucha y el pixel la sigue viendo. Sirve de red para
-				quien no tiene cuenta en ninguna plataforma.
-			-->
+				DESACTIVADO HASTA QUE EL REPRODUCTOR TENGA EL DISCO DE VERDAD.
+
+				album.html todavía carga los cinco temas de relleno que vinieron con
+				el widget ("Demo I" a "Demo V", apuntando a MP3s de ejemplo de
+				soundhelix.com). Mientras siga así, esta opción manda a alguien que
+				llegó por un anuncio pago a escuchar música de stock.
+
+				Hoy no lo ve nadie porque album.html no está linkeado desde ninguna
+				otra parte del sitio. Esta página era la única puerta.
+
+				Para reactivarlo: cargar los MP3 reales en el array TRACKS de
+				js/player.js y descomentar este bloque. Es la única opción del
+				listado que no se va del dominio, así que vale la pena recuperarla.
+
 			<a class="opt" href="album.html" data-heo-out="player-propio">
 				<span class="opt__ico" aria-hidden="true">▶</span>
 				<span class="opt__body">
@@ -74,6 +84,7 @@
 					<span class="opt__sub">Reproductor del sitio · sigue sonando con la pantalla apagada</span>
 				</span>
 			</a>
+			-->
 
 			<a class="opt" href="https://www.youtube.com/watch?v=zXoY7GYSDX0"
 			   data-heo-out="youtube" rel="noopener">

@@ -70,11 +70,21 @@ Los tres van **combinados dentro de un mismo conjunto de anuncios**, no separado
 | **B · Puerta de entrada** | Korn, Slipknot, Linkin Park, System of a Down, Deftones, Rammstein |
 | **C · Escena y medios** | Knotfest, Hell & Heaven, Resurrection Fest, Revolver Magazine, Kerrang! |
 
-### El cover de Korn es nuestro mejor activo publicitario
+### Apuntarle a los fans de Korn no requiere tocar a Korn
 
-En el setlist está **"Here to Stay"**. Un anuncio con ese cover, apuntado al stack B, es **atención prestada**: no le pedimos a un desconocido que le dé una chance a una banda que no conoce, le ofrecemos algo que ya ama, tocado por nosotros.
+El stack B se queda como está. **Segmentar y creativo son dos decisiones separadas** y conviene no mezclarlas: el interés es del oyente, no nuestro. Meta sabe a quién le gusta Korn y le muestra lo que le pongamos adelante — no hace falta tener nada de ellos.
 
-Es el creativo con más chances de funcionar en público frío que tenemos. Que no falte.
+Lo aclaro porque la primera versión de este plan proponía un anuncio con el cover de *"Here to Stay"*. Estaba mal por tres motivos, en orden de importancia:
+
+1. **El cover no está en el disco.** El anuncio prometía una cosa y el destino entregaba otra. Es de los motivos más comunes de campaña con mucho click y cero conversión.
+2. **No es parte del repertorio**: se tocó una vez.
+3. **Usar una composición ajena en un anuncio pago** no es lo mismo que tocarla una noche en vivo.
+
+### La regla que sale de ahí: el anuncio y el destino tienen que coincidir
+
+Todo lo que suene en un anuncio tiene que estar en *Mitos De Un Futuro Cercano*, a un click de distancia. Si alguien escucha algo, hace click y no lo encuentra, ese click está pago y perdido.
+
+> Si hay video del cover, va **orgánico**: no cuesta nada, no promete nada y está bueno. Pero no pago.
 
 ### El anuncio tiene que espantar al que no es del palo
 
@@ -173,16 +183,21 @@ haciaelocaso.com/escucha?utm_source=meta&utm_medium=cpc&utm_campaign=mdufc&utm_c
 
 Tenemos 54. Van 8, y tienen que ser **8 ángulos distintos**, no 8 variaciones del mismo.
 
+> ⚠️ **Verificar cada tema contra el tracklist real del álbum antes de producir el reel.**
+> Los títulos de abajo salen de `setlist.json`, que es el **setlist del show**: mezcla
+> temas del disco con singles viejos (Erial 2023, Cifra 2024, Lágrimas 2018),
+> interludios de Nomios y covers. Si un tema no está en el álbum, no se pauta.
+
 | # | Qué | Por qué |
 |---|---|---|
-| 1 | **Cover de Korn — "Here to Stay"** | Atención prestada. El de mejor pronóstico en público frío |
-| 2 | **Breakdown de "Cae el Velo"** | Es el single que abre esta era |
-| 3 | **Vivo con público** (del 10/10) | El formato que mejor funciona en metal |
-| 4 | **El concepto**: la humanidad le confiesa a la Tierra su final ("Mitos" / "Gaia") | Un gancho narrativo que ninguna otra banda tiene |
-| 5 | **Nomios**, la IA entrenada con las letras | La rareza corta el scroll. Además es material de prensa |
-| 6 | **"Sicofante"** con la letra en pantalla | El que escupe odio detrás de una pantalla: la queja más universal que hay en redes. Es el de mayor techo orgánico |
-| 7 | **La estética audiovisual** (matrix / lo visual del disco) | Identidad de marca |
-| 8 | **Un tema emocional** ("Más Allá De Mis Ojos" o "En Las Sombras") | Para el corte emo / post-hardcore del público |
+| 1 | **El breakdown más pesado de "Cae el Velo"** | Es el single que abre esta era y está en el disco. Para público frío, el riff pesa más que cualquier concepto |
+| 2 | **Vivo con público** (del 10/10) | El formato que mejor funciona en metal: prueba de que esto existe y hay gente |
+| 3 | **Nomios**, la IA entrenada con las letras | La rareza corta el scroll igual que lo haría un cover, y esto sí es nuestro |
+| 4 | **"Sicofante"** con la letra en pantalla | El que escupe odio detrás de una pantalla: la queja más universal que hay en redes. El de mayor techo orgánico |
+| 5 | **El concepto**: la humanidad le confiesa a la Tierra su final | Un gancho narrativo que ninguna otra banda tiene |
+| 6 | **La prensa**: Chaoszine (Finlandia) y "Los 20 duros" de Mariskal Rock | Prueba social real, y ya está publicada. Que una revista finlandesa hable de nosotros pesa acá |
+| 7 | **La estética audiovisual** del disco | Identidad de marca |
+| 8 | **Un tema emocional** del álbum | Para el corte emo / post-hardcore del público |
 
 ### Reglas para los 8
 
@@ -227,6 +242,8 @@ Se va a ver en Spotify for Artists. **No va a hacer un hit.** Lo que queda cuand
 
 - [ ] **Cuenta publicitaria en USD y zona horaria Buenos Aires.** Cambiarlo después resetea la facturación. Es de lo poco que en Meta no tiene arreglo cómodo
 - [ ] **Deployar `/escucha`**: mergear la rama a `develop` (staging), verificar, y después a `main` (producción)
+- [ ] ⚠️ **El reproductor del sitio (`/album.html`) todavía tiene temas de relleno** — cinco "Demo" apuntando a MP3s de ejemplo. La opción "Acá mismo, sin salir" quedó **comentada** en `/escucha` para no mandarle música de stock a alguien que llegó por un anuncio pago. Para recuperarla: subir los MP3 del disco, completar `TRACKS` en `js/player.js` y descomentar el bloque. Es la única opción del listado que no se va del dominio, así que conviene antes de la etapa 2
+- [ ] **Confirmar el tracklist real del álbum** y chequear contra él los 8 reels
 - [ ] **Custom Conversion en Meta**: Events Manager → Custom Conversions → evento `ClickOut`, `destino` = `spotify`
 - [ ] **Verificar el pixel** con la herramienta de Eventos de prueba, entrando a `/escucha` y clickeando Spotify
 - [ ] **Cargar 20 USD con la tarjeta Deel** y mirar dos comprobantes: el resumen de Deel y el recibo de Meta. Confirmar que no aparezca ningún cargo extra antes de meter los 408

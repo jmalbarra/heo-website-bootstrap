@@ -3,8 +3,15 @@
 
   /* ═══════════════════════════════════════════════════════════════
      TRACK LIST
-     Reemplazá los src por las rutas reales a tus MP3.
-     Ejemplo: src: "audio/01-intro.mp3"
+
+     ⚠️ ESTO TODAVÍA ES RELLENO. Los cinco "Demo" de abajo son los MP3 de
+     ejemplo que vinieron con el widget, no el disco. Mientras sigan acá,
+     /escucha tiene comentada la opción que trae gente a esta página, para
+     no mandarle música de stock a alguien que llegó por un anuncio pago.
+
+     Para ponerlo en marcha: subir los MP3 del disco, reemplazar TRACKS por
+     los títulos y rutas reales, y descomentar el bloque en escucha.html.
+     Ejemplo: { title: "Cae el Velo", src: "audio/02-cae-el-velo.mp3" }
   ═══════════════════════════════════════════════════════════════ */
   var TRACKS = [
     { title: "Demo I",   src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
@@ -16,7 +23,7 @@
 
   var ALBUM_TITLE  = "Mitos De Un Futuro Cercano";
   var ALBUM_ARTIST = "Hacia el Ocaso";
-  var ALBUM_ART    = "images/album-cover.jpg"; /* tapa del disco */
+  var ALBUM_ART    = "images/mdufc-tapa.jpg"; /* tapa del disco */
 
   /* ═══════════════════════════════════════════════════════════════
      STATE
