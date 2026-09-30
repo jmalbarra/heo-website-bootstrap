@@ -197,19 +197,6 @@ body::after {
 	text-align: center;
 }
 
-.foot__link {
-	color: var(--tinta);
-	text-decoration: none;
-	font-size: 0.76rem;
-	line-height: 1.5;
-	letter-spacing: 0.04em;
-	border-bottom: 1px solid var(--linea);
-	padding-bottom: 3px;
-}
-
-.foot__link:hover,
-.foot__link:focus-visible { border-bottom-color: var(--tinta); }
-
 .foot__row {
 	display: flex;
 	flex-wrap: wrap;
