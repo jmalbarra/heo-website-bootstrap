@@ -90,12 +90,11 @@
   color: var(--accent);
   background: var(--accent-bg);
   border: 1px solid var(--accent-border);
-  border-radius: 99px;
+  border-radius: 4px;
   padding: 0.35rem 0.9rem;
   margin-bottom: 1.1rem;
 }
 
-.pk-release__tag--live { animation: breathe-text 4s ease-in-out infinite; }
 
 .pk-release__title {
   font-family: var(--font-hero);

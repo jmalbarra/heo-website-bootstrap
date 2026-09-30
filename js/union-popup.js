@@ -61,7 +61,7 @@
 		'background:rgba(3,3,6,.72);opacity:0;transition:opacity .28s ease;padding:0;}' +
 		'#heo-up-back.on{opacity:1;}' +
 		'#heo-up{width:100%;max-width:460px;background:#050507;color:#eaeaea;border:1px solid #14554a;' +
-		'border-radius:14px 14px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.55);padding:26px 22px 22px;' +
+		'border-radius:14px 14px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.55);padding:22px 20px 18px;' +
 		'font-family:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;' +
 		'transform:translateY(24px);transition:transform .3s ease;position:relative;}' +
 		'#heo-up-back.on #heo-up{transform:translateY(0);}' +
@@ -70,16 +70,17 @@
 		'line-height:1;cursor:pointer;padding:4px;}' +
 		'#heo-up-x:hover{color:#fff;}' +
 		'#heo-up .kick{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#22eec9;margin:0 0 12px;}' +
-		'#heo-up h2{font-size:21px;line-height:1.3;color:#fff;margin:0 0 8px;font-weight:700;}' +
-		'#heo-up p.sub{font-size:13.5px;line-height:1.6;color:#b4b4b4;margin:0 0 18px;}' +
+		'#heo-up h2{font-size:19px;line-height:1.3;color:#fff;margin:0 28px 6px 0;font-weight:700;}' +
+		'#heo-up p.sub{font-size:13px;line-height:1.5;color:#b4b4b4;margin:0 0 14px;}' +
 		'#heo-up label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8a8a8a;margin:0 0 5px;}' +
 		'#heo-up input[type=text],#heo-up input[type=email]{width:100%;box-sizing:border-box;background:#0a1613;' +
-		'border:1px solid #14554a;border-radius:7px;color:#fff;font:inherit;font-size:15px;padding:11px 12px;margin:0 0 13px;}' +
+		'border:1px solid #14554a;border-radius:7px;color:#fff;font:inherit;font-size:15px;padding:10px 12px;margin:0 0 10px;}' +
+		'#heo-up input::placeholder{color:#6e6e6e;}' +
 		'#heo-up input:focus{outline:none;border-color:#22eec9;}' +
 		'#heo-up button.go{width:100%;background:#22eec9;color:#050507;border:0;border-radius:7px;font:inherit;' +
-		'font-size:15px;font-weight:700;padding:13px;cursor:pointer;}' +
+		'font-size:15px;font-weight:700;padding:12px;cursor:pointer;}' +
 		'#heo-up button.go:disabled{opacity:.6;cursor:default;}' +
-		'#heo-up .fine{font-size:11px;line-height:1.6;color:#6e6e6e;margin:13px 0 0;}' +
+		'#heo-up .fine{font-size:11px;line-height:1.5;color:#6e6e6e;margin:10px 0 0;text-align:center;}' +
 		'#heo-up .fine a{color:#22eec9;}' +
 		'#heo-up .err{font-size:12.5px;color:#ff6b6b;margin:0 0 12px;min-height:1px;}' +
 		'#heo-up .done h2{color:#22eec9;}' +
@@ -98,16 +99,13 @@
 		'<div id="heo-up">' +
 			'<button id="heo-up-x" type="button" aria-label="Cerrar">&times;</button>' +
 			'<div id="heo-up-form">' +
-				'<p class="kick">Hacia el Ocaso</p>' +
-				'<h2>Sos parte de Hacia el Ocaso. Hacelo oficial.</h2>' +
-				'<p class="sub">Sumate a la Unión y recibí tu número de miembro. Te escribimos cuando haya shows, lanzamientos y cosas que no salen en redes.</p>' +
+				'<h2>Sumate a la Unión</h2>' +
+				'<p class="sub">Shows, lanzamientos y lo que no sale en redes.</p>' +
 				'<p class="err" id="heo-up-err" hidden></p>' +
-				'<label for="heo-up-name">Nombre</label>' +
-				'<input type="text" id="heo-up-name" autocomplete="name" maxlength="64">' +
-				'<label for="heo-up-mail">Email</label>' +
-				'<input type="email" id="heo-up-mail" autocomplete="email" inputmode="email" maxlength="128">' +
+				'<input type="text" id="heo-up-name" autocomplete="name" maxlength="64" placeholder="Nombre" aria-label="Nombre">' +
+				'<input type="email" id="heo-up-mail" autocomplete="email" inputmode="email" maxlength="128" placeholder="Email" aria-label="Email">' +
 				'<button type="button" class="go" id="heo-up-go">Cuenten conmigo</button>' +
-				'<p class="fine">Al unirte aceptás recibir novedades por mail. Te podés dar de baja cuando quieras. <a href="/union/" target="_blank" rel="noopener">Más info</a>.</p>' +
+				'<p class="fine">Te podés dar de baja cuando quieras.</p>' +
 			'</div>' +
 		'</div>';
 
@@ -134,7 +132,7 @@
 		wrap.innerHTML =
 			'<p class="kick">Hacia el Ocaso</p>' +
 			'<h2>Listo, sos parte de la Unión.</h2>' + num +
-			'<p class="sub" style="margin-top:12px;">Te llega un mail con tu credencial. Si no aparece, mirá en spam. Ahora seguí, que hay más.</p>';
+			'<p class="sub" style="margin-top:10px;">Te llega un mail con tu credencial (si no, mirá en spam).</p>';
 		setTimeout(function () { cerrar(false); }, 2600);
 	}
 
