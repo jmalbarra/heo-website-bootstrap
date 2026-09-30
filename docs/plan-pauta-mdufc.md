@@ -129,8 +129,8 @@ Por eso la etapa 1 arranca **ya** y lo atraviesa, en vez de empezar en una fecha
 
 | Semana | Fechas | Qué corre | **Total** |
 |---|---|---|---|
-| **1** | mié 30/09 – dom 05/10 | Etapa 1 · Test (8 USD/día) | **48 USD** |
-| **2** | lun 06/10 – dom 12/10 | Etapa 1 · Test — **🎤 show sáb 10/10** | **56 USD** |
+| **1** | mié 30/09 – dom 05/10 | 1a Test de video → 1b Test de canción | **48 USD** |
+| **2** | lun 06/10 – dom 12/10 | 1b Test de canción — **🎤 show sáb 10/10** | **56 USD** |
 | **3** | lun 13/10 – dom 19/10 | Etapa 2A · Escala AR (5,50/día) | **38 USD** |
 | **4** | lun 20/10 – dom 26/10 | 2A + 2B Retargeting + 2C México/Chile | **91 USD** |
 | **5** | lun 27/10 – dom 02/11 | 2A + 2B (2C termina el 29/10) | **75 USD** |
@@ -141,7 +141,8 @@ Por eso la etapa 1 arranca **ya** y lo atraviesa, en vez de empezar en una fecha
 
 | Etapa | Fechas | Diario | Total |
 |---|---|---|---|
-| **1 · Test de creativos** | 30/09 – 12/10 (13 días) | 8,00 USD | 104 USD |
+| **1a · Test de video** | 30/09 – 04/10 (5 días) | 8,00 USD | 40 USD |
+| **1b · Test de canción** | 05/10 – 12/10 (8 días) | 8,00 USD | 64 USD |
 | **2A · Escala Argentina** | 13/10 – 02/11 (21 días) | 5,50 USD | 115 USD |
 | **2B · Retargeting + Lookalike** | 20/10 – 02/11 (14 días) | 3,50 USD | 49 USD |
 | **2C · Test México + Chile** | 20/10 – 29/10 (10 días) | 4,00 USD | 40 USD |
@@ -198,33 +199,48 @@ Nueve temas pautables. Los dos interludios y el bonus quedan afuera.
 
 ### Qué son los 50+ reels que ya tenemos
 
-Todos el mismo formato: **la tapa + "NUEVO ÁLBUM YA DISPONIBLE" + el título**, cambiando el tema de fondo. Eso tiene una consecuencia muy buena y una muy mala, y las dos importan.
+**4 videos de base** (que ya traen la tapa y el texto "NUEVO ÁLBUM YA DISPONIBLE") combinados con las distintas canciones de fondo. De ahí salen los 50 y pico.
 
-#### Lo bueno: es un test de canción químicamente puro
+Eso es una matriz de **4 visuales × 9 temas pautables**, y tiene una consecuencia que decide cómo se arma el test.
 
-El visual es constante y lo único que cambia es el audio. Eso **aísla una sola variable** y contesta una pregunta que vale mucho más que esta campaña: *¿qué tema engancha a alguien que no nos conoce?*
+#### El problema: son dos variables, no una
 
-Es raro tener un test tan limpio. La respuesta sirve para elegir el próximo single, para saber con qué abrir los shows y para todo lo que publiquemos los próximos dos años. **Los 54 reels son perfectos para la etapa 1.**
+Si los 8 anuncios del test tienen **canción distinta y base distinta**, cuando uno gane no vamos a saber por qué ganó. ¿Enganchó la canción o enganchó el video? Las dos respuestas llevan a decisiones opuestas para la etapa 2, y el test no distingue.
 
-#### Lo malo: en mudo no queda nada
+Con 408 dólares no se pueden testear dos variables a la vez. **Hay que fijar una.**
 
-La mayoría del feed arranca **sin sonido**. Un reel que es tapa fija + texto + música, visto en mudo, es una imagen quieta. **Lo único que el anuncio tiene para ofrecer —la canción— es justo lo que no se oye.** Y "NUEVO ÁLBUM YA DISPONIBLE" es un anuncio, no un gancho: le pide al que pasa que le importe antes de darle un motivo para que le importe.
+#### La solución: dos tests seguidos, misma plata
 
-Además Meta entrega mucho peor lo que no se mueve: menos tiempo de visualización → CPM más caro → menos alcance por el mismo dinero.
+La etapa 1 se parte en dos, sin presupuesto extra:
 
-### Los tres arreglos, del más barato al más caro
+| | Cuándo | Qué | Cómo |
+|---|---|---|---|
+| **1a · Test de video** | 30/09 – 04/10 · 5 días · **40 USD** | ¿Qué base visual frena el scroll? | **4 anuncios, los 4 con la misma canción.** Sólo cambia el video |
+| **1b · Test de canción** | 05/10 – 12/10 · 8 días · **64 USD** | ¿Qué tema engancha a un desconocido? | **8 anuncios, los 8 con el video ganador.** Sólo cambia el tema |
 
-**1 · Letra en pantalla.** Cuatro a seis palabras del verso más fuerte, sincronizadas. Es **lo único que hace que el reel funcione en mudo**, y es el arreglo con mejor relación esfuerzo/resultado de toda la campaña. Cantamos en castellano: la letra es nuestro diferencial y hay que poder leerla.
+El video va primero por tres razones: son 4 celdas y no 9, así que se resuelve más rápido y más barato; el visual es lo primero que se ve, sobre todo en mudo; y una vez fijado, el test de canción queda limpio.
 
-**2 · Que se mueva.** Aunque sea un zoom lento sobre la tapa. Mejor todavía: el visualizador que ya existe en el reproductor del sitio.
+La canción del test 1a tiene que ser **la misma en los cuatro** y conviene que sea de las fuertes: **Cae El Velo** o **Sicofante**.
 
-**3 · Los primeros 2 segundos.** Que arranque en el golpe, no en la intro ni en el build-up. Si el recorte actual empieza en una parte tranquila, recortarlo de nuevo.
+> **Honestidad sobre el test 1a:** 40 dólares entre 4 celdas son unos 10 por celda, o sea 65–165 clicks cada una. Alcanza para ver un ganador claro, **no** para desempatar dos que van parejos. Si dos empatan, se elige por tiempo de visualización y se sigue. No gastar más en resolverlo: la plata rinde mucho más en el test de canción.
+>
+> Van los 4 en **un mismo conjunto**, no en cuatro. Meta va a concentrar el gasto en el que rinde mejor, y eso *es* la respuesta — se lee como "Meta eligió el 3" y no como una estadística prolija. Cuatro conjuntos separados darían datos más limpios y costarían el triple.
 
-> Con el arreglo 1 solo ya alcanza para lanzar. Los otros dos pueden esperar a la etapa 2.
+#### La combinación ganadora puede no existir todavía
+
+Los 50 reels son combinaciones ya fabricadas, pero la que importa —**video ganador × canción ganadora**— puede no estar entre ellas. No es problema: es rearmar un render con piezas que ya existen. Al cerrar cada test, fabricar lo que falte.
+
+### Lo que sí sigue siendo cierto: en mudo se pierde la canción
+
+La mayoría del feed arranca **sin sonido**. Aunque el video se mueva, **lo único que el anuncio tiene para ofrecer —la canción— es justo lo que no se oye**, y "NUEVO ÁLBUM YA DISPONIBLE" es un anuncio, no un gancho: le pide al que pasa que le importe antes de darle un motivo.
+
+**El arreglo más barato de toda la campaña: la letra en pantalla.** Cuatro a seis palabras del verso más fuerte, sincronizadas. Cantamos en castellano y esa es la diferencia con las bandas anglo que compiten por la misma atención: hay que poder leerla.
+
+No frena el lanzamiento —los videos ya se mueven, algo van a entregar— pero es lo primero que hay que sumar, y va perfecto en el test 1b: para entonces ya sabemos qué base usar y se le agrega la letra a esa sola.
 
 ### Los 8 temas del test
 
-Un reel por tema. **La pregunta del test no es "qué reel", es "qué canción".**
+Son los 8 del test **1b**, todos sobre el video que haya ganado el 1a. **La pregunta acá no es "qué reel", es "qué canción".**
 
 | # | Tema | Por qué está |
 |---|---|---|
@@ -239,26 +255,29 @@ Un reel por tema. **La pregunta del test no es "qué reel", es "qué canción".*
 
 *Suplente: **Conexión**, si algún reel se rechaza o queremos un noveno.*
 
-### Etapa 1 testea la canción. Etapa 2 la escala en mejor envase.
+### Etapa 2: el video del 10/10 entra a competir
 
-Los 54 que ya existen entran tal cual a la etapa 1 (con la letra agregada). Para la etapa 2, **los 2–3 temas ganadores se rehacen** con el material del 10/10: el mismo tema que ya demostró que engancha, ahora en un formato que Meta entrega bien y que en mudo sigue diciendo algo.
+Para la etapa 2 tenemos algo que hoy no existe: **material en vivo con público**. Ese es el formato que mejor funciona en metal y no está entre los 4 videos actuales.
 
-Es la única producción nueva que pide este plan, y se hace sabiendo exactamente qué canción merece el trabajo.
+No se rehace todo: se arma **una variante en vivo de la canción ganadora** y se la pone a competir contra la combinación que ganó la etapa 1. Si gana, se escala con esa; si no, se sigue con la que ya venía. Es una sola producción nueva y se hace sabiendo exactamente qué canción merece el trabajo.
 
 ### Reglas para los 8
 
 - **Vertical 9:16**
-- **Letra en pantalla** (ver arreglo 1)
-- **El golpe en los primeros 2 segundos**
-- Nombre del anuncio = nombre del tema = `utm_content`, para poder cruzarlo después
+- **Una sola variable por test.** En 1a cambia el video y nada más; en 1b cambia el tema y nada más
+- **Letra en pantalla** a partir del test 1b
+- **El golpe en los primeros 2 segundos** — si el recorte arranca en una parte tranquila, recortarlo de nuevo
+- Nombre del anuncio = lo que se está testeando (`video-1`…`video-4`, después el nombre del tema) = `utm_content`
 
 ## 8. Qué mirar y cuándo
 
 | Cuándo | Qué hacer |
 |---|---|
-| **Día 5** (04/10) | Matar los 4 reels con peor costo por vista de landing |
-| **Día 10** (09/10) | Dejar los 3 mejores |
-| **12/10** | Cerrar etapa 1. Elegir ganadores. Sumar material del show |
+| **04/10** | Cierra 1a. Elegir el video ganador y fabricar con él los 8 reels de canción (+ letra en pantalla) |
+| **05/10** | Arranca 1b |
+| **09/10** | Matar los 4 temas con peor costo por vista de landing |
+| **10/10** | 🎤 Show en Bula. **Filmar vertical** |
+| **12/10** | Cerrar etapa 1. Quedan 2–3 temas ganadores |
 | **19/10** | Revisar 2A antes de abrir 2B y 2C |
 | **29/10** | Leer el test de México/Chile: ¿el CPC compensa? |
 | **02/11** | Cerrar Meta. Chequear Campaign Kit en Spotify for Artists |
@@ -286,7 +305,8 @@ Se va a ver en Spotify for Artists. **No va a hacer un hit.** Lo que queda cuand
 
 - [ ] **Cuenta publicitaria en USD y zona horaria Buenos Aires.** Cambiarlo después resetea la facturación. Es de lo poco que en Meta no tiene arreglo cómodo
 - [ ] **Deployar `/escucha`**: mergear la rama a `develop` (staging), verificar, y después a `main` (producción)
-- [ ] **Agregar la letra en pantalla a los 8 reels del test** (ver sección 7 — es lo que los hace funcionar en mudo)
+- [ ] **Elegir la canción del test 1a** (Cae El Velo o Sicofante) y armar los 4 reels con ella, uno por video
+- [ ] **Chequear que los 4 se diferencien SÓLO en el video.** Misma canción, mismo recorte, mismo texto — si no, el test no mide nada
 - [ ] **Custom Conversion en Meta**: Events Manager → Custom Conversions → evento `ClickOut`, `destino` = `spotify`
 - [ ] **Verificar el pixel** con la herramienta de Eventos de prueba, entrando a `/escucha` y clickeando Spotify
 - [ ] **Cargar 20 USD con la tarjeta Deel** y mirar dos comprobantes: el resumen de Deel y el recibo de Meta. Confirmar que no aparezca ningún cargo extra antes de meter los 408
@@ -332,6 +352,7 @@ Una tarjeta de Deel se emite afuera y paga USD contra saldo en USD: **no hay ent
 | **Meta rechaza la tarjeta Deel** | Por eso el test de 20 USD primero, y un medio de pago de respaldo cargado |
 | **El pixel no puede ver los streams** | Limitación de la industria, no nuestra. Se cruza con Spotify for Artists |
 | **Los intereses rinden peor que el público abierto** | Se lee el día 5. Si el costo por vista es malo, se abre un conjunto amplio de prueba con lo que quede |
+| **Los 4 videos empatan en el test 1a** | Se elige por tiempo de visualización y se sigue. No gastar más en desempatar: rinde más en el test de canción |
 
 ---
 
