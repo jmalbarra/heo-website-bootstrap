@@ -47,12 +47,34 @@
  *
  *   PageView    — a todos los pixels, en toda página que incluya el script.
  *   ViewContent — sólo al principal, donde el HTML declare data-heo-view.
+ *   EngagedView — sólo al principal, en las mismas páginas que ViewContent.
  *   ClickOut    — sólo al principal. Evento propio, con destino: 'spotify' | …
  *
  * ClickOut es custom a propósito. En Meta se convierte en Custom Conversion
  * (Events Manager › Custom Conversions › evento ClickOut, destino = spotify) y
  * desde ahí se puede optimizar. Mandarlo como Purchase optimizaría mejor pero
  * ensucia el reporte de ventas de la tienda con streams, que no son plata.
+ *
+ * POR QUÉ EXISTE EngagedView
+ *
+ * La primera pauta dejó este número: 545 ViewContent contra 28 ClickOut. El
+ * 95% de las visitas cargó la landing y se fue sin tocar nada. Pero ViewContent
+ * se dispara al cargar la página, así que mete en la misma bolsa dos cosas que
+ * piden arreglos opuestos:
+ *
+ *   - el que tocó el anuncio sin querer y rebotó en un segundo
+ *     → la landing no tiene la culpa; el problema es a quién compra Meta
+ *   - el que llegó, miró y no se convenció
+ *     → la landing sí tiene la culpa y hay que rehacerla
+ *
+ * EngagedView separa los dos: se manda cuando la visita acumula VISITA_REAL_MS
+ * de página *visible*, o antes si la persona hace algo (scroll, toque, tecla).
+ * Mirando ViewContent → EngagedView → ClickOut se ve en qué escalón se cae la
+ * gente. Si EngagedView queda muy por debajo de ViewContent, era tráfico
+ * accidental; si lo acompaña y el que no sube es ClickOut, es la página.
+ *
+ * Cuenta tiempo visible y no tiempo de reloj a propósito: una pestaña abierta
+ * en segundo plano y nunca mirada no es una visita real.
  */
 (function (window, document) {
 	"use strict";
@@ -82,6 +104,11 @@
 	// caso en que fbevents no cargue nunca (bloqueador, red caída).
 	var ESPERA_BEACON_MS = 300;
 	var ESPERA_MAXIMA_MS = 1200;
+
+	// Página visible que hace falta acumular para contar la visita como real.
+	// Tres segundos es poco para leer la página pero mucho para un rebote: el
+	// toque accidental se va bastante antes. Subirlo acá sube el listón.
+	var VISITA_REAL_MS = 3000;
 
 	/* ── Modo ──────────────────────────────────────────────────────────── */
 
@@ -303,6 +330,69 @@
 		window.setTimeout(irse, ESPERA_MAXIMA_MS);
 	}
 
+	/* ── Visita real ───────────────────────────────────────────────────── */
+
+	// Manda EngagedView una sola vez, cuando la visita deja de parecer un
+	// rebote: o acumuló VISITA_REAL_MS de página visible, o la persona hizo
+	// algo antes. Cualquiera de las dos alcanza — quien scrollea a los 800 ms
+	// ya demostró que está mirando.
+	//
+	// El reloj se frena cuando la pestaña deja de estar visible y sigue cuando
+	// vuelve. Sin eso una pestaña abierta en segundo plano y nunca mirada
+	// llegaría sola a los tres segundos y contaría como visita real.
+	function medirVisitaReal(marca) {
+		var SENALES = ['scroll', 'pointerdown', 'keydown'];
+		var yaFue = false;
+		var acumulado = 0;   // ms visibles ya contados
+		var desde = null;    // cuándo empezó el tramo visible en curso
+		var timer = null;
+
+		function olvidar() {
+			if (timer) { window.clearTimeout(timer); timer = null; }
+			document.removeEventListener('visibilitychange', alCambiar);
+			for (var i = 0; i < SENALES.length; i++) {
+				window.removeEventListener(SENALES[i], disparar, true);
+			}
+		}
+
+		function disparar() {
+			if (yaFue) return;
+			yaFue = true;
+			olvidar();
+			ev('EngagedView', {
+				content_name: marca.getAttribute('data-heo-content'),
+				content_type: 'album'
+			});
+		}
+
+		function arrancarReloj() {
+			if (yaFue || timer) return;
+			desde = Date.now();
+			timer = window.setTimeout(disparar, Math.max(0, VISITA_REAL_MS - acumulado));
+		}
+
+		function pararReloj() {
+			if (timer) { window.clearTimeout(timer); timer = null; }
+			if (desde) { acumulado += Date.now() - desde; desde = null; }
+		}
+
+		function alCambiar() {
+			if (document.visibilityState === 'visible') arrancarReloj();
+			else pararReloj();
+		}
+
+		document.addEventListener('visibilitychange', alCambiar);
+
+		// En captura, para enterarnos aunque algo más detenga la propagación.
+		// disparar() no cancela nada ni toca el evento, así que no se mete en
+		// el camino del handler de ClickOut que vive en los <a>.
+		for (var i = 0; i < SENALES.length; i++) {
+			window.addEventListener(SENALES[i], disparar, true);
+		}
+
+		if (document.visibilityState === 'visible') arrancarReloj();
+	}
+
 	/* ── Auto-cableado ─────────────────────────────────────────────────── */
 
 	// <a href="…" data-heo-out="spotify">           → navega la misma pestaña
@@ -332,12 +422,17 @@
 
 		// ViewContent sólo donde el HTML lo pida. En el home no va: ahí la
 		// visita es PageView y nada más.
+		//
+		// EngagedView va junto con ViewContent y no tiene atributo propio: la
+		// página que quiere saber cuánta gente la vio quiere saber también a
+		// cuánta de esa gente le importó. Los dos juntos son el par que sirve.
 		var marca = document.querySelector('[data-heo-content]');
 		if (marca && marca.hasAttribute('data-heo-view')) {
 			ev('ViewContent', {
 				content_name: marca.getAttribute('data-heo-content'),
 				content_type: 'album'
 			});
+			medirVisitaReal(marca);
 		}
 	}
 
