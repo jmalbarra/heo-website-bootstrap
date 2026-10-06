@@ -55,6 +55,11 @@
  * desde ahí se puede optimizar. Mandarlo como Purchase optimizaría mejor pero
  * ensucia el reporte de ventas de la tienda con streams, que no son plata.
  *
+ * Todos menos PageView llevan además utm_source, utm_campaign y utm_content
+ * cuando se los puede averiguar, más utm_origen ('url' o 'guardado') que dice
+ * de dónde salieron. Con eso el embudo se parte por creativo dentro de Meta,
+ * que por su cuenta no mira las UTM. Ver conUtms().
+ *
  * POR QUÉ EXISTE EngagedView
  *
  * La primera pauta dejó este número: 545 ViewContent contra 28 ClickOut. El
@@ -199,12 +204,46 @@
 
 	guardarPrimerContacto();
 
+	// Le pega a cada evento de dónde vino la persona.
+	//
+	// Esto existe porque la atribución por creativo no tenía dónde aterrizar:
+	// los anuncios de la primera pauta llevaban utm_content=video-1..4, pero
+	// Meta ignora las UTM y GA4 todavía no está conectado, así que se podía
+	// saber qué video traía clicks baratos y no cuál traía gente que después
+	// hacía algo. Mandándolas como parámetro del evento, el embudo
+	// ViewContent → EngagedView → ClickOut se puede partir por video.
+	//
+	// Prioriza las UTM de la URL actual: si llegó del anuncio recién, son
+	// exactas. Si no hay, cae al primer contacto guardado, que es lo único que
+	// queda cuando la persona vuelve días después por otro lado. utm_origen
+	// dice cuál de las dos se usó, para que el dato se lea sin adivinar.
+	var CAMPOS_EVENTO = ['utm_source', 'utm_campaign', 'utm_content'];
+
+	function conUtms(params) {
+		var salida = {};
+		for (var k in params) {
+			if (Object.prototype.hasOwnProperty.call(params, k)) salida[k] = params[k];
+		}
+
+		var u = leerUtmsDeLaUrl();
+		var origen = 'url';
+		if (!u) { u = utms(); origen = 'guardado'; }
+		if (!u) return salida;
+
+		for (var i = 0; i < CAMPOS_EVENTO.length; i++) {
+			var c = CAMPOS_EVENTO[i];
+			if (u[c] && salida[c] == null) salida[c] = u[c];
+		}
+		if (salida.utm_origen == null) salida.utm_origen = origen;
+		return salida;
+	}
+
 	/* ── Eventos ───────────────────────────────────────────────────────── */
 
 	var ESTANDAR = { PageView: 1, ViewContent: 1, Lead: 1, CompleteRegistration: 1, Contact: 1, Search: 1, AddToCart: 1, InitiateCheckout: 1, Purchase: 1, Subscribe: 1 };
 
 	function ev(nombre, params) {
-		params = params || {};
+		params = conUtms(params || {});
 		try {
 			if (MODO_REDIRECT) throw new Error('sin fbevents');
 			// trackSingle* en vez de track: todo lo que no sea PageView va sólo al
@@ -317,11 +356,14 @@
 		// ClickOut al principal: es el evento que dice que esta persona se fue a
 		// escuchar. A los heredados les mandamos el PageView que venían
 		// recibiendo, para no cortarles la serie de golpe.
-		beacon(PIXEL_PRINCIPAL, 'ClickOut', {
+		// conUtms también acá: estas páginas pueden recibir la pauta de forma
+		// directa, y si lo hacen son el único lugar donde queda registro de
+		// qué anuncio trajo a la persona.
+		beacon(PIXEL_PRINCIPAL, 'ClickOut', conUtms({
 			destino: destino,
 			content_name: 'mitos-de-un-futuro-cercano',
 			content_type: 'album'
-		}, uno);
+		}), uno);
 
 		for (var j = 0; j < PIXELS_HEREDADOS.length; j++) {
 			beacon(PIXELS_HEREDADOS[j], 'PageView', null, uno);
