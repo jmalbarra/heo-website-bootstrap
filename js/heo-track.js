@@ -16,17 +16,23 @@
  * IDs viven acá y en ningún otro lado: cambiar uno es cambiar una línea. Por
  * eso tampoco quedan <noscript> con el ID hardcodeado.
  *
- * LOS PIXELS HEREDADOS NO SE TIRAN TODAVÍA
+ * LOS PIXELS HEREDADOS YA NO SE CARGAN
  *
- * Los tres de las campañas viejas siguen cargando y siguen recibiendo PageView,
- * así que sus audiencias no se cortan. Lo que cambia es que los eventos que
- * sirven para optimizar (ViewContent, ClickOut) van sólo al principal, que es
- * el único que ve todo el sitio. Cuando en Events Manager se confirme que los
- * heredados no tienen audiencias vivas, se vacía PIXELS_HEREDADOS y listo.
+ * Se revisaron en la cuenta publicitaria y ninguno de los tres tenía una
+ * audiencia armada encima, así que mantenerlos vivos sólo servía para bajar
+ * tres archivos más antes de que se vea la página. En la landing de la pauta
+ * eso se paga caro: quien llega viene de un anuncio y se va en dos segundos.
  *
  * Aclaración por si hay dudas: sacar un pixel de acá no borra nada del lado de
- * Meta. Lo ya registrado queda; lo único que deja de pasar es que entren
+ * Meta. Lo ya registrado queda; lo único que dejó de pasar es que entren
  * eventos nuevos.
+ *
+ * GA4 AL LADO DEL PIXEL
+ *
+ * El pixel sabe qué anuncio trajo a la gente pero descarta las UTM, así que no
+ * puede separar un creativo de otro una vez que la persona entró. GA4 sí las
+ * guarda. Van los dos juntos y miden lo mismo: ev() manda cada evento a los dos
+ * lados, y lo que acá se llama EngagedView en GA4 entra como engaged_view.
  *
  * EL PROBLEMA DEL REDIRECT
  *
@@ -90,19 +96,19 @@
 	// advanced matching con el mail hasheado en el alta de la Unión.
 	var PIXEL_PRINCIPAL = '799209169403412';
 
-	// Los de las campañas viejas. Sólo reciben PageView, para no cortarles las
-	// audiencias mientras no esté confirmado si tienen algo vivo adentro.
-	// Vaciar este array (var PIXELS_HEREDADOS = [];) los deja de cargar.
-	var PIXELS_HEREDADOS = [
-		'2233684557132392',  // spotify.html
-		'847508594324813',   // spotify.html — estaba pegado al anterior
-		'1360622835771508'   // youtube.html
-	];
+	// Los de las campañas viejas, que ya no se cargan: no tenían ninguna
+	// audiencia armada encima, y cada uno costaba una descarga más antes de que
+	// se vea la página. Lo que midieron sigue estando del lado de Meta; lo único
+	// que dejó de pasar es que entren eventos nuevos. Si alguna vez hay que
+	// sumar otro pixel que sólo tiene que recibir PageView, va acá.
+	var PIXELS_HEREDADOS = [];
 
-	// GA4: si algún día se crea la propiedad, va acá el G-XXXXXXX y se carga
-	// solo. Vacío no pide nada a Google. El pixel dice qué anuncio trajo a la
-	// gente; GA4 dice qué hizo en el sitio y respeta las UTM, que Meta ignora.
-	var GA4_ID = '';
+	// GA4, propiedad "Hacia el Ocaso", stream haciaelocaso.com. El pixel dice
+	// qué anuncio trajo a la gente; GA4 dice qué hizo una vez acá adentro y
+	// respeta las UTM, que Meta ignora. Los eventos no hay que declararlos de
+	// nuevo: ev() manda cada uno a los dos lados, en GA4 con el nombre en
+	// snake_case. Vaciarlo deja de pedirle nada a Google.
+	var GA4_ID = 'G-4Q4HTTJ5D1';
 
 	// Cuánto esperamos al beacon antes de cambiar de página. 300 ms no se
 	// notan y alcanzan para que el pedido salga; el timeout de salir() cubre el
