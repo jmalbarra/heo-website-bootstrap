@@ -1,0 +1,263 @@
+/* ═══════════════════════════════════════════════════
+   /escucha-b — variante B del smart link del álbum
+
+   Archivo completo y no un parche encima de escucha.css, por dos motivos:
+   una sola descarga en vez de dos (la velocidad de esta página es media
+   hipótesis del test), y porque las dos variantes están hechas para
+   divergir. Cuando una gane, la perdedora se borra entera y no hay que ir
+   desenredando overrides.
+
+   Lo que es idéntico a la A —paleta, tipografías, glow, scanlines, tamaño
+   del botón— está igual a propósito: si cambiara también el aspecto, ganara
+   quien ganara no sabríamos por qué.
+═══════════════════════════════════════════════════ */
+
+:root {
+	--fondo: #050507;
+	--tinta: #22eec9;
+	--tinta-apagada: rgba(34, 238, 201, 0.55);
+	--linea: rgba(34, 238, 201, 0.18);
+	--panel: rgba(34, 238, 201, 0.04);
+	--spotify: #1db954;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { height: 100%; -webkit-text-size-adjust: 100%; }
+
+body {
+	background: var(--fondo);
+	color: var(--tinta);
+	font-family: "Geist Mono", "Courier New", monospace;
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: flex;
+	justify-content: center;
+	overflow-x: hidden;
+	position: relative;
+	isolation: isolate;
+}
+
+/* Glow de fondo y scanlines: los mismos dos pseudo-elementos del player. */
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background:
+		radial-gradient(ellipse 70% 50% at 50% 30%, rgba(34, 238, 201, 0.06) 0%, transparent 65%),
+		radial-gradient(ellipse 100% 60% at 50% 100%, rgba(34, 238, 201, 0.03) 0%, transparent 70%);
+}
+
+body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 200;
+	pointer-events: none;
+	background: repeating-linear-gradient(
+		0deg, transparent, transparent 2px,
+		rgba(0, 0, 0, 0.07) 2px, rgba(0, 0, 0, 0.07) 4px
+	);
+}
+
+.link {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	max-width: 440px;
+	padding: 40px 20px 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 26px;
+}
+
+/* ── Cabecera ─────────────────────────────────────── */
+
+.link__head { text-align: center; }
+
+.link__cover {
+	width: 100%;
+	max-width: 300px;
+	height: auto;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border: 1px solid var(--linea);
+	box-shadow: 0 0 60px rgba(34, 238, 201, 0.10);
+	margin-bottom: 20px;
+}
+
+.link__band {
+	font-size: 0.68rem;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--tinta-apagada);
+	margin-bottom: 8px;
+}
+
+.link__album {
+	font-family: "Orbitron", "Geist Mono", monospace;
+	font-weight: 900;
+	font-size: clamp(1.3rem, 6.4vw, 1.72rem);
+	line-height: 1.12;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	text-wrap: balance;
+}
+
+/* El reemplazo del kicker de la A, que decía "Álbum completo · elegí dónde".
+   Ese pedía una decisión; este da una razón. Va en minúscula y sin tracking
+   ancho a propósito: el resto de la página está en versalitas espaciadas, que
+   se leen como rótulos y no como algo que alguien escribió. Esta línea sí
+   tiene que leerse. */
+.link__hook {
+	margin-top: 14px;
+	font-size: 0.92rem;
+	line-height: 1.5;
+	color: var(--tinta-apagada);
+	text-wrap: balance;
+}
+
+/* ── La acción ────────────────────────────────────── */
+
+.cta {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	align-items: stretch;
+}
+
+/* Mismo botón que la A, mismas medidas. Acá es el único, así que no hay nada
+   a su lado que le dispute el ojo. */
+.btn {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	min-height: 64px;
+	padding: 20px 22px;
+	border-radius: 10px;
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 1.2rem;
+	letter-spacing: 0.01em;
+	border: 1px solid transparent;
+	transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+}
+
+.btn--spotify {
+	background: var(--spotify);
+	color: #04130a;
+}
+
+.btn--spotify:hover,
+.btn--spotify:focus-visible {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 30px rgba(29, 185, 84, 0.34);
+	filter: brightness(1.06);
+}
+
+.btn__ico { width: 26px; height: 26px; flex: none; }
+.btn__txt { flex: 1; }
+.btn__arrow { font-size: 1.25rem; opacity: 0.75; }
+
+/* YouTube como texto. Sigue siendo un destino de verdad para quien lo
+   prefiera, pero ya no compite de igual a igual con Spotify.
+
+   El área táctil igual llega a 44px de alto aunque la letra sea chica: que
+   esté en segundo plano no quiere decir que sea difícil de tocar. */
+.alt {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	color: var(--tinta-apagada);
+	text-decoration: none;
+	font-size: 0.86rem;
+	letter-spacing: 0.06em;
+	border-bottom: 1px solid transparent;
+	transition: color 0.14s ease;
+}
+
+.alt:hover,
+.alt:focus-visible { color: var(--tinta); }
+
+/* ── Pantallas BAJAS: que el botón entre sin scrollear ──────────────────
+
+   Medido sobre la variante A, que es la que está en vivo: en un viewport de
+   375×553 —un iPhone SE con la barra de direcciones de Safari puesta, que es
+   un teléfono de los comunes— el botón de Spotify termina en 556px. Tres
+   píxeles por debajo del pliegue. No se ve hasta que la persona scrollea.
+
+   Eso puede ser parte del 88% de visitantes atentos que no tocan nada: no es
+   que decidieron que no, es que no vieron el botón. Y encaja con que
+   EngagedView cuente el scroll como señal de interés — puede que parte de lo
+   que estábamos leyendo como "se quedó mirando" fuera "tuvo que buscar".
+
+   El criterio es por ALTO y no por ancho: el problema no es el teléfono
+   angosto sino el viewport bajo, y un celular ancho en horizontal lo sufre
+   igual. La tapa es lo que más espacio ocupa y por eso es lo que cede: vale
+   más que el botón se vea que tres centímetros más de ilustración.
+*/
+@media (max-height: 700px) {
+	.link { padding-top: 24px; gap: 18px; }
+	.link__cover { max-width: 190px; margin-bottom: 14px; }
+	.link__hook { margin-top: 10px; font-size: 0.86rem; }
+	.link__foot { margin-top: 6px; padding-top: 16px; }
+}
+
+/* En pantallas angostas el texto entra igual bajando un punto, antes que
+   partirse en dos líneas. */
+@media (max-width: 380px) {
+	.btn { font-size: 1.06rem; padding: 18px 18px; gap: 12px; }
+	.btn__ico { width: 23px; height: 23px; }
+}
+
+/* iPhone SE y similares: acá "Escuchar en Spotify" se partía en dos líneas.
+   Un renglón partido en el botón principal es exactamente lo que no queremos
+   en una página que tiene que resolverse sin leer. */
+@media (max-width: 340px) {
+	.btn { font-size: 0.94rem; padding: 16px 14px; gap: 10px; }
+	.btn__ico { width: 20px; height: 20px; }
+	.btn__arrow { font-size: 1.05rem; }
+}
+
+/* ── Pie ──────────────────────────────────────────── */
+
+/* La A tenía acá tienda, Instagram y "el sitio". Quedó sólo Instagram: es el
+   único destino secundario que la banda quiere sostener, y tres salidas en
+   una página cuyo único trabajo es un clic son dos salidas de más. */
+.link__foot {
+	margin-top: 10px;
+	padding-top: 22px;
+	border-top: 1px solid var(--linea);
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	align-items: center;
+	text-align: center;
+}
+
+.link__foot a {
+	color: var(--tinta-apagada);
+	text-decoration: none;
+	font-size: 0.72rem;
+	letter-spacing: 0.06em;
+}
+
+.link__foot a:hover,
+.link__foot a:focus-visible { color: var(--tinta); }
+
+.foot__copy {
+	font-size: 0.64rem;
+	letter-spacing: 0.22em;
+	color: rgba(34, 238, 201, 0.32);
+}
+
+/* ── Foco visible y motion ────────────────────────── */
+
+:focus-visible { outline: 2px solid var(--tinta); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after { transition: none !important; }
+}

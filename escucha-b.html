@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<title>Escuchá Mitos De Un Futuro Cercano · Hacia el Ocaso</title>
+	<meta name="description" content="El álbum de Hacia el Ocaso. Metalcore de Buenos Aires.">
+	<meta name="theme-color" content="#050507">
+
+	<!--
+		noindex a propósito. Esta página es la variante B de /escucha y existe
+		para competir contra ella, no para traer búsquedas: si Google indexa las
+		dos, se reparten las visitas orgánicas y ninguna de las dos mide limpio.
+		El canonical apunta a la A por el mismo motivo.
+	-->
+	<meta name="robots" content="noindex, follow">
+	<link rel="canonical" href="https://haciaelocaso.com/escucha">
+
+	<meta property="og:type" content="music.album">
+	<meta property="og:title" content="Mitos De Un Futuro Cercano · Hacia el Ocaso">
+	<meta property="og:description" content="El álbum completo. Metalcore de Buenos Aires.">
+	<meta property="og:image" content="https://haciaelocaso.com/images/mdufc-banner.jpg">
+	<meta property="og:image:width" content="1456">
+	<meta property="og:image:height" content="816">
+	<meta property="og:url" content="https://haciaelocaso.com/escucha-b">
+	<meta name="twitter:card" content="summary_large_image">
+
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/escucha-b.css">
+
+	<!-- Pixel de Meta + GA4 + eventos de salida. El ID vive en ese archivo. -->
+	<script src="js/heo-track.js"></script>
+</head>
+
+<body>
+
+	<!--
+		VARIANTE B DE LA LANDING — qué cambia y por qué
+		═══════════════════════════════════════════════
+
+		La A (escucha.html) midió esto en la etapa 1b: de cada 100 personas que
+		llegan, 44 se quedan de verdad (EngagedView) y de esas 44 sólo unas 5
+		tocan un botón. O sea que 9 de cada 10 personas que SÍ están prestando
+		atención se van igual. Eso no es un problema de pauta: esas no rebotaron
+		por accidente, miraron la página y decidieron que no.
+
+		Tres cambios, todos apuntando a lo mismo:
+
+		1. UNA SOLA ACCIÓN. La A pone Spotify y YouTube del mismo tamaño y el
+		   kicker dice "elegí dónde", así que la página pide una decisión antes
+		   de pedir una acción. Para alguien que venía scrolleando y no buscaba
+		   nada, una bifurcación es una salida. Acá Spotify es el único botón y
+		   YouTube queda como link de texto para quien de verdad lo prefiera.
+
+		2. UNA RAZÓN PARA ESCUCHAR. La A asume que ya querés el disco. Pero quien
+		   llega de un anuncio no sabe quiénes son: no hay género, no hay de
+		   dónde, no hay nada. Dos líneas alcanzan para que la decisión sea
+		   "¿me gusta esto?" en vez de "¿qué es esto?".
+
+		3. SIN FUGAS. La A tenía tres links en el pie (tienda, IG, el sitio) en
+		   una página cuyo único trabajo es un clic. Queda sólo Instagram, bien
+		   abajo y en chico, porque es el único destino secundario que la banda
+		   quiere sostener.
+
+		Lo que NO cambia, a propósito: la foto, la tipografía, los colores, el
+		peso de la página y la medición. Si cambiáramos también eso, ganara quien
+		ganara no sabríamos por qué.
+
+		Tampoco entra acá el reproductor embebido de Spotify, que es la otra idea
+		sobre la mesa. Sumaría un iframe pesado a una página cuya velocidad es
+		media hipótesis, y mezclado con estos tres cambios haría ilegible el
+		resultado. Ese es el candidato a variante C.
+
+		data-heo-content lleva el sufijo -b para que los eventos de las dos
+		variantes se puedan separar en Meta y en GA4 sin tocar heo-track.js
+		mientras la 1b está corriendo.
+	-->
+	<main class="link" data-heo-content="mitos-de-un-futuro-cercano-b" data-heo-view>
+
+		<header class="link__head">
+			<img src="images/mdufc-tapa.jpg" alt="Tapa de Mitos De Un Futuro Cercano"
+			     class="link__cover" width="320" height="320" fetchpriority="high">
+			<p class="link__band">Hacia el Ocaso</p>
+			<h1 class="link__album">Mitos De Un Futuro Cercano</h1>
+
+			<!--
+				REEMPLAZAR CON LA VOZ DE LA BANDA. Esto es lo único de la página
+				que no puedo escribir bien desde afuera: lo armé con datos que se
+				verifican (género, ciudad, doce temas, el título del disco) y sin
+				inventar nada del concepto. Dos líneas, concreto, sin adjetivos
+				de prensa. Es la parte que más puede mover el número.
+			-->
+			<p class="link__hook">
+				Metalcore de Buenos Aires.<br>
+				Doce temas sobre un futuro que ya llegó.
+			</p>
+		</header>
+
+		<!--
+			Un solo botón, del mismo tamaño grande que tenía en la A: 64px de
+			alto, muy por encima del mínimo táctil de 44px, para que el dedo
+			caiga sin apuntar.
+		-->
+		<div class="cta">
+			<a class="btn btn--spotify"
+			   href="https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy"
+			   data-heo-out="spotify" rel="noopener">
+				<svg class="btn__ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.5 17.28a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.56-1.15a.75.75 0 1 1-.33-1.46c4.58-1.05 8.5-.6 11.67 1.33.35.22.46.68.25 1.03zm1.47-3.27a.94.94 0 0 1-1.29.31c-3.23-1.99-8.15-2.56-11.97-1.4a.94.94 0 1 1-.55-1.8c4.37-1.32 9.8-.68 13.5 1.6.44.27.58.85.31 1.29zm.13-3.4C15.23 8.31 8.89 8.1 5.2 9.22a1.12 1.12 0 1 1-.65-2.15C8.79 5.78 15.79 6.03 20.2 8.65a1.12 1.12 0 0 1-1.1 1.96z"/>
+				</svg>
+				<span class="btn__txt">Escuchar en Spotify</span>
+				<span class="btn__arrow" aria-hidden="true">→</span>
+			</a>
+
+			<!--
+				YouTube sigue midiéndose igual que en la A (data-heo-out), así
+				que si resulta que mucha gente lo elige igual aun estando en
+				chico, eso también es un resultado: querría decir que la
+				bifurcación de la A no era el problema.
+
+				Va a la playlist y no al video suelto: el objetivo es que
+				escuchen el disco, y una playlist sigue sola de tema en tema
+				mientras que un video termina y devuelve a las recomendaciones.
+			-->
+			<a class="alt"
+			   href="https://www.youtube.com/playlist?list=PLNJp1A05FLtg"
+			   data-heo-out="youtube" rel="noopener">
+				o escuchalo en YouTube
+			</a>
+		</div>
+
+		<footer class="link__foot">
+			<a href="https://www.instagram.com/heo.oficial" target="_blank"
+			   rel="noopener noreferrer" data-heo-out="instagram">IG @heo.oficial</a>
+			<p class="foot__copy">&copy; 2026 HEO</p>
+		</footer>
+
+	</main>
+
+</body>
+</html>
