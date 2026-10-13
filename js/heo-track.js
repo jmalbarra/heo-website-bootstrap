@@ -248,6 +248,33 @@
 
 	var ESTANDAR = { PageView: 1, ViewContent: 1, Lead: 1, CompleteRegistration: 1, Contact: 1, Search: 1, AddToCart: 1, InitiateCheckout: 1, Purchase: 1, Subscribe: 1 };
 
+	/*
+	 * POR QUÉ CADA EVENTO LLEVA UN ID — ESTO NO ES UN DETALLE
+	 *
+	 * El conjunto de datos tiene una API de conversiones conectada desde que se
+	 * creó el píxel, en octubre de 2025. No la configuramos nosotros: se prendió
+	 * sola. Eso significa que los mismos eventos pueden llegarle a Meta dos
+	 * veces, una desde el navegador y otra desde el servidor.
+	 *
+	 * Meta sabe juntarlas y contar una sola, pero únicamente si las dos traen el
+	 * mismo identificador. Sin él, cuenta las dos.
+	 *
+	 * Pasó, y costó caro. En la etapa 1a el píxel vio 545 "Ver contenido" contra
+	 * 522 visitas que reportó el sistema de anuncios: casi idéntico. En la 1b,
+	 * 2.386 contra 805. Tres veces de más. Durante cuatro días leímos un embudo
+	 * que mejoraba y era aritmética duplicada; sobre esos números se decidió
+	 * pausar dos creatividades.
+	 *
+	 * La señal para darse cuenta, por si vuelve a pasar: en el Administrador de
+	 * eventos la columna "Integración" dice "Varios" en vez de "Navegador".
+	 */
+	function idEvento() {
+		try {
+			if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
+		} catch (_) {}
+		return 'heo-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+	}
+
 	function ev(nombre, params) {
 		params = conUtms(params || {});
 		try {
@@ -257,7 +284,7 @@
 			// páginas que nunca midieron y sus números pasados no se podrían leer.
 			window.fbq(
 				ESTANDAR[nombre] ? 'trackSingle' : 'trackSingleCustom',
-				PIXEL_PRINCIPAL, nombre, params
+				PIXEL_PRINCIPAL, nombre, params, { eventID: idEvento() }
 			);
 		} catch (_) {}
 		try {
@@ -316,9 +343,14 @@
 	// bloqueador de publicidad devuelve error, pero para entonces el pedido ya
 	// salió o ya sabemos que no va a salir. Lo que nos importa es no navegar
 	// antes de tener una respuesta.
+	// eid es el mismo identificador que fbq manda como eventID, sólo que acá va
+	// a mano porque esto es un pedido armado a dedo y no pasa por fbevents.
+	// Sin él, la API de conversiones conectada al conjunto de datos duplica el
+	// evento: ver la nota larga arriba de idEvento().
 	function beacon(pixel, evento, cd, listo) {
 		var u = 'https://www.facebook.com/tr/?id=' + encodeURIComponent(pixel) +
 			'&ev=' + encodeURIComponent(evento) +
+			'&eid=' + encodeURIComponent(idEvento()) +
 			'&dl=' + encodeURIComponent(window.location.href);
 
 		if (document.referrer) u += '&rl=' + encodeURIComponent(document.referrer);
