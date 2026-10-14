@@ -5,6 +5,12 @@ on:
     branches:
       - develop
 
+# Mismo grupo que deploy-main-to-prod: los dos entran al mismo SFTP con el
+# mismo usuario, que corta en 7 conexiones. Si se superponen, se pisan.
+concurrency:
+  group: sftp-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -36,9 +42,11 @@ jobs:
         # mirror: --ignore-time evita resubir todo tras un checkout (mtime nuevo en CI).
         # Se re-sube si cambia el tamaño; -x excluye .git/.github (antes se subía ~toda la carpeta .git).
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
+        set cmd:fail-exit yes
         set net:max-retries 3
         set net:reconnect-interval-base 5
+        set net:connection-limit 5
         cd htdocs/staging
-        mirror -R --ignore-time --parallel=10 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -x '^\.claude(/|$$)' -X '.DS_Store' -X 'serve.ps1' -X '.gitignore' . .
+        mirror -R --ignore-time --parallel=4 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -x '^\.claude(/|$$)' -X '.DS_Store' -X 'serve.ps1' -X '.gitignore' . .
         bye
         EOF
