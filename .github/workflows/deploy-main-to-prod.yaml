@@ -5,6 +5,18 @@ on:
     branches:
       - main
 
+# El SFTP acepta 7 conexiones simultáneas del mismo usuario y los dos workflows
+# entran con el mismo. Si corren a la vez se pisan: pasó el 14/10/2026 al
+# mergear dos PR con 24 segundos de diferencia, y entre los dos deploys se
+# quedaron 21 archivos sin subir. El grupo es compartido con el de staging a
+# propósito, para que ningún par de deploys se superponga nunca.
+#
+# cancel-in-progress en false: un deploy a medio subir deja el sitio
+# inconsistente, así que el segundo espera en vez de matar al primero.
+concurrency:
+  group: sftp-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -33,14 +45,25 @@ jobs:
         fi
 
         # mirror: --ignore-time + exclusiones (ver deploy-develop-to-stg.yaml)
+        #
+        # parallel=4 y no 10: el servidor corta en 7 conexiones por usuario y con
+        # 10 el mirror fallaba archivo por archivo. 4 transferencias más la de
+        # control deja margen de sobra.
+        #
+        # cmd:fail-exit es lo más importante de este bloque. Sin eso lftp termina
+        # con código 0 aunque no haya subido nada, el step queda en verde y el
+        # sitio sigue sirviendo la versión vieja sin que nadie se entere. Es
+        # exactamente lo que pasó el 14/10/2026.
         /usr/bin/lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "$SFTP_HOST" << EOF
+        set cmd:fail-exit yes
         set net:max-retries 3
         set net:reconnect-interval-base 5
+        set net:connection-limit 5
         cd htdocs
-        mirror -R --ignore-time --parallel=10 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -x '^\.claude(/|$$)' -X '.DS_Store' -X 'serve.ps1' -X '.gitignore' . .
+        mirror -R --ignore-time --parallel=4 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -x '^\.claude(/|$$)' -X '.DS_Store' -X 'serve.ps1' -X '.gitignore' . .
 
         cd htdocs/staging
-        mirror -R --ignore-time --parallel=10 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -x '^\.claude(/|$$)' -X '.DS_Store' -X 'serve.ps1' -X '.gitignore' . .
+        mirror -R --ignore-time --parallel=4 -x '^\.git(/|$$)' -x '^\.github(/|$$)' -x '^\.claude(/|$$)' -X '.DS_Store' -X 'serve.ps1' -X '.gitignore' . .
 
         bye
         EOF
