@@ -100,6 +100,9 @@ Hay por lo menos cuatro cosas llamadas "Hacia el Ocaso" dando vueltas:
 4. Un artista homónimo en **Discogs** (`7611272`), que aparece en el compilado
    *The Fencepost Reclamation Project Volume 6*.
 
+Y **`TRSCNDR` es además el tag de un grafitero** con videos propios en YouTube, así
+que el título del disco tampoco es un término único.
+
 Más un libro académico español, *Hacia el ocaso de un mito*, que sí tiene ítems en
 Wikidata (`Q125341579`, `Q125341591`).
 

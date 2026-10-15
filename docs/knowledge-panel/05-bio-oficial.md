@@ -68,8 +68,8 @@ La banda se mueve con regularidad por salas de la escena porteña y presentó
 Mitos De Un Futuro Cercano en La Tangente, en la Ciudad de Buenos Aires.
 
 Formación: Juan Manuel Albarracín (voz), Emiliano Demián Zapiola (guitarra y
-voces), Nelson Javier Fernández (guitarra), Ramiro Kowalski (⚠️ INSTRUMENTO) y
-Pablo Mosca (⚠️ INSTRUMENTO).
+voces), Nelson Javier Fernández (guitarra), Poli Abdusetir (bajo y voces) y
+Damián Bonesi (batería).
 
 Contacto: ocasomcore@gmail.com · haciaelocaso.com
 ```
@@ -109,6 +109,7 @@ Contact: ocasomcore@gmail.com · haciaelocaso.com
 | Fecha exacta de la presentación en La Tangente | El presskit dice "mayo 2026" sin día. Puse sólo el lugar. ⚠️ Pasame la fecha exacta y la agrego. |
 | "Niceto", "Uniclub", "Frida Club" como salas habituales | Aparecen en listados de Bandsintown que no pude verificar directamente. Dejé la formulación genérica. |
 | Cantidad de oyentes / seguidores | Cambia todo el tiempo y envejece mal en una bio. |
+| Los ex integrantes (Pablo Mosca, Ramiro Kowalski) | Una bio oficial lista la formación actual. Los ex integrantes van en MusicBrainz y en el JSON-LD del sitio, que es donde sirven para desambiguar. |
 
 ## 6.5 Dónde va cada versión
 

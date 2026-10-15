@@ -57,29 +57,43 @@ Entrá a <https://musicbrainz.org/artist/775132f6-8d44-4524-bd3a-4d62f0a1036e/ed
 | youtube | `https://www.youtube.com/channel/UCIEBdateHdWkVd9UYlqc0tA` | ✅ |
 | social network | `https://www.instagram.com/heo.oficial/` | ⚠️ corregir |
 | social network | `https://www.facebook.com/heo.oficial` | ✅ |
+| other databases | `https://www.songkick.com/artists/8767954-hacia-el-ocaso` | ❌ falta |
 | other databases | `https://www.wikidata.org/wiki/QBANDA` | ⏳ cuando exista el QID |
 
 ## 3.4 Integrantes
 
 A diferencia de Wikidata, en MusicBrainz **sí conviene** cargar a cada integrante como
 artista tipo `Person` y vincularlo con la relación **"member of band"**. No hay criterio
-de notabilidad y es exactamente para lo que sirve la base.
+de notabilidad y es exactamente para lo que sirve la base. Además es lo único que le
+explica a las bases externas por qué hay tres formaciones distintas dando vueltas.
 
 Por cada persona: *Add artist* → Type `Person`, Area `Buenos Aires` (AR), y después
 desde la página de la banda *Relationships → Add relationship → member of band*.
 
-| Persona | Instrumento en la relación | Desde | Hasta |
-|---|---|---|---|
-| Juan Manuel Albarracín | lead vocals | 2014 ⚠️ confirmar | — (actual) |
-| Emiliano Demián Zapiola | guitar, vocals | ⚠️ falta | — (actual) |
-| Nelson Javier Fernández | guitar | ⚠️ falta | — (actual) |
-| **Ramiro Kowalski** | ❓ **FALTA EL DATO** | ⚠️ falta | — (actual) |
-| **Pablo Mosca** | ❓ **FALTA EL DATO** | ⚠️ falta | — (actual) |
-| Poli Abdusetir | bass guitar, vocals | ⚠️ falta | ⚠️ falta |
-| Damián Bonesi | drums (drum set) | ⚠️ falta | ⚠️ falta |
+### Formación actual
 
-Cargar a los dos ex integrantes con su fecha de salida es importante: es lo que le
-explica a las bases por qué hay dos formaciones dando vueltas en internet.
+| Persona | Instrumento en la relación | Begin | End |
+|---|---|---|---|
+| Juan Manuel Albarracín | lead vocals | 2014 ⚠️ confirmar | — |
+| Emiliano Demián Zapiola | guitar, vocals | ⚠️ falta | — |
+| Nelson Javier Fernández | guitar | ⚠️ falta | — |
+| Poli Abdusetir | bass guitar, vocals | 2025-01 | — |
+| Damián Bonesi | drums (drum set) | 2024-02 | — |
+
+### Ex integrantes
+
+| Persona | Instrumento | Begin | End |
+|---|---|---|---|
+| Pablo Mosca | drums (drum set) | 2014-12 | 2023-12 |
+| Ramiro Kowalski | bass guitar | 2018-08 | 2025-12 |
+| Marcos Rocchi | bass guitar ⚠️ sin confirmar | ⚠️ | ⚠️ |
+
+⚠️ **Antes de cargar:** las fechas de Kowalski (bajo hasta 2025-12) y Abdusetir
+(bajo desde 2025-01) se solapan doce meses. MusicBrainz lo acepta, pero si fue un
+error de tipeo conviene arreglarlo ahora y no después.
+
+⚠️ **Marcos Rocchi** sale sólo de Pogopedia. No lo cargues hasta confirmar si existió
+como bajista (probablemente antes de agosto de 2018).
 
 ## 3.5 Lanzamientos a cargar
 

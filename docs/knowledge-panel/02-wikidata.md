@@ -58,6 +58,7 @@ Leyenda de referencias: **R1** = sitio oficial, **R2** = Chaoszine, **R3** = App
 | YouTube handle | P11245 | `heo.oficial` |
 | Instagram username | P2003 | `heo.oficial` |
 | Facebook username | P2013 | `heo.oficial` |
+| Songkick artist ID | P3478 | `8767954` |
 
 **No cargar todavía** (hay que crear o confirmar el perfil primero):
 `P1953` Discogs artist ID · `P3192` Last.fm ID · `P7195` Bandsintown artist ID ·
@@ -107,15 +108,15 @@ P577   (publication date)   25 de mayo de 2024
 P813   (retrieved)          15 de octubre de 2026
 ```
 
-## 2.4 Integrantes (P527) — FALTAN DATOS
+## 2.4 Integrantes (P527)
 
 Cada integrante necesita **su propio ítem de Wikidata** para poder enlazarse con P527.
 Crear un ítem por persona sólo porque está en una banda chica es discutible y puede
 terminar borrado. **Recomendación: no crees ítems para las personas todavía.**
-Cargá los integrantes recién cuando la banda tenga más cobertura, o dejalos sólo en
-el JSON-LD del sitio (donde no hay criterio de notabilidad).
+Cargalos en MusicBrainz (donde no hay criterio de notabilidad) y en el JSON-LD del
+sitio, que ya los tiene con rol y fecha de ingreso.
 
-Si igual querés cargarlos, el modelado correcto es:
+Si igual querés cargarlos acá, el modelado correcto es:
 
 ```
 P527 (tiene parte) → [ítem de la persona]
@@ -125,17 +126,32 @@ P527 (tiene parte) → [ítem de la persona]
    qualifier P582 (end time)     → sólo para los que se fueron
 ```
 
-Formación a cargar, con lo que falta marcado:
+### Formación actual
 
-| Persona | Instrumento (QID) | Desde | Estado del dato |
+| Persona | Instrumento (QID) | P580 (desde) |
+|---|---|---|
+| Juan Manuel Albarracín | voz → `Q17172850` | 2014 ⚠️ confirmar |
+| Emiliano Demián Zapiola | guitarra `Q6607` + voz `Q17172850` | ⚠️ falta |
+| Nelson Javier Fernández | guitarra → `Q6607` | ⚠️ falta |
+| Poli Abdusetir | bajo `Q46185` + voz `Q17172850` | `enero 2025` (precisión: mes) |
+| Damián Bonesi | batería → `Q128309` | `febrero 2024` (precisión: mes) |
+
+### Ex integrantes
+
+| Persona | Instrumento (QID) | P580 | P582 |
 |---|---|---|---|
-| Juan Manuel Albarracín | voz → `Q17172850` | 2014 ⚠️ confirmar | OK |
-| Emiliano Demián Zapiola | guitarra y voz → `Q6607` + `Q17172850` | ⚠️ falta | OK |
-| Nelson Javier Fernández | guitarra → `Q6607` | ⚠️ falta | OK |
-| **Ramiro Kowalski** | ❓ **FALTA** | ⚠️ falta | **bloqueante** |
-| **Pablo Mosca** | ❓ **FALTA** | ⚠️ falta | **bloqueante** |
-| Poli Abdusetir (ex) | bajo → `Q46185` | hasta ⚠️ falta | ex integrante |
-| Damián Bonesi (ex) | batería → `Q128309` | hasta ⚠️ falta | ex integrante |
+| Pablo Mosca | batería → `Q128309` | `diciembre 2014` | `diciembre 2023` |
+| Ramiro Kowalski | bajo → `Q46185` | `agosto 2018` | `diciembre 2025` |
+| Marcos Rocchi | bajo → `Q46185` ⚠️ sin confirmar | ⚠️ | ⚠️ |
+
+⚠️ **Solapamiento a resolver antes de cargar nada:** Kowalski figura en bajo hasta
+diciembre de 2025 y Abdusetir desde enero de 2025. Son doce meses con dos bajistas.
+Wikidata y MusicBrainz lo van a aceptar igual, pero queda raro y es el tipo de dato
+que después alguien "corrige" mal. Definilo.
+
+⚠️ **Marcos Rocchi** aparece sólo en Pogopedia, como bajo y voz. Si fue el bajista
+anterior a Kowalski (antes de agosto de 2018), corresponde cargarlo. Si Pogopedia
+se equivocó, hay que pedirles que lo saquen. No lo cargo hasta que confirmes.
 
 ## 2.5 Imagen (P18)
 
@@ -188,6 +204,7 @@ LAST|P2397|"UCIEBdateHdWkVd9UYlqc0tA"
 LAST|P11245|"heo.oficial"
 LAST|P2003|"heo.oficial"
 LAST|P2013|"heo.oficial"
+LAST|P3478|"8767954"
 ```
 
 4. **Run**. Anotá el QID que devuelve (va a ser algo tipo `Q1340…`) y pegámelo:

@@ -48,22 +48,37 @@ MusicBrainz se propaga a todo lo que consume MusicBrainz.
 Además el ítem no tiene: año de formación, ciudad (sólo "Argentina"), integrantes,
 ni **un solo lanzamiento**. Hoy MusicBrainz dice que la banda existe y nada más.
 
-### b) La formación publicada está vieja
-El presskit del sitio (`presskit.html`) y la bio pública listan:
-Juanma Albarracín, Démian Zapiola, Nelo Fernández, **Poli Abdusetir (bajo)** y
-**Damián Bonesi (batería)**.
+### b) La formación está bien en el sitio y mal en todos lados menos el sitio
 
-La formación actual que me pasaste es: Albarracín, Zapiola, Fernández,
-**Ramiro Kowalski** y **Pablo Mosca**.
+**Corregido el 15/10/2026 con datos de la banda.** La formación actual es la que ya
+publica el sitio oficial y el presskit:
 
-Y afuera el dato está partido en tres versiones distintas:
-- Bandsintown: Albarracín, Zapiola, Fernández, **Bonesi**, **Kowalski** (mezcla vieja y nueva)
-- Pogopedia: Albarracín, Zapiola, **Mosca**, **Marcos Rocchi** (una cuarta versión)
-- Sitio oficial: la formación vieja
+| Integrante | Instrumento | Desde |
+|---|---|---|
+| Juan Manuel Albarracín | voz | 2014 ⚠️ confirmar |
+| Emiliano Demián Zapiola | guitarra y voces | ⚠️ falta |
+| Nelson Javier Fernández | guitarra | ⚠️ falta |
+| Poli Abdusetir | bajo y voces | enero 2025 |
+| Damián Bonesi | batería | febrero 2024 |
 
-**Esto es un problema real para el Knowledge Panel.** Google cruza fuentes; cuando no
-coinciden, o no arma el panel o lo arma con datos viejos. Unificar la formación es
-bloqueante para los pasos 2, 3 y 5.
+Ex integrantes:
+
+| Integrante | Instrumento | Período |
+|---|---|---|
+| Pablo Mosca | batería | diciembre 2014 – diciembre 2023 |
+| Ramiro Kowalski | bajo | agosto 2018 – diciembre 2025 |
+
+El sitio está bien. **Lo que está mal es todo lo de afuera:**
+- Bandsintown: lista a Kowalski (que ya no está) junto a Bonesi.
+- Pogopedia: lista a Pablo Mosca (se fue en 2023) y a **Marcos Rocchi** en bajo, que
+  no figura en ninguna otra fuente. Probablemente sea el bajista anterior a Kowalski
+  (antes de agosto de 2018), pero no lo puedo confirmar.
+
+⚠️ **Hay un solapamiento sin explicar:** según las fechas que pasó la banda, Kowalski
+estuvo en bajo hasta diciembre de 2025 y Abdusetir entró en bajo en enero de 2025.
+Son doce meses con dos bajistas simultáneos. Puede ser real (transición larga,
+sesionista) o puede ser un error de tipeo en alguna de las dos fechas. Hay que
+definirlo antes de cargarlo en MusicBrainz, que no admite ambigüedad en las fechas.
 
 ### c) El nombre aparece mal escrito en prensa
 Vientos de Poder publica "**Hacía** el Ocaso" (con tilde). Es un medio real con nota
@@ -114,12 +129,42 @@ release oficial (sí puede ir a MusicBrainz como demo si existe físicamente).
 | Medio | País | Fecha | Tipo | Estado |
 |---|---|---|---|---|
 | [Chaoszine](https://chaoszine.net/listen-to-erial-by-hacia-el-ocaso-powerful-sounds-from-argentina/) | Finlandia | 09/07/2024 | Nota dedicada sobre *Erial*, por Hernan Osuna | ✅ **la mejor referencia que tienen** |
-| [Vientos de Poder](https://vientosdepoder.com/el-metalcore-brillo-en-una-energica-noche-de-la-mano-de-blessthefall/) | Argentina | 25/05/2024 | Crónica de show (telonearon a Blessthefall), por Sergio Silva | ✅ sirve, pero escribe mal el nombre |
-| [Mariskal Rock](https://mariskalrock.com/actualidad/los-20-duros-del-08-07-al-14-07-pearl-jam-tarja-turunen-marko-hietala-dream-theater-hammerfall-toto-ice-nine-kills-o-sonata-arctica-en-nuestra-playlist-de-rock-y-metal-en-spotify/) | España | — | Inclusión en playlist "Los 20 duros" | ⚠️ mención de pasada, no es cobertura |
-| [Bolas de Fuego TV](https://youtu.be/-wEqazQm-24?t=348) | Argentina | 15/05/2022 | Entrevista en vivo | ⚠️ video, no texto; sirve como color, no como fuente fuerte |
-| Rompiendo Cadenas | — | — | Reseña | ❌ dominio caído |
-| El Under Nuestro | Argentina | — | Crónica | ❌ 404 |
+| [Rompiendo Cadenas](http://rompiendo-cadenas.com/revista/los-discos-que-llegaron-a-nosotros-el-mes-de-julio/) | — | — | Reseña de disco | ⚠️ dominio caído, **pero hay copia archivada** — ver 1.7 |
+| [Vientos de Poder](https://vientosdepoder.com/el-metalcore-brillo-en-una-energica-noche-de-la-mano-de-blessthefall/) | Argentina | 25/05/2024 | Crónica del show con Blessthefall (Uniclub, 16/05/2024), por Sergio Silva | ✅ los nombra, con el nombre mal escrito |
+| [Mariskal Rock](https://mariskalrock.com/actualidad/los-20-duros-del-08-07-al-14-07-pearl-jam-tarja-turunen-marko-hietala-dream-theater-hammerfall-toto-ice-nine-kills-o-sonata-arctica-en-nuestra-playlist-de-rock-y-metal-en-spotify/) | España | — | Inclusión en playlist "Los 20 duros" | ⚠️ mención de pasada |
+| [Herederos de una Pasión](https://youtu.be/M48ZPe6toJ8) | Argentina | 04/05/2022 | **Entrevista a Juanma Albarracín y Nelo Fernández** | ✅ **hallazgo nuevo** |
+| [Bolas de Fuego TV](https://youtu.be/-wEqazQm-24?t=348) | Argentina | 15/05/2022 | Entrevista en vivo | ✅ |
+| [El Faro Rock](https://youtu.be/a3gw854pL9g) | Argentina | ⚠️ sin fecha | **Episodio 54: entrevista a Rocknosfera y Hacia el Ocaso** | ✅ **hallazgo nuevo** |
+| [RPM Legion](https://youtu.be/Ex585zeUTxs) | Argentina | ⚠️ sin fecha | Video sobre la banda | ⚠️ **hallazgo nuevo**, contenido menor |
+| [Metal-Daze](https://metaldazeweb.com/recitales/hacia-el-ocaso/) | Argentina | — | Ficha en la sección "recitales" | ⚠️ sin texto editorial |
+| El Under Nuestro | Argentina | — | Crónica | ❌ 404 y **sin copia archivada** |
 
-**Lectura honesta:** hay **una** fuente independiente con cobertura dedicada
-(Chaoszine) y **una** crónica argentina que los nombra al pasar. Alcanza de sobra
-para Wikidata. No alcanza para Wikipedia (ver `08-wikipedia.md`).
+**Lectura honesta:** una sola fuente escrita con cobertura dedicada (Chaoszine),
+una reseña escrita recuperable sólo desde el archivo (Rompiendo Cadenas), tres
+entrevistas en video de programas argentinos, y dos menciones al pasar. Alcanza de
+sobra para Wikidata. Para Wikipedia sigue sin alcanzar, pero están más cerca de lo
+que parecía: ver `08-wikipedia.md`.
+
+## 1.7 La reseña de Rompiendo Cadenas se puede recuperar
+
+El dominio `rompiendo-cadenas.com` ya no resuelve, pero **el Internet Archive tiene
+una captura del 15/01/2026**:
+
+```
+https://web.archive.org/web/20260115020644/http://rompiendo-cadenas.com/revista/los-discos-que-llegaron-a-nosotros-el-mes-de-julio/
+```
+
+⚠️ **No pude leer su contenido desde acá**: la política de red de este entorno
+bloquea `web.archive.org`. Abrila vos en el navegador y fijate dos cosas:
+1. ¿Reseña efectivamente a Hacia el Ocaso, y a qué disco?
+2. ¿Qué fecha y qué autor tiene?
+
+Si la reseña está, es una **segunda fuente escrita válida** y cambia la cuenta de
+Wikipedia. Pasame lo que diga y actualizo todo.
+
+## 1.8 Más homónimos encontrados
+
+Sumado a los de la sección 8.6 del documento del Knowledge Panel: **`TRSCNDR` es
+también el tag de un grafitero**, con varios videos en YouTube. Buscar "TRSCNDR"
+a secas no lleva al disco. Al mencionarlo en prensa conviene escribir siempre
+*TRSCNDR, de Hacia el Ocaso*.

@@ -28,22 +28,54 @@ Un grupo es relevante si cumple **al menos uno** de estos (lista abreviada):
 
 ## 9.2 El recuento real de fuentes
 
-Esto es lo que hay hoy, verificado link por link:
+Actualizado el 15/10/2026 después de una segunda búsqueda. Aparecieron cosas que
+no estaban en la primera pasada.
 
 | Fuente | ¿Independiente? | ¿Cobertura significativa? | ¿Suma? |
 |---|---|---|---|
-| [Chaoszine](https://chaoszine.net/listen-to-erial-by-hacia-el-ocaso-powerful-sounds-from-argentina/) (FI, 09/07/2024) | ✅ sí | ✅ nota dedicada a la banda | ✅ **1** |
+| [Chaoszine](https://chaoszine.net/listen-to-erial-by-hacia-el-ocaso-powerful-sounds-from-argentina/) (FI, 09/07/2024, Hernan Osuna) | ✅ sí | ✅ nota dedicada a la banda | ✅ **1** |
+| [Rompiendo Cadenas](https://web.archive.org/web/20260115020644/http://rompiendo-cadenas.com/revista/los-discos-que-llegaron-a-nosotros-el-mes-de-julio/) (reseña, vía Internet Archive) | ✅ sí | ⚠️ **sin verificar** — no pude abrir el archivo desde acá | ⚠️ **candidata a nº 2** |
+| [Herederos de una Pasión](https://youtu.be/M48ZPe6toJ8) (AR, 04/05/2022) | ✅ sí | ⚠️ entrevista en video a Juanma y Nelo | ⚠️ media |
+| [Bolas de Fuego TV](https://youtu.be/-wEqazQm-24?t=348) (AR, 15/05/2022) | ✅ sí | ⚠️ entrevista en video | ⚠️ media |
+| [El Faro Rock](https://youtu.be/a3gw854pL9g) (AR, Episodio 54) | ✅ sí | ⚠️ entrevista en video | ⚠️ media |
 | [Vientos de Poder](https://vientosdepoder.com/el-metalcore-brillo-en-una-energica-noche-de-la-mano-de-blessthefall/) (AR, 25/05/2024) | ✅ sí | ❌ los nombra en una línea como teloneros | ❌ |
-| [Mariskal Rock](https://mariskalrock.com/actualidad/los-20-duros-del-08-07-al-14-07-pearl-jam-tarja-turunen-marko-hietala-dream-theater-hammerfall-toto-ice-nine-kills-o-sonata-arctica-en-nuestra-playlist-de-rock-y-metal-en-spotify/) (ES) | ✅ sí | ❌ inclusión en playlist, mención de pasada | ❌ |
-| Bolas de Fuego TV (AR, 15/05/2022) | ✅ sí | ⚠️ entrevista en video; en Wikipedia una entrevista cuenta poco porque el contenido lo aporta el sujeto | ⚠️ media |
-| Pogopedia | ❌ base de datos colaborativa | ❌ | ❌ |
-| Rompiendo Cadenas | — | — | ❌ link muerto |
-| El Under Nuestro | — | — | ❌ 404 |
-| Sitio oficial, Spotify, Apple, Bandsintown | ❌ no independientes | — | ❌ |
+| [Mariskal Rock](https://mariskalrock.com/actualidad/los-20-duros-del-08-07-al-14-07-pearl-jam-tarja-turunen-marko-hietala-dream-theater-hammerfall-toto-ice-nine-kills-o-sonata-arctica-en-nuestra-playlist-de-rock-y-metal-en-spotify/) (ES) | ✅ sí | ❌ inclusión en playlist | ❌ |
+| [RPM Legion](https://youtu.be/Ex585zeUTxs) (AR) | ✅ sí | ❌ video breve | ❌ |
+| [Metal-Daze](https://metaldazeweb.com/recitales/hacia-el-ocaso/) | ✅ sí | ❌ ficha de recitales, sin texto | ❌ |
+| Pogopedia | ❌ base colaborativa | ❌ | ❌ |
+| El Under Nuestro | — | — | ❌ 404, sin copia archivada |
+| Sitio oficial, Spotify, Apple, Bandsintown, Songkick | ❌ no independientes | — | ❌ |
 
-**Total: 1 fuente que suma, 1 que suma a medias.** Se necesitan 2 sólidas como
-mínimo, y en la práctica los bibliotecarios piden 3 o más para un grupo sin otros
-méritos.
+### El problema de las entrevistas
+
+Aparecieron **tres entrevistas en video** de programas argentinos distintos. Eso es
+más de lo que yo había encontrado en la primera pasada y es una señal real: tres
+medios decidieron, por separado, que la banda valía una entrevista.
+
+Pero para Wikipedia pesan poco, y es importante entender por qué. El criterio pide
+"obras publicadas no triviales" **sobre** el grupo. En una entrevista el contenido lo
+aporta el propio entrevistado: es fuente primaria para lo que la banda dice de sí
+misma. Sirve para **citar un dato** dentro de un artículo que ya existe, no para
+**justificar que el artículo exista**.
+
+### Dónde están parados
+
+```
+Fuentes escritas, independientes, con cobertura dedicada:
+  confirmadas .................. 1   (Chaoszine)
+  pendientes de verificar ...... 1   (Rompiendo Cadenas, en el archivo)
+  necesarias ................... 3
+Entrevistas en video ........... 3   (suman poco, pero suman)
+```
+
+**Si la reseña de Rompiendo Cadenas resulta ser real y sobre un disco de ellos,
+pasan de 1 a 2.** Con 2 escritas más 3 entrevistas, un artículo sigue siendo
+discutible pero ya es defensible. Con 3 escritas deja de ser discutible.
+
+**Abrí este link y decime qué dice:**
+```
+https://web.archive.org/web/20260115020644/http://rompiendo-cadenas.com/revista/los-discos-que-llegaron-a-nosotros-el-mes-de-julio/
+```
 
 ## 9.3 Por qué NO conviene escribirlo ustedes
 
@@ -64,6 +96,7 @@ Tenés razón en preocuparte, y el riesgo es el que imaginás:
 **Ahora:**
 - Cargá el ítem de Wikidata (paso 2). Ahí sí entran, sin discusión. Y es lo que
   mueve el panel.
+- Abrí la captura archivada de Rompiendo Cadenas y confirmá qué dice.
 - No crees el artículo. Ni como borrador en tu taller, ni "a ver si pasa".
 
 **En los próximos meses:**
@@ -96,8 +129,9 @@ Si es no: todavía no.
 
 - [ ] ❌ No escribir el artículo todavía *(decisión tomada, revisable)*
 - [ ] Ítem de Wikidata creado (paso 2) — es lo que sí sirve ahora
-- [ ] Fuente independiente nº 2 conseguida
-- [ ] Fuente independiente nº 3 conseguida
-- [ ] Fuente independiente nº 4 conseguida
+- [ ] Rompiendo Cadenas verificada en el Internet Archive
+- [ ] Fuente independiente escrita nº 2 conseguida
+- [ ] Fuente independiente escrita nº 3 conseguida
+- [ ] Fuente independiente escrita nº 4 conseguida
 - [ ] Reevaluar relevancia con las fuentes en mano
 - [ ] Si corresponde: borrador vía Asistente para la creación de artículos, con COI declarado

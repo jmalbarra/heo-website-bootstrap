@@ -21,6 +21,9 @@ quema el contacto.
 | **Vientos de Poder** | webzine, **ya los cubrió** (crónica Blessthefall, 25/05/2024) | ⚠️ no publica mail en el sitio — contactar por redes | ⚠️ |
 | **Jedbangers** | revista + podcast | ⚠️ no encontré mail público | ⚠️ |
 | **Bolas de Fuego TV** | canal de entrevistas, **ya los entrevistó** (15/05/2022) | ⚠️ por YouTube/redes | ⚠️ |
+| **Herederos de una Pasión** | canal de entrevistas, **ya los entrevistó** (04/05/2022, a Juanma y Nelo) | [@herederosdeunapasion5293](https://www.youtube.com/@herederosdeunapasion5293) | ⚠️ por YouTube |
+| **El Faro Rock** | podcast/canal, **ya los entrevistó** (Episodio 54, junto a Rocknosfera) | [@sebastianfurrer2397](https://www.youtube.com/@sebastianfurrer2397) | ⚠️ por YouTube |
+| **RPM Legion** | canal, publicó un video sobre la banda | [@rpmlegion2025](https://www.youtube.com/@rpmlegion2025) | ⚠️ por YouTube |
 | **Indie Hoy** | medio de música independiente (no es metal puro, pero cubre escena AR) | `info@indiehoy.com` | ✅ en su sitio |
 | **Pogopedia** | base de datos de bandas AR — **ya tienen entrada, está desactualizada** | ⚠️ el sitio dio error 521 | ⚠️ |
 
@@ -48,9 +51,11 @@ sus mails de contacto. Lo más efectivo es escribirles por DM de Instagram.
 
 ## 7.2 Prioridad: a quién escribirle primero
 
-1. **Los que ya los cubrieron** (Chaoszine, Vientos de Poder, Bolas de Fuego, Mariskal Rock).
-   Un medio que ya te publicó una vez vuelve a publicarte con mucha más facilidad.
-   Mandales el disco nuevo. Son 4 mails y es lo que más rinde.
+1. **Los que ya los cubrieron.** Un medio que ya te publicó una vez vuelve a
+   publicarte con mucha más facilidad. Son siete y es lo que más rinde:
+   Chaoszine, Vientos de Poder, Mariskal Rock, Bolas de Fuego TV,
+   **Herederos de una Pasión**, **El Faro Rock** y **RPM Legion**.
+   A los cuatro últimos escribiles por YouTube o Instagram, no tienen mail público.
 2. **Pogopedia**: pediles que actualicen la ficha. Es una base de datos argentina
    que Google indexa y hoy tiene la formación mal.
 3. Metal-Daze y Del Otro Lado (AR): aceptan material de forma explícita.
@@ -150,8 +155,12 @@ Formación actual:
 - Juan Manuel Albarracín — voz
 - Emiliano Demián Zapiola — guitarra y voces
 - Nelson Javier Fernández — guitarra
-- Ramiro Kowalski — [INSTRUMENTO]
-- Pablo Mosca — [INSTRUMENTO]
+- Poli Abdusetir — bajo y voces (desde enero de 2025)
+- Damián Bonesi — batería (desde febrero de 2024)
+
+Ex integrantes: Pablo Mosca (batería, 2014-2023) y Ramiro Kowalski (bajo, 2018-2025).
+La ficha actual lista a Pablo Mosca como integrante activo y a Marcos Rocchi en bajo;
+ninguno de los dos está hoy en la banda.
 
 Discografía completa:
 - Amanecer (EP, 2016)
@@ -177,7 +186,7 @@ a un periodista es la peor primera impresión posible.
 
 Checklist previo al primer envío:
 
-- [ ] Formación actualizada en `presskit.html` (y en la sección "Nosotros" de `index.html`)
+- [x] ~~Formación actualizada~~ — el sitio y el presskit ya tienen la formación correcta
 - [ ] Fotos de prensa con la formación actual
 - [ ] Link de Rompiendo Cadenas: reemplazar por su copia en web.archive.org o eliminar
 - [ ] Link de El Under Nuestro: ídem
@@ -191,6 +200,9 @@ Checklist previo al primer envío:
 | Chaoszine | ⬜ | | |
 | Vientos de Poder | ⬜ | | |
 | Bolas de Fuego TV | ⬜ | | |
+| Herederos de una Pasión | ⬜ | | |
+| El Faro Rock | ⬜ | | |
+| RPM Legion | ⬜ | | |
 | Mariskal Rock | ⬜ | | |
 | Pogopedia (corrección) | ⬜ | | |
 | Metal-Daze | ⬜ | | |
