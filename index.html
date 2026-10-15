@@ -11,6 +11,7 @@
   <meta name="theme-color" content="#050507">
   <title>Hacia el Ocaso</title>
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="https://www.haciaelocaso.com/">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +23,119 @@
   <!-- Medición: pixel de Meta, GA4 y eventos. El ID vive en ese archivo y
        en ningún otro lado, así que no hay <noscript> con el ID acá. -->
   <script src="js/heo-track.js"></script>
+
+  <!-- ======================================================
+       DATOS ESTRUCTURADOS (schema.org / JSON-LD)
+       Esto es lo que leen Google, Bing y los agregadores para
+       armar el Knowledge Panel. sameAs enlaza todos los perfiles
+       oficiales + Wikidata: NO agregar acá ningún perfil que no
+       sea nuestro y que no esté verificado.
+       Ver docs/knowledge-panel/CHECKLIST.md
+       ====================================================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MusicGroup",
+        "@id": "https://www.haciaelocaso.com/#band",
+        "name": "Hacia el Ocaso",
+        "alternateName": ["HEO", "Hacia El Ocaso"],
+        "url": "https://www.haciaelocaso.com/",
+        "description": "Hacia el Ocaso es una banda argentina de metal alternativo formada en Buenos Aires en 2014. Publicó el EP Amanecer (2016), el álbum TRSCNDR (2020) y el álbum conceptual Mitos De Un Futuro Cercano (2026).",
+        "genre": ["Alternative metal", "Metalcore", "Metal alternativo"],
+        "foundingDate": "2014",
+        "foundingLocation": {
+          "@type": "Place",
+          "name": "Buenos Aires, Argentina",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Buenos Aires",
+            "addressCountry": "AR"
+          }
+        },
+        "logo": "https://www.haciaelocaso.com/images/ojo-goth-blanco.png",
+        "image": "https://www.haciaelocaso.com/images/nosotros.jpeg",
+        "email": "ocasomcore@gmail.com",
+        "member": [
+          { "@type": "Person", "name": "Juan Manuel Albarracín", "alternateName": "Juanma Albarracín", "roleName": "Voz" },
+          { "@type": "Person", "name": "Emiliano Demián Zapiola", "alternateName": "Démian Zapiola", "roleName": "Guitarra y voces" },
+          { "@type": "Person", "name": "Nelson Javier Fernández", "alternateName": "Nelo Fernández", "roleName": "Guitarra" },
+          { "@type": "Person", "name": "Ramiro Kowalski" },
+          { "@type": "Person", "name": "Pablo Mosca" }
+        ],
+        "album": [
+          {
+            "@type": "MusicAlbum",
+            "@id": "https://www.haciaelocaso.com/#mdufc",
+            "name": "Mitos De Un Futuro Cercano",
+            "albumProductionType": "https://schema.org/StudioAlbum",
+            "albumReleaseType": "https://schema.org/AlbumRelease",
+            "numTracks": 12,
+            "datePublished": "2026-09-17",
+            "byArtist": { "@id": "https://www.haciaelocaso.com/#band" },
+            "image": "https://www.haciaelocaso.com/images/mdufc-tapa.jpg",
+            "sameAs": [
+              "https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy",
+              "https://music.apple.com/ar/album/mitos-de-un-futuro-cercano/6811223490",
+              "https://www.deezer.com/album/1076741532"
+            ]
+          },
+          {
+            "@type": "MusicAlbum",
+            "@id": "https://www.haciaelocaso.com/#trscndr",
+            "name": "TRSCNDR",
+            "albumProductionType": "https://schema.org/StudioAlbum",
+            "albumReleaseType": "https://schema.org/AlbumRelease",
+            "numTracks": 10,
+            "datePublished": "2020-07-12",
+            "byArtist": { "@id": "https://www.haciaelocaso.com/#band" },
+            "sameAs": [
+              "https://open.spotify.com/album/3JY6VlXseXt9KfxXYojHXW",
+              "https://music.apple.com/ar/album/trscndr/1518270361",
+              "https://www.deezer.com/album/154511902"
+            ]
+          },
+          {
+            "@type": "MusicAlbum",
+            "@id": "https://www.haciaelocaso.com/#amanecer",
+            "name": "Amanecer",
+            "albumProductionType": "https://schema.org/StudioAlbum",
+            "albumReleaseType": "https://schema.org/EPRelease",
+            "numTracks": 6,
+            "datePublished": "2016-05-18",
+            "byArtist": { "@id": "https://www.haciaelocaso.com/#band" },
+            "sameAs": [
+              "https://open.spotify.com/album/1wbRI0DA5Bmfn3LaHNG7xO",
+              "https://music.apple.com/ar/album/amanecer-ep/1114769389",
+              "https://www.deezer.com/album/13155754"
+            ]
+          }
+        ],
+        "sameAs": [
+          "https://open.spotify.com/artist/0qWTEFLLXPxzWbTqjg8QXu",
+          "https://music.apple.com/ar/artist/hacia-el-ocaso/1114769394",
+          "https://www.youtube.com/channel/UCIEBdateHdWkVd9UYlqc0tA",
+          "https://www.youtube.com/@heo.oficial",
+          "https://www.instagram.com/heo.oficial/",
+          "https://www.facebook.com/heo.oficial",
+          "https://www.deezer.com/artist/10395280",
+          "https://musicbrainz.org/artist/775132f6-8d44-4524-bd3a-4d62f0a1036e",
+          "https://linktr.ee/haciaelocaso"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.haciaelocaso.com/#website",
+        "url": "https://www.haciaelocaso.com/",
+        "name": "Hacia el Ocaso",
+        "inLanguage": "es-AR",
+        "publisher": { "@id": "https://www.haciaelocaso.com/#band" }
+      }
+    ]
+  }
+  </script>
+
 </head>
 
 <body>
