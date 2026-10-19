@@ -132,6 +132,22 @@ body::after {
 	border: 0;
 }
 
+/* El reproductor lo inyecta un script (ver el comentario en escucha.html). Si
+   por lo que sea no llega a crearse, esto evita que quede un recuadro con
+   borde y sombra envolviendo la nada. El <noscript> de la página cubre el
+   caso con un link al álbum. */
+.player:empty { display: none; }
+
+.player__sinjs {
+	text-align: center;
+	font-size: 0.86rem;
+}
+
+.player__sinjs a {
+	color: var(--tinta);
+	text-decoration: underline;
+}
+
 /* ── La acción ────────────────────────────────────── */
 
 .cta {
