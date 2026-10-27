@@ -21,9 +21,57 @@
 
 	<script src="js/heo-track.js" data-heo-modo="redirect"></script>
 	<script>
-	document.addEventListener('DOMContentLoaded', function () {
-		HEO.redirigir('spotify', 'https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy');
-	});
+	/*
+		?tema= — LA PÁGINA PUENTE DE LA ETAPA 3
+		═══════════════════════════════════════
+
+		La etapa 2 mandó 964 visitas a /escucha?tema=parias y Parias bajó de
+		60 a 26 streams semanales. En esa landing el 98,6% de la gente nunca
+		tocó Spotify, y el reproductor embebido le regala 30 segundos de
+		muestra a quien no tiene sesión, que no cuentan como stream.
+
+		Esta página saca la landing del medio: el anuncio apunta acá, salen
+		PageView y ClickOut, y en unos 300 ms la persona está en el tema en
+		Spotify. Para Meta es casi igual que tener landing (ve la visita, arma
+		el público de quienes hicieron clic); para la persona es ir directo.
+
+		Sin ?tema= sigue llevando al álbum, que es lo que hacía siempre. Los
+		IDs son los mismos del mapa de escucha.html: si se suma un tema, va en
+		los dos lados.
+	*/
+	(function () {
+		var ALBUM = 'https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy';
+		var TEMAS = {
+			'intronicte':  '68JTF9FvHvOjDBJIiw77OF',
+			'erial':       '6R7TAMMJevYXkU7D1mwEvj',
+			'parias':      '5F72tR0bk13gPUQrQ0q4kh',
+			'mitos':       '62luIT5gtUMpImUPjqEwyl',
+			'cifra':       '1MZ5DjHIreojxKW1gCHe6y',
+			'gaia':        '1RiENIr2qOh8yPcMyLNXCx',
+			'sicofante':   '1U2If5cjdH5QAsZIB9DTeN',
+			'anamnesis':   '4swTtcUKN4jvq4Cm9w4Tbm',
+			'lo-que-siento': '6V6W26IzwygZmk7IaWEhO1',
+			'cae-el-velo': '0VjFiiwEl0iHdfoulKLPZk',
+			'conexion':    '0Ge5ZlpL6ahDmVJRZZydDZ',
+			'union':       '0vVOAAEKwq5H7dGoz2Ulh1'
+		};
+
+		var pedido = '';
+		try {
+			var m = window.location.search.match(/[?&]tema=([^&]*)/);
+			if (m) pedido = decodeURIComponent(m[1]).toLowerCase().replace(/[^a-z0-9-]/g, '');
+		} catch (_) {}
+
+		var tema = TEMAS[pedido] ? pedido : null;
+		var url = tema ? 'https://open.spotify.com/track/' + TEMAS[tema] : ALBUM;
+
+		document.addEventListener('DOMContentLoaded', function () {
+			// El link de "si no pasa nada" tiene que ir al mismo lugar.
+			var a = document.getElementById('a-mano');
+			if (a) a.href = url;
+			HEO.redirigir('spotify', url, tema);
+		});
+	})();
 	</script>
 
 	<style>
@@ -55,7 +103,7 @@
 	<span class="punto" aria-hidden="true"></span>
 	<p>Abriendo Spotify</p>
 	<p class="tenue">
-		Si no pasa nada, <a href="https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy">entrá acá</a>.
+		Si no pasa nada, <a id="a-mano" href="https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy">entrá acá</a>.
 		<br>O mirá <a href="escucha.html">todas las formas de escucharlo</a>.
 	</p>
 </body>
