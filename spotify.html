@@ -65,11 +65,56 @@
 		var tema = TEMAS[pedido] ? pedido : null;
 		var url = tema ? 'https://open.spotify.com/track/' + TEMAS[tema] : ALBUM;
 
+		/*
+			ABRIR LA APP, NO LA WEB
+			═══════════════════════
+
+			Probado en un iPhone el 27/10/2026: el redirect a open.spotify.com
+			dejaba a la persona en la web de Spotify, sin sesión, con "Iniciá
+			sesión para escuchar la canción completa". O sea, 30 segundos de
+			muestra que no cuentan como stream: el mismo agujero de la landing.
+
+			El celular le pasa un link https a la app sólo si la persona lo
+			toca. Un redirect hecho por script no cuenta como toque, así que el
+			sistema se queda en el navegador. Por eso en el celular no vamos al
+			link web sino directo a la app:
+
+			  Android → intent:// apuntado al paquete de Spotify. Si la app no
+			            está, el propio Android cae a browser_fallback_url, que
+			            es la web. No hay que adivinar nada.
+			  iPhone  → spotify:track:… El navegador pregunta "¿Abrir en
+			            Spotify?" y la persona confirma. No hay caída automática
+			            a la web: no hay forma de saber si el cartel sigue
+			            abierto, y salir de la página lo cerraría. Si no tiene
+			            la app, queda el link de "si no pasa nada" de abajo.
+			  Compu   → la web, como siempre.
+		*/
+		var partes = url.replace('https://open.spotify.com/', '').split('/');  // ['track', id]
+		var ua = navigator.userAgent || '';
+		var esAndroid = /Android/i.test(ua);
+		var esIphone = /iPhone|iPad|iPod/i.test(ua) ||
+			(navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+		function abrir(web) {
+			if (esAndroid) {
+				window.location.replace(
+					'intent://open.spotify.com/' + partes.join('/') +
+					'#Intent;scheme=https;package=com.spotify.music;' +
+					'S.browser_fallback_url=' + encodeURIComponent(web) + ';end'
+				);
+			} else if (esIphone) {
+				window.location.href = 'spotify:' + partes.join(':');
+			} else {
+				window.location.replace(web);
+			}
+		}
+
 		document.addEventListener('DOMContentLoaded', function () {
-			// El link de "si no pasa nada" tiene que ir al mismo lugar.
+			// El link de "si no pasa nada" va a la web: es la salida para
+			// quien no tiene la app, y tocado a mano sí abre la app si está.
 			var a = document.getElementById('a-mano');
 			if (a) a.href = url;
-			HEO.redirigir('spotify', url, tema);
+			HEO.redirigir('spotify', url, tema, abrir);
 		});
 	})();
 	</script>

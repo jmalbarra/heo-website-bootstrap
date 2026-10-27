@@ -403,14 +403,19 @@
 	// de quienes hicieron clic.
 	//
 	// contenido dice qué se fue a escuchar: el disco o un tema suelto.
-	function redirigir(destino, url, contenido) {
+	//
+	// navegar reemplaza al location.replace de siempre cuando la página
+	// necesita salir de otra forma: spotify.html lo usa para abrir la app en
+	// vez de la web. Igual se llama recién cuando los eventos ya salieron.
+	function redirigir(destino, url, contenido, navegar) {
 		var faltan = 2 + PIXELS_HEREDADOS.length;
 		var yaFue = false;
 
 		function irse() {
 			if (yaFue) return;
 			yaFue = true;
-			window.location.replace(url);
+			if (navegar) navegar(url);
+			else window.location.replace(url);
 		}
 
 		function uno() { if (--faltan <= 0) irse(); }
