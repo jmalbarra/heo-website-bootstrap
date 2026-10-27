@@ -347,6 +347,19 @@
 	// a mano porque esto es un pedido armado a dedo y no pasa por fbevents.
 	// Sin él, la API de conversiones conectada al conjunto de datos duplica el
 	// evento: ver la nota larga arriba de idEvento().
+	//
+	// fbc es lo que le permite a Meta atar el evento al anuncio que lo trajo.
+	// fbevents.js lo arma solo desde el fbclid y lo guarda en una cookie; acá
+	// fbevents no carga, así que lo armamos igual a mano. Sin eso, en el
+	// navegador de Instagram —que no comparte cookies con Facebook— la visita
+	// llega sin forma de saber de qué anuncio vino.
+	function fbcDeLaUrl() {
+		try {
+			var id = new URLSearchParams(window.location.search).get('fbclid');
+			return id ? 'fb.1.' + Date.now() + '.' + id : null;
+		} catch (_) { return null; }
+	}
+
 	function beacon(pixel, evento, cd, listo) {
 		var u = 'https://www.facebook.com/tr/?id=' + encodeURIComponent(pixel) +
 			'&ev=' + encodeURIComponent(evento) +
@@ -354,6 +367,9 @@
 			'&dl=' + encodeURIComponent(window.location.href);
 
 		if (document.referrer) u += '&rl=' + encodeURIComponent(document.referrer);
+
+		var fbc = fbcDeLaUrl();
+		if (fbc) u += '&fbc=' + encodeURIComponent(fbc);
 
 		if (cd) {
 			for (var k in cd) {
@@ -379,8 +395,16 @@
 	//
 	// Acá el orden está al revés: primero salen los eventos, y la navegación
 	// espera a que terminen o a que se venza ESPERA_MAXIMA_MS.
-	function redirigir(destino, url) {
-		var faltan = TODOS.length;
+	//
+	// PageView también sale, al principal. Si un anuncio apunta directo a esta
+	// página —la idea de la etapa 3: saltear la landing, donde el 98,6% se
+	// quedaba sin tocar Spotify— Meta necesita ver la visita para poder
+	// optimizar por "visitas a la página de destino" y para armar el público
+	// de quienes hicieron clic.
+	//
+	// contenido dice qué se fue a escuchar: el disco o un tema suelto.
+	function redirigir(destino, url, contenido) {
+		var faltan = 2 + PIXELS_HEREDADOS.length;
 		var yaFue = false;
 
 		function irse() {
@@ -397,10 +421,11 @@
 		// conUtms también acá: estas páginas pueden recibir la pauta de forma
 		// directa, y si lo hacen son el único lugar donde queda registro de
 		// qué anuncio trajo a la persona.
+		beacon(PIXEL_PRINCIPAL, 'PageView', null, uno);
 		beacon(PIXEL_PRINCIPAL, 'ClickOut', conUtms({
 			destino: destino,
-			content_name: 'mitos-de-un-futuro-cercano',
-			content_type: 'album'
+			content_name: contenido || 'mitos-de-un-futuro-cercano',
+			content_type: contenido ? 'tema' : 'album'
 		}), uno);
 
 		for (var j = 0; j < PIXELS_HEREDADOS.length; j++) {
