@@ -45,9 +45,20 @@
  *
  * CÓMO SE USA
  *
- *   <script src="js/heo-track.js"></script>          <!-- en el <head> -->
+ *   <script src="js/heo-track.js?v=2026-10-27"></script>  <!-- en el <head> -->
  *   <a href="..." data-heo-out="spotify">…</a>        <!-- se instrumenta solo -->
  *   HEO.ev('Lead', { content_name: 'union' });        <!-- evento a mano -->
+ *
+ * EL ?v= NO ES DECORACIÓN
+ *
+ * El .htaccess deja que el navegador se guarde los .js una semana, y el
+ * HTML lo revalida en cada visita. Si este archivo cambia y el ?v= no,
+ * quien ya entró se queda con la versión vieja hasta siete días, y una
+ * página nueva puede llamar a algo que el script viejo no tiene. Pasó el
+ * 27/10/2026: spotify.html nueva le pedía abrir la app de Spotify a un
+ * heo-track.js de la mañana que no sabía hacerlo, y el iPhone de prueba
+ * terminó en la web. Al cambiar este archivo, cambiar la fecha del ?v= en
+ * todas las páginas que lo cargan (grep "heo-track.js?v").
  *
  * QUÉ EVENTOS MANDA
  *
