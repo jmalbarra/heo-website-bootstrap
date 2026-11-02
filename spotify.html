@@ -114,6 +114,9 @@
 			pueden llegar a dejar pasar — y la salida segura, que es abrir el
 			link afuera de Instagram con el menú ⋯. Desde Safari o Chrome esta
 			misma página hace lo de siempre.
+
+			Sin probar todavía: si Instagram deja pasar spotify: o intent://
+			aunque los toque la persona. Si no, la única salida es el menú ⋯.
 		*/
 		var enApp = /Instagram|FBAN|FBAV|FB_IAB|FBIOS|FB4A/i.test(ua);
 
@@ -153,8 +156,8 @@
 		// toque: si lo frenamos para esperar al beacon y navegamos después,
 		// para Instagram ya no es un toque sino un script, y lo corta igual que
 		// al redirect. Así que el evento sale en pointerdown —antes del click,
-		// con ventaja— y el link sigue solo. metodo dice qué botón fue, para
-		// saber cuál de las dos salidas usa la gente.
+		// con ventaja— y el link sigue solo. metodo separa estos ClickOut de
+		// los del redirect automático, que en Instagram no llegan a ningún lado.
 		function medirToque(a, metodo) {
 			var yaFue = false;
 			function marcar() {
@@ -185,11 +188,8 @@
 				var na = document.getElementById('app-tema');
 				if (na && tema && NOMBRES[tema]) na.textContent = NOMBRES[tema];
 				var ba = document.getElementById('app-btn');
-				var bw = document.getElementById('app-web');
 				ba.href = enlaceApp(url);
-				bw.href = url;
 				medirToque(ba, 'boton-app');
-				medirToque(bw, 'boton-web');
 				// Sólo la visita: el ClickOut lo manda el toque. Meta necesita
 				// el PageView para contar la visita a la página de destino.
 				HEO.medir('PageView');
@@ -269,7 +269,12 @@
 		<p class="app__pide">Escuchá <span class="app__tema" id="app-tema">el disco</span><br>en Spotify</p>
 		<a class="ios__btn" id="app-btn" href="https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy">Abrir en Spotify</a>
 		<p class="app__ayuda">¿No se abre? Tocá <b>⋯</b> arriba a la derecha<br>y elegí <b>«Abrir en el navegador externo»</b>.</p>
-		<p class="tenue"><a id="app-web" href="https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy">Escuchar en la web de Spotify</a></p>
+		<!--
+			Sin link a la web de Spotify a propósito. Adentro de Instagram la
+			web abre sin sesión: "Iniciá sesión" o 30 segundos de muestra, que
+			no cuentan como stream. Es el agujero en el que cayeron las etapas
+			1a, 1b y 2 sin que lo viéramos.
+		-->
 	</div>
 
 	<div class="ios">
