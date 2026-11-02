@@ -19,7 +19,7 @@
 	-->
 	<noscript><meta http-equiv="refresh" content="0;url=https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy"></noscript>
 
-	<script src="js/heo-track.js?v=2026-10-27" data-heo-modo="redirect"></script>
+	<script src="js/heo-track.js?v=2026-11-02" data-heo-modo="redirect"></script>
 	<script>
 	/*
 		?tema= — LA PÁGINA PUENTE DE LA ETAPA 3
@@ -95,9 +95,32 @@
 		var esIphone = /iPhone|iPad|iPod/i.test(ua) ||
 			(navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
+		/*
+			EL NAVEGADOR DE INSTAGRAM Y FACEBOOK
+			════════════════════════════════════
+
+			La etapa 3 mandó 695 visitas de anuncios a esta página y Parias no
+			se movió: 5 streams por día, igual que sin pauta. Probado el
+			2/11/2026 desde un mensaje de Instagram en iPhone: la página carga,
+			los eventos salen, y cuando intenta abrir la app Instagram corta
+			todo y muestra "Se produjo un problema al cargar este sitio web".
+			La persona no ve ni la página ni Spotify. Las pruebas del 27/10
+			habían salido bien porque fueron desde WhatsApp, que abre Safari.
+
+			El navegador que traen adentro Instagram y Facebook no deja que una
+			página abra otra app por su cuenta. Así que ahí no intentamos nada
+			solos: medimos la visita, nos quedamos quietos y le damos a la
+			persona un botón — un toque suyo es lo único que esos navegadores
+			pueden llegar a dejar pasar — y la salida segura, que es abrir el
+			link afuera de Instagram con el menú ⋯. Desde Safari o Chrome esta
+			misma página hace lo de siempre.
+		*/
+		var enApp = /Instagram|FBAN|FBAV|FB_IAB|FBIOS|FB4A/i.test(ua);
+
 		// Ya, antes de que se pinte el <body>: así la pantalla de iPhone no
 		// aparece primero como la común y después salta.
-		if (esIphone) document.documentElement.className += ' es-iphone';
+		if (enApp) document.documentElement.className += ' en-app';
+		else if (esIphone) document.documentElement.className += ' es-iphone';
 
 		// Cómo se llama cada tema para decirlo en pantalla. Los que no están
 		// acá dicen "el disco", que es lo que abre sin ?tema=.
@@ -109,18 +132,43 @@
 			'conexion': 'Conexión'
 		};
 
-		function abrir(web) {
+		// La dirección que abre la app: la usa el redirect automático y el
+		// botón del navegador de Instagram. En la compu no hay app que abrir.
+		function enlaceApp(web) {
 			if (esAndroid) {
-				window.location.replace(
-					'intent://open.spotify.com/' + partes.join('/') +
+				return 'intent://open.spotify.com/' + partes.join('/') +
 					'#Intent;scheme=https;package=com.spotify.music;' +
-					'S.browser_fallback_url=' + encodeURIComponent(web) + ';end'
-				);
-			} else if (esIphone) {
-				window.location.href = 'spotify:' + partes.join(':');
-			} else {
-				window.location.replace(web);
+					'S.browser_fallback_url=' + encodeURIComponent(web) + ';end';
 			}
+			if (esIphone) return 'spotify:' + partes.join(':');
+			return web;
+		}
+
+		function abrir(web) {
+			if (esIphone) window.location.href = enlaceApp(web);
+			else window.location.replace(enlaceApp(web));
+		}
+
+		// En el navegador de Instagram el link tiene que navegar en el mismo
+		// toque: si lo frenamos para esperar al beacon y navegamos después,
+		// para Instagram ya no es un toque sino un script, y lo corta igual que
+		// al redirect. Así que el evento sale en pointerdown —antes del click,
+		// con ventaja— y el link sigue solo. metodo dice qué botón fue, para
+		// saber cuál de las dos salidas usa la gente.
+		function medirToque(a, metodo) {
+			var yaFue = false;
+			function marcar() {
+				if (yaFue) return;
+				yaFue = true;
+				HEO.medir('ClickOut', {
+					destino: 'spotify',
+					content_name: tema || 'mitos-de-un-futuro-cercano',
+					content_type: tema ? 'tema' : 'album',
+					metodo: metodo
+				});
+			}
+			a.addEventListener('pointerdown', marcar);
+			a.addEventListener('click', marcar);
 		}
 
 		document.addEventListener('DOMContentLoaded', function () {
@@ -132,6 +180,22 @@
 			if (b) b.href = url;
 			var n = document.getElementById('ios-tema');
 			if (n && tema && NOMBRES[tema]) n.textContent = NOMBRES[tema];
+
+			if (enApp) {
+				var na = document.getElementById('app-tema');
+				if (na && tema && NOMBRES[tema]) na.textContent = NOMBRES[tema];
+				var ba = document.getElementById('app-btn');
+				var bw = document.getElementById('app-web');
+				ba.href = enlaceApp(url);
+				bw.href = url;
+				medirToque(ba, 'boton-app');
+				medirToque(bw, 'boton-web');
+				// Sólo la visita: el ClickOut lo manda el toque. Meta necesita
+				// el PageView para contar la visita a la página de destino.
+				HEO.medir('PageView');
+				return;
+			}
+
 			HEO.redirigir('spotify', url, tema, abrir);
 		});
 	})();
@@ -182,9 +246,32 @@
 			background: #1db954; color: #04130a; text-decoration: none;
 			font-family: system-ui, sans-serif; font-weight: 700; font-size: 1.12rem;
 		}
+
+		/*
+			Navegador de Instagram o Facebook: la página no se va sola, así que
+			es una pantalla de verdad. El botón arriba del pulgar, la salida por
+			el menú ⋯ explicada abajo, y una flecha hacia la esquina donde está
+			ese menú (arriba a la derecha en las dos apps).
+		*/
+		.app { display: none; }
+		.en-app .comun { display: none; }
+		.en-app .app { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; max-width: 360px; }
+		.app__pide { font-size: 1.35rem; line-height: 1.3; letter-spacing: 0; text-transform: none; color: #e8fff9; }
+		.app__tema { color: #22eec9; }
+		.app__ayuda { color: rgba(232, 255, 249, 0.8); font-size: 0.85rem; line-height: 1.5; letter-spacing: 0; text-transform: none; }
+		.app__ayuda b { color: #e8fff9; }
+		.app__flecha { position: fixed; top: 6px; right: 14px; font-size: 1.6rem; color: #22eec9; letter-spacing: 0; }
 	</style>
 </head>
 <body>
+	<div class="app">
+		<p class="app__flecha" aria-hidden="true">↗</p>
+		<p class="app__pide">Escuchá <span class="app__tema" id="app-tema">el disco</span><br>en Spotify</p>
+		<a class="ios__btn" id="app-btn" href="https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy">Abrir en Spotify</a>
+		<p class="app__ayuda">¿No se abre? Tocá <b>⋯</b> arriba a la derecha<br>y elegí <b>«Abrir en el navegador externo»</b>.</p>
+		<p class="tenue"><a id="app-web" href="https://open.spotify.com/album/78mapk8m7x0773C0wxsSwy">Escuchar en la web de Spotify</a></p>
+	</div>
+
 	<div class="ios">
 		<p class="ios__pide">Tocá <b>«Permitir»</b><br>para escuchar <span class="ios__tema" id="ios-tema">el disco</span> en Spotify</p>
 	</div>

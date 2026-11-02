@@ -45,7 +45,7 @@
  *
  * CÓMO SE USA
  *
- *   <script src="js/heo-track.js?v=2026-10-27"></script>  <!-- en el <head> -->
+ *   <script src="js/heo-track.js?v=2026-11-02"></script>  <!-- en el <head> -->
  *   <a href="..." data-heo-out="spotify">…</a>        <!-- se instrumenta solo -->
  *   HEO.ev('Lead', { content_name: 'union' });        <!-- evento a mano -->
  *
@@ -451,6 +451,14 @@
 		window.setTimeout(irse, ESPERA_MAXIMA_MS);
 	}
 
+	// Lo mismo que redirigir() pero sin irse: un evento al principal por
+	// beacon, con las UTM pegadas. Para cuando la página de redirect tiene que
+	// quedarse quieta y esperar a que la persona toque algo — spotify.html en
+	// el navegador de Instagram o Facebook, ver la nota ahí.
+	function medir(evento, params, listo) {
+		beacon(PIXEL_PRINCIPAL, evento, params ? conUtms(params) : null, listo || function () {});
+	}
+
 	/* ── Visita real ───────────────────────────────────────────────────── */
 
 	// Manda EngagedView una sola vez, cuando la visita deja de parecer un
@@ -573,6 +581,7 @@
 		ev: ev,
 		salir: salir,
 		redirigir: redirigir,
+		medir: medir,
 		utms: utms
 	};
 
